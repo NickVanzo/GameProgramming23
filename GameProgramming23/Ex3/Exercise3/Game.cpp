@@ -11,8 +11,10 @@
 #include "sre/SDLRenderer.hpp"
 #include "sre/SpriteAtlas.hpp"
 
+int pos_x_snake = 400;
+int pos_y_snake = 400;
 glm::vec2 window_size = glm::vec2(800, 600);
-glm::vec2 initial_position_snake = glm::vec2(400, 400);
+glm::vec2 initial_position_snake = glm::vec2(pos_x_snake, pos_y_snake);
 sre::SDLRenderer renderer;
 sre::Camera camera;
 std::shared_ptr<sre::SpriteAtlas> atlas;
@@ -26,7 +28,7 @@ void LongComputation();
 void FixedLoop();
 void Render();
 void Update(float deltaTime);
-void ProcessEvents(SDL_Event& event) {}
+void ProcessEvents(SDL_Event& event);
 
 int main() {
 //	gameObjects = {};
@@ -75,6 +77,26 @@ void Render() {
     renderPass.draw(spriteBatch);
 }
 
+void ProcessEvents(SDL_Event& event){
+    switch (event.key.keysym.scancode) {
+        case SDL_SCANCODE_W:
+            pos_y_snake += 10;
+            break;
+        case SDL_SCANCODE_D:
+            pos_x_snake += 10;
+            break;
+        case SDL_SCANCODE_S:
+            pos_y_snake -= 10;
+            break;
+        case SDL_SCANCODE_A:
+            pos_x_snake -= 10;
+            break;
+        default:
+            break;
+    }
+    snakeSprite.setPosition(glm::vec2(pos_x_snake, pos_y_snake));
+}
+
 void FixedLoop()
 {
 	while (true)
@@ -94,8 +116,6 @@ void FixedLoop()
 
 		engine->time_end_computation = std::chrono::steady_clock::now();
 		std::chrono::duration<double> sleep_time = engine->target_frame_time - engine->GetTimeComputationMs();
-
-
 
 		engine->time_elapsed = std::chrono::steady_clock::now() - engine->time_start;
 	}
