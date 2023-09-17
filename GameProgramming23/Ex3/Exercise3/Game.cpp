@@ -12,10 +12,12 @@
 #include "sre/SpriteAtlas.hpp"
 
 glm::vec2 window_size = glm::vec2(800, 600);
+glm::vec2 initial_position_snake = glm::vec2(400, 400);
 sre::SDLRenderer renderer;
 sre::Camera camera;
 std::shared_ptr<sre::SpriteAtlas> atlas;
 sre::Sprite sprite;
+sre::Sprite snakeSprite;
 
 Engine *engine;
 std::list<GameObject *> gameObjects;
@@ -46,6 +48,8 @@ int main() {
     camera.setWindowCoordinates();
     atlas = sre::SpriteAtlas::create("data/snake.json",
                                      "data/snake.png");
+    snakeSprite = atlas->get("snake-body.png");
+    snakeSprite.setPosition(initial_position_snake);
     sprite = atlas->get("berry.png");
     sprite.setPosition(window_size / 2.0f);
     renderer.startEventLoop();
@@ -53,7 +57,9 @@ int main() {
     return 0;
 }
 
-void Update(float deltaTime) { }
+void Update(float deltaTime) {
+
+}
 
 void Render() {
     sre::RenderPass renderPass = sre::RenderPass::create()
@@ -64,6 +70,7 @@ void Render() {
             = sre::SpriteBatch::create();
     // send spriteBatchBuilder to your game elements, so that they can add their sprites for rendering
     spriteBatchBuilder.addSprite(sprite);
+    spriteBatchBuilder.addSprite(snakeSprite);
     auto spriteBatch = spriteBatchBuilder.build();
     renderPass.draw(spriteBatch);
 }
