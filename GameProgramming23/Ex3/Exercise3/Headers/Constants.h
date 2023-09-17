@@ -1,0 +1,4 @@
+#pragma once
+#define TIME_TO_CHANGE_SPRITE_IN_SECONDS 0.5
+#define PLAYER_FIRST_SPRITE '0'
+#define PLAYER_SECOND_SPRITE 'O'
