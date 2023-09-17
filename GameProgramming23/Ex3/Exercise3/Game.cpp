@@ -8,26 +8,64 @@
 #include "./Headers/Player.h"
 #include "./Headers/GameObject.h"
 
+#include "sre/SDLRenderer.hpp"
+#include "sre/SpriteAtlas.hpp"
+
+glm::vec2 window_size = glm::vec2(800, 600);
+sre::SDLRenderer renderer;
+sre::Camera camera;
+std::shared_ptr<sre::SpriteAtlas> atlas;
+sre::Sprite sprite;
+
 Engine *engine;
 std::list<GameObject *> gameObjects;
 
 void LongComputation();
 void FixedLoop();
+void Render();
+void Update(float deltaTime);
+void ProcessEvents(SDL_Event& event) {}
 
-int main()
-{
-	gameObjects = {};
+int main() {
+//	gameObjects = {};
+//
+//	Player *player = new Player();
+//	player->Init(20, 10);
+//	gameObjects.push_back(player);
+//
+//	engine = new Engine();
+//	gameObjects.push_back(engine);
 
-	Player *player = new Player();
-	player->Init(20, 10);
-	gameObjects.push_back(player);
+//	FixedLoop();
 
-	engine = new Engine();
-	gameObjects.push_back(engine);
+    renderer.frameRender = Render;
+    renderer.frameUpdate = Update;
+    renderer.keyEvent = ProcessEvents;
+    renderer.setWindowSize(window_size);
+    renderer.init();
+    camera.setWindowCoordinates();
+    atlas = sre::SpriteAtlas::create("data/snake.json",
+                                     "data/snake.png");
+    sprite = atlas->get("berry.png");
+    sprite.setPosition(window_size / 2.0f);
+    renderer.startEventLoop();
 
-	FixedLoop();
+    return 0;
+}
 
-	return 0;
+void Update(float deltaTime) { }
+
+void Render() {
+    sre::RenderPass renderPass = sre::RenderPass::create()
+            .withCamera(camera)
+            .withClearColor(true, { .3f, .3f, 1, 1 })
+            .build();
+    sre::SpriteBatch::SpriteBatchBuilder spriteBatchBuilder
+            = sre::SpriteBatch::create();
+    // send spriteBatchBuilder to your game elements, so that they can add their sprites for rendering
+    spriteBatchBuilder.addSprite(sprite);
+    auto spriteBatch = spriteBatchBuilder.build();
+    renderPass.draw(spriteBatch);
 }
 
 void FixedLoop()
@@ -49,6 +87,7 @@ void FixedLoop()
 
 		engine->time_end_computation = std::chrono::steady_clock::now();
 		std::chrono::duration<double> sleep_time = engine->target_frame_time - engine->GetTimeComputationMs();
+
 
 
 		engine->time_elapsed = std::chrono::steady_clock::now() - engine->time_start;
