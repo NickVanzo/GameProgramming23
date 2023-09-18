@@ -5,9 +5,6 @@
 Engine *engine;
 std::list<GameObject *> gameObjects;
 
-void Render();
-void Update(float deltaTime);
-
 int main() {
 	gameObjects = {};
 
@@ -20,6 +17,3 @@ int main() {
     return 0;
 }
 
-//void ProcessEvents(SDL_Event& event){
-//    snakeSprite.setPosition(glm::vec2(pos_x_snake, pos_y_snake));
-//}

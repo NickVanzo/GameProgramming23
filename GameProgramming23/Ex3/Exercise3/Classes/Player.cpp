@@ -1,5 +1,5 @@
 #include "../Headers/Player.h"
-
+#include "sre/SDLRenderer.hpp"
 Player::Player(Engine &engine): engine_(engine){
     this->engine_.Attach(this);
     std::cout << "Player constructor initialized and register to the Engine" << std::endl;
@@ -35,4 +35,5 @@ void Player::ProcessEvents(SDL_Event &event)
 }
 void Player::Render()
 {
+    this->engine_.snakeSprite.setPosition(glm::vec2(x_pos, y_pos));
 }
