@@ -12,7 +12,7 @@ void Engine::Init()
     sprite.setPosition(window_size / 2.0f);
     renderer.frameUpdate = [this](float delta_time) {
         Update(delta_time);
-    };;
+    };
     renderer.keyEvent = [this](SDL_Event &event) {
         ProcessEvents(event);
     };
