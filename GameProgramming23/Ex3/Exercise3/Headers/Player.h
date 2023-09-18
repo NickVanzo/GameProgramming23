@@ -1,21 +1,23 @@
 #pragma once
 #include <chrono>
+#include "./Engine.h"
 #include "./Constants.h"
 #include "./GameObject.h"
+#include "sre/SDLRenderer.hpp"
+
 class Player: public GameObject
 {
 public:
-    char player_primary_sprite = '0';
-    char player_secondary_sprite = 'O';
+    explicit Player(Engine &engine);
     int x_pos = 20;
     int y_pos = 10;
-    int prev_pos_x = 0;
-    int prev_pos_y = 0;
-    std::chrono::time_point<std::chrono::steady_clock> spawn_time = std::chrono::steady_clock::now();
 
-    void Init(int start_x, int start_y) override;
     void Init() override;
-    void ProcessEvents() override;
-    void Update() override;
+    void ProcessEvents(SDL_Event &event) override;
+    void Update(float delta_time) override;
     void Render() override;
+    void RemoveMeFromObserverList();
+
+private:
+    Engine &engine_;
 };

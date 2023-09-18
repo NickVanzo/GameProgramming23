@@ -1,24 +1,30 @@
 #pragma once
 #include <chrono>
+#include <list>
 #include "./GameObject.h"
+#include "sre/SDLRenderer.hpp"
+#include "sre/SpriteAtlas.hpp"
+
+
 class Engine: public GameObject
 {
 public:
-    std::chrono::time_point<std::chrono::steady_clock> time_end_computation;
-    std::chrono::time_point<std::chrono::steady_clock> time_start;
-    std::chrono::time_point<std::chrono::steady_clock> time_end;
-    std::chrono::duration<double> time_elapsed; 
-    double seconds_to_wait_to_change_sprite = 0.5;
-    double target_fps = 60.0;
-    std::chrono::duration<double> target_frame_time = (std::chrono::duration<double>)1.0 / target_fps;
-    double fps = 0;
+    std::list<GameObject*> listObserver;
+    sre::SDLRenderer renderer;
+    sre::Camera camera;
+    std::shared_ptr<sre::SpriteAtlas> atlas;
+    sre::Sprite sprite;
+    sre::Sprite snakeSprite;
+    glm::vec2 window_size = glm::vec2(800, 600);
+    glm::vec2 initial_position_snake = glm::vec2(400, 400);
 
     void Init() override;
-    void Init(int pos_x, int pos_y) override;
-    void ProcessEvents() override;
-    void Update() override;
+    void ProcessEvents(SDL_Event &event) override;
+    void Update(float delta_time) override;
     void Render() override;
-    double GetFPS();
-    double GetTimeElapsedMs();
-    std::chrono::duration<double> GetTimeComputationMs();
+    void Attach(GameObject* observer);
+    void Detach(GameObject* observer);
+    void NotifyUpdate(float delta_time);
+    void NotifyProcessEvents(SDL_Event &event);
+    void NotifyRender();
 };

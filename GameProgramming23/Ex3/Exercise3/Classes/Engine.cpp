@@ -1,38 +1,75 @@
 #include "../Headers/Engine.h"
-#include <random>
-#include "../ITUGames.h"
 
 void Engine::Init()
 {
-    std::srand(std::time(nullptr));
-    ITUGames::Console::InitScreenForRendering();
+    renderer.setWindowSize(window_size);
+    renderer.init();
+    camera.setWindowCoordinates();
+    atlas = sre::SpriteAtlas::create("data/snake.json", "data/snake.png");
+    snakeSprite = atlas->get("snake-body.png");
+    snakeSprite.setPosition(initial_position_snake);
+    sprite = atlas->get("berry.png");
+    sprite.setPosition(window_size / 2.0f);
+    renderer.frameUpdate = [this](float delta_time) {
+        Update(delta_time);
+    };;
+    renderer.keyEvent = [this](SDL_Event &event) {
+        ProcessEvents(event);
+    };
+    renderer.frameRender = [this]() {
+        Render();
+    };
+    renderer.startEventLoop();
 }
-void Engine::Init(int pos_x, int pos_y) {};
-void Engine::Update()
+void Engine::Update(float delta_time)
 {
-    fps = 1.0 / time_elapsed.count();
+    NotifyUpdate(delta_time);
 }
-void Engine::ProcessEvents()
+void Engine::NotifyUpdate(float delta_time)
 {
+    auto iterator = listObserver.begin();
+    while(iterator != listObserver.end()) {
+        (*iterator)->Update(delta_time);
+        ++iterator;
+    }
+}
+void Engine::ProcessEvents(SDL_Event &event)
+{
+    NotifyProcessEvents(event);
+}
+void Engine::NotifyProcessEvents(SDL_Event &event) {
+    auto iterator = listObserver.begin();
+    while(iterator != listObserver.end())
+    {
+        (*iterator)->ProcessEvents(event);
+        ++iterator;
+    }
 }
 void Engine::Render()
 {
-    ITUGames::Console::GotoTop();
-    std::cout << "Elapsed(ms) : " << time_elapsed.count() * 100 << std::endl;
-    std::cout << "FPS: " << fps << std::endl;
-    std::cout << "Computation time (ms): " << (time_elapsed).count() * 100 << std::endl;
-    std::cout << "Target Frame Time (ms): " << target_frame_time.count() * 100 << std::endl;
-    std::cout << "Target FPS: " << target_fps << std::endl;
+    sre::RenderPass renderPass = sre::RenderPass::create()
+            .withCamera(camera)
+            .withClearColor(true, { .3f, .3f, 1, 1 })
+            .build();
+    sre::SpriteBatch::SpriteBatchBuilder spriteBatchBuilder
+            = sre::SpriteBatch::create();
+    // send spriteBatchBuilder to your game elements, so that they can add their sprites for rendering
+    spriteBatchBuilder.addSprite(sprite);
+    spriteBatchBuilder.addSprite(snakeSprite);
+    auto spriteBatch = spriteBatchBuilder.build();
+    renderPass.draw(spriteBatch);
+    NotifyRender();
 }
-std::chrono::duration<double> Engine::GetTimeComputationMs()
-{
-    return time_end_computation - time_start;
+void Engine::NotifyRender() {
+    auto iterator = listObserver.begin();
+    while(iterator != listObserver.end()) {
+        (*iterator)->Render();
+        ++iterator;
+    }
 }
-double Engine::GetFPS()
-{
-    return fps;
+void Engine::Attach(GameObject *observer) {
+    listObserver.push_front(observer);
 }
-double Engine::GetTimeElapsedMs()
-{
-    return time_elapsed.count() * 100;
+void Engine::Detach(GameObject *observer) {
+    listObserver.remove(observer);
 }
