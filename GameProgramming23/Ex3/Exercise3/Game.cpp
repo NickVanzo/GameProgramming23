@@ -6,7 +6,7 @@
 int main() {
     Engine* engine = Engine::GetInstance();
 	auto *player = new Player(*engine);
-    auto *map = new Map(*engine);
+    auto *map = new Map(*engine, *player);
     engine->Init();
     return 0;
 }
