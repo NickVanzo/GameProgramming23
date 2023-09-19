@@ -4,12 +4,18 @@
 #include "./GameObject.h"
 #include "sre/SDLRenderer.hpp"
 
+struct Snake {
+    int currentPosX;
+    int currentPosY;
+    int nextPosX;
+    int nextPosY;
+};
+
 class Player: public GameObject
 {
 public:
     explicit Player(Engine &engine);
-    int x_pos = 20;
-    int y_pos = 10;
+    Snake position;
     char direction;
     void Init() override;
     void ProcessEvents(SDL_Event &event) override;

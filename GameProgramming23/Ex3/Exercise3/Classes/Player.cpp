@@ -3,6 +3,10 @@
 
 Player::Player(Engine &engine): engine_(engine){
     this->engine_.Attach(this);
+    position.currentPosX = 20;
+    position.currentPosY = 20;
+    position.nextPosX = 0;
+    position.nextPosX = 0;
     direction = NORD;
     std::cout << "Player constructor initialized and register to the Engine" << std::endl;
 }
@@ -47,16 +51,16 @@ void Player::MovePlayer() {
     int movementSpeed = 5;
     switch (direction) {
         case NORD:
-            y_pos += movementSpeed;
+            position.currentPosY += movementSpeed;
             break;
         case SUD:
-            y_pos -= movementSpeed;
+            position.currentPosY -= movementSpeed;
             break;
         case OVEST:
-            x_pos -= movementSpeed;
+            position.currentPosX -= movementSpeed;
             break;
         case EST:
-            x_pos += movementSpeed;
+            position.currentPosX += movementSpeed;
             break;
         default:
             break;
@@ -64,5 +68,5 @@ void Player::MovePlayer() {
 }
 void Player::Render()
 {
-    this->engine_.snakeSprite.setPosition(glm::vec2(x_pos, y_pos));
+    this->engine_.snakeSprite.setPosition(glm::vec2(position.currentPosX, position.currentPosY));
 }
