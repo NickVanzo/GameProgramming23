@@ -1,7 +1,6 @@
 #pragma once
 #include <chrono>
 #include "./Engine.h"
-#include "./Constants.h"
 #include "./GameObject.h"
 #include "sre/SDLRenderer.hpp"
 
@@ -11,13 +10,11 @@ public:
     explicit Player(Engine &engine);
     int x_pos = 20;
     int y_pos = 10;
-
     void Init() override;
     void ProcessEvents(SDL_Event &event) override;
     void Update(float delta_time) override;
     void Render() override;
     void RemoveMeFromObserverList();
-
 private:
     Engine &engine_;
 };

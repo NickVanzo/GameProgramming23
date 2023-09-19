@@ -11,7 +11,7 @@ void Engine::Init()
     snakeSprite = atlas->get("snake-body.png");
     snakeSprite.setPosition(initial_position_snake);
     sprite = atlas->get("berry.png");
-    sprite.setPosition(window_size / 2.0f);
+
     renderer.frameUpdate = [this](float delta_time) {
         Update(delta_time);
     };
