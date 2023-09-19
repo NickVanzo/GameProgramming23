@@ -1,5 +1,7 @@
 #include "../Headers/Engine.h"
-
+Engine* Engine::engineInstance_{nullptr};
+std::mutex Engine::mutex_;
+Engine::Engine() {}
 void Engine::Init()
 {
     renderer.setWindowSize(window_size);
@@ -73,3 +75,11 @@ void Engine::Attach(GameObject *observer) {
 void Engine::Detach(GameObject *observer) {
     listObserver.remove(observer);
 }
+Engine* Engine::GetInstance() {
+    std::lock_guard<std::mutex> lock(mutex_);
+    if(engineInstance_ == nullptr){
+        engineInstance_ = new Engine();
+    }
+    return engineInstance_;
+}
+

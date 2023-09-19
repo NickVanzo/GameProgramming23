@@ -8,7 +8,15 @@
 
 class Engine: public GameObject
 {
+private:
+    static Engine * engineInstance_;
+    static std::mutex mutex_;
+protected:
+    Engine();
+    ~Engine();
 public:
+    Engine(Engine &other) = delete;
+    void operator=(const Engine &) = delete;
     std::list<GameObject*> listObserver;
     sre::SDLRenderer renderer;
     sre::Camera camera;
@@ -27,4 +35,5 @@ public:
     void NotifyUpdate(float delta_time);
     void NotifyProcessEvents(SDL_Event &event);
     void NotifyRender();
+    static Engine* GetInstance();
 };
