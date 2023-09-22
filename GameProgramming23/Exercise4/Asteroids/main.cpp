@@ -29,20 +29,19 @@ int main() {
     renderer.init();
     camera.setWindowCoordinates();
 
-    atlas = sre::SpriteAtlas::create("data/asteroids_sprites.json", "data/asteroids_sprites.png");
+    engine.Init();
 
     auto gameObject = engine.CreateGameObject("Player");
 
     auto playerController = std::shared_ptr<Asteroids::PlayerUpdateComponent>(new Asteroids::PlayerUpdateComponent());
     auto playerRenderer = std::make_shared<Asteroids::PlayerComponentRenderer>();
     auto playerProcessEventsComponent = std::make_shared<Asteroids::PlayerProcessEventsComponent>();
-    playerRenderer->sprite = atlas->get("playerShip1_blue.png");
+    playerRenderer->sprite = engine.GetSpriteFromAtlas("playerShip1_blue.png");
 
     gameObject->AddComponent(playerController);
     gameObject->AddComponent(playerRenderer);
     gameObject->AddComponent(playerProcessEventsComponent);
 
-    engine.Init();
     renderer.startEventLoop();
 }
 

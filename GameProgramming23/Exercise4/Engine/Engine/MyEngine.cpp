@@ -23,7 +23,7 @@ namespace MyEngine {
     void Engine::Init() {
         // initializes random generator
         std::srand(std::time(nullptr));
-
+        atlas = sre::SpriteAtlas::create("data/asteroids_sprites.json", "data/asteroids_sprites.png");
         _camera.setWindowCoordinates();
 
         _root->Init();
@@ -62,5 +62,13 @@ namespace MyEngine {
         _root->AddChild(ret);
 
         return ret.get();
+    }
+
+    std::shared_ptr<sre::SpriteAtlas> Engine::GetAtlas() {
+        return atlas;
+    }
+
+    sre::Sprite Engine::GetSpriteFromAtlas(std::basic_string<char> name) {
+        return atlas->get(name);
     }
 }

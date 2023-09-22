@@ -21,7 +21,6 @@ namespace Asteroids {
                 float yPos = cos * speed;
                 parent->position.x -= xPos;
                 parent->position.y += yPos;
-
                 break;
         }
     }
