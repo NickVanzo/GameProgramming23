@@ -4,7 +4,6 @@
 #include "Engine/Component.h"
 #ifndef SIMPLERENDERENGINEPROJECT_PLAYERCOMPONENTRENDERER_H
 #define SIMPLERENDERENGINEPROJECT_PLAYERCOMPONENTRENDERER_H
-
 namespace Asteroids {
     class PlayerComponentRenderer: public MyEngine::Component {
     public:
@@ -13,7 +12,4 @@ namespace Asteroids {
         void Render(sre::SpriteBatch::SpriteBatchBuilder&) override;
     };
 }
-
-
-
 #endif //SIMPLERENDERENGINEPROJECT_PLAYERCOMPONENTRENDERER_H

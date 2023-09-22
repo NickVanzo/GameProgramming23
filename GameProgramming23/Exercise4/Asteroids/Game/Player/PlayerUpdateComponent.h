@@ -6,15 +6,10 @@
 #ifndef SIMPLERENDERENGINEPROJECT_PLAYERCOMPONENTINPUT_H
 #define SIMPLERENDERENGINEPROJECT_PLAYERCOMPONENTINPUT_H
 namespace Asteroids {
-    class PlayerComponentInput: public MyEngine::Component {
-        const float ROT_SPEED = 50;
-        const float MOV_SPEED = 5;
-        const float MOV_AMOUNT = 20;
-        const glm::vec2 movDirection = glm::vec2(1,0);
+    class PlayerUpdateComponent: public MyEngine::Component {
     public:
-        glm::vec2 position;
-        float rotation;
 
+        const glm::vec2 movDirection = glm::vec2(1,0);
         void Init() override;
         void Update(float) override;
     };
