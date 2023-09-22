@@ -5,9 +5,10 @@
 #include "BulletComponentUpdate.h"
 #include "MyEngine.h"
 
-namespace Asteroid {
+namespace Asteroids {
     void BulletComponentUpdate::Update(float deltaTime) {
         MyEngine::GameObject* parent = GetGameObject();
-        glm::vec2 basePos = parent->position;
+        MyEngine::GameObject* gm = GetGameObject();
+
     }
 }

@@ -3,11 +3,15 @@
 //
 #include "Engine/Component.h"
 #include "BulletComponentRender.h"
-namespace Asteroid {
+namespace Asteroids {
     void BulletComponentRender::Render(sre::SpriteBatch::SpriteBatchBuilder & builder) {
-        MyEngine::GameObject* parent = GetGameObject();
-        sprite.setPosition(parent->position);
+        MyEngine::GameObject *parent = GetGameObject();
+        glm::vec2 basePos = startingPos_;
+        sprite.setPosition(basePos +  parent->position);
         sprite.setRotation(parent->rotation);
         builder.addSprite(sprite);
+    }
+    void BulletComponentRender::SetStartingPos(glm::vec2 initialPos) {
+        startingPos_ = initialPos;
     }
 }

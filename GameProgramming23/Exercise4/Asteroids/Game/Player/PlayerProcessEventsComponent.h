@@ -8,6 +8,8 @@ namespace Asteroids {
 class PlayerProcessEventsComponent: public MyEngine::Component {
 public:
         void KeyEvent(SDL_Event&) override;
+private:
+    void Shoot();
     };
 }
 

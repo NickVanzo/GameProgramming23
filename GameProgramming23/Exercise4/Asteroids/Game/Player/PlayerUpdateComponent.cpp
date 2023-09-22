@@ -10,5 +10,6 @@ namespace Asteroids {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
         MyEngine::GameObject* parent = GetGameObject();
         glm::vec2 basePos = engine->GetScreenSize() / 2.f;
+        
     }
 }

@@ -4,8 +4,10 @@
 #include "Engine/Component.h"
 #pragma once
 
-namespace Asteroid {
-    class BulletComponentUpdate: MyEngine::Component {
+namespace Asteroids{
+    class BulletComponentUpdate: public MyEngine::Component {
+    public:
+
         void Update(float deltaTime);
     };
 }
