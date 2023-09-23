@@ -8,10 +8,13 @@ namespace Asteroids {
         MyEngine::GameObject *parent = GetGameObject();
         glm::vec2 basePos = startingPos_;
         sprite.setPosition(basePos +  parent->position);
-        sprite.setRotation(parent->rotation);
+        sprite.setRotation(rotation_);
         builder.addSprite(sprite);
     }
     void BulletComponentRender::SetStartingPos(glm::vec2 initialPos) {
         startingPos_ = initialPos;
+    }
+    void BulletComponentRender::SetRotation(float rotation) {
+        rotation_ = rotation;
     }
 }

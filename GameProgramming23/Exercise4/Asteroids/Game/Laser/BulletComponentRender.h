@@ -8,6 +8,8 @@ namespace Asteroids {
     public:
         sre::Sprite sprite;
         glm::vec2 startingPos_;
+        float rotation_;
+        void SetRotation(float rotation);
         void SetStartingPos(glm::vec2);
         void Render(sre::SpriteBatch::SpriteBatchBuilder&) override;
     };
