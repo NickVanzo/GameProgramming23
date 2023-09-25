@@ -8,6 +8,7 @@
 #include "Game/Player/PlayerUpdateComponent.h"
 #include "Game/Player/PlayerComponentRenderer.h"
 #include "Game/Player/PlayerProcessEventsComponent.h"
+#include "Game/AsteroidSpawner/AsteroidSpawner.h"
 
 void InitGame();
 void ProcessEvents(SDL_Event& event);
@@ -41,6 +42,10 @@ int main() {
     gameObject->AddComponent(playerRenderer);
     gameObject->AddComponent(playerProcessEventsComponent);
 
+    auto asteroidSpawnerGameObject = engine.CreateGameObject("AsteroidSpawner");
+    auto asteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner());
+
+    asteroidSpawnerGameObject->AddComponent(asteroidSpawnerUpdateComponent);
     renderer.startEventLoop();
 }
 

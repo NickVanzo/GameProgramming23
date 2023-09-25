@@ -6,7 +6,9 @@ add_executable(Asteroids ${Asteroids-src}
         Game/Laser/BulletComponentRender.cpp
         Game/Laser/BulletComponentRender.h
         Game/Laser/BulletComponentUpdate.cpp
-        Game/Laser/BulletComponentUpdate.h)
+        Game/Laser/BulletComponentUpdate.h
+        Game/AsteroidSpawner/AsteroidSpawner.cpp
+        Game/AsteroidSpawner/AsteroidSpawner.h)
 
 target_include_directories(Asteroids PUBLIC ${MYENGINE_INCLUDE_DIR})
 
