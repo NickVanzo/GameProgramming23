@@ -7,8 +7,14 @@
 namespace Asteroids{
     class BulletComponentUpdate: public MyEngine::Component {
     public:
-
-        void Update(float deltaTime);
+        float bulletSpeed = 10;
+        void SetRotation(float rotation);
+        void SetStartingPos(glm::vec2);
+        void Update(float deltaTime) override;
+    private:
+        void MoveLaser();
+        glm::vec2 startingPos_;
+        float rotation_;
     };
 }
 
