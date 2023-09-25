@@ -3,13 +3,16 @@
 //
 
 #include "GameObject.h"
+#include "Component.h"
 #pragma once
 namespace Asteroids {
     class AsteroidSpawner: public MyEngine::Component {
         public:
         void Update(float deltaTime);
+        void SpawnAsteroid();
     private:
-        float TIME_TO_SPAWN_ASTEROID = 10;
+        std::list<MyEngine::GameObject*> asteroids;
+        float TIME_TO_SPAWN_ASTEROID = 2;
         float timeCounter = 0;
     };
 }
