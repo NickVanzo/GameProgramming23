@@ -8,12 +8,14 @@
 namespace Asteroids {
     class AsteroidSpawner: public MyEngine::Component {
         public:
+        AsteroidSpawner(int);
         void Update(float deltaTime);
         void SpawnAsteroid();
     private:
         std::list<MyEngine::GameObject*> asteroids;
         float TIME_TO_SPAWN_ASTEROID = 2;
         float timeCounter = 0;
+        int direction;
     };
 }
 

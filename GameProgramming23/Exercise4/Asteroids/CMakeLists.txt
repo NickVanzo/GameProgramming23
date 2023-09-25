@@ -10,7 +10,9 @@ add_executable(Asteroids ${Asteroids-src}
         Game/AsteroidSpawner/AsteroidSpawner.cpp
         Game/AsteroidSpawner/AsteroidSpawner.h
         Game/Asteroid/AsteroidRenderComponent.cpp
-        Game/Asteroid/AsteroidRenderComponent.h)
+        Game/Asteroid/AsteroidRenderComponent.h
+        Game/Asteroid/AsteroidUpdateComponent.cpp
+        Game/Asteroid/AsteroidUpdateComponent.h)
 
 target_include_directories(Asteroids PUBLIC ${MYENGINE_INCLUDE_DIR})
 
