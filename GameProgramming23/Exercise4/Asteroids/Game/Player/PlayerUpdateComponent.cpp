@@ -8,8 +8,6 @@ namespace Asteroids {
     void PlayerUpdateComponent::Init() {}
     void PlayerUpdateComponent::Update(float deltaTime) {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
-        MyEngine::GameObject* parent = GetGameObject();
         glm::vec2 basePos = engine->GetScreenSize() / 2.f;
-        
     }
 }
