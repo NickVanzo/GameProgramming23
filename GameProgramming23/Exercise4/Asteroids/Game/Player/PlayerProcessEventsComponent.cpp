@@ -39,6 +39,7 @@ namespace Asteroids {
         bulletRenderer->sprite = engine->GetSpriteFromAtlas("laserBlue01.png");
         bulletRenderer->SetStartingPos(glm::vec2(gm->position.x, gm->position.y));
         bulletRenderer->SetRotation(gm->rotation);
+        gameObject->rotation = gm->rotation;
         gameObject->AddComponent(bulletRenderer);
         gameObject->AddComponent(bulletUpdate);
     }

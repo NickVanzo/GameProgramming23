@@ -4,13 +4,27 @@
 #include "Engine/Component.h"
 #include "BulletComponentRender.h"
 namespace Asteroids {
+    using namespace glm;
     void BulletComponentRender::Render(sre::SpriteBatch::SpriteBatchBuilder & builder) {
         MyEngine::GameObject *parent = GetGameObject();
-        glm::vec2 basePos = startingPos_;
-        sprite.setPosition(basePos +  parent->position);
+
+        MoveLaser(parent);
+
+        sprite.setPosition(parent->position);
         sprite.setRotation(rotation_);
+
         builder.addSprite(sprite);
     }
+    void BulletComponentRender::MoveLaser(MyEngine::GameObject* parent) {
+        if(parent->position.x == 0 && parent->position.y == 0) {
+            parent->position = startingPos_;
+        }
+        float rotationInRadians = radians(parent->rotation + 90);
+        vec2 direction = vec2(cos(rotationInRadians), sin(rotationInRadians));
+        parent->position += direction * bulletSpeed;
+        parent->rotation = rotation_;
+    }
+
     void BulletComponentRender::SetStartingPos(glm::vec2 initialPos) {
         startingPos_ = initialPos;
     }

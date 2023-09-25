@@ -37,7 +37,6 @@ int main() {
     auto playerRenderer = std::make_shared<Asteroids::PlayerComponentRenderer>();
     auto playerProcessEventsComponent = std::make_shared<Asteroids::PlayerProcessEventsComponent>();
     playerRenderer->sprite = engine.GetSpriteFromAtlas("playerShip1_blue.png");
-
     gameObject->AddComponent(playerController);
     gameObject->AddComponent(playerRenderer);
     gameObject->AddComponent(playerProcessEventsComponent);
