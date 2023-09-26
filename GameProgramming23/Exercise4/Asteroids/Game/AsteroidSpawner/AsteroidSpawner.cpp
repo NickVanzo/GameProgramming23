@@ -58,8 +58,7 @@ namespace Asteroids {
             bool isCollidingWithYBoundaries = ((*it)->position.y == CUSTOM_WINDOW_HEIGHT) || ((*it)->position.y == 0);
 
             if (isCollidingWithXBoundaries || isCollidingWithYBoundaries) {
-                std::cout << "Asteroid collided" << std::endl;
-                it = asteroids.erase(it); 
+                it = asteroids.erase(it);
             } else {
                 ++it;
             }
