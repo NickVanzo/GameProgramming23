@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include "../Constants/Engine.h"
 #include "../Player/PlayerComponentRenderer.h"
+#include "../Player/PlayerProcessEventsComponent.h"
 namespace Asteroids {
     using namespace glm;
     using namespace std;
@@ -45,7 +46,6 @@ namespace Asteroids {
             randY = CUSTOM_WINDOW_HEIGHT + 400;
             randX = rand() % (int) CUSTOM_WINDOW_WIDTH;
             asteroidUpdateComponent->SetDirection(UPPER);
-        } else {
         }
         gameObject->position = glm::vec2(randX,randY);
         gameObject->AddComponent(asteroidRenderComponent);
@@ -58,23 +58,40 @@ namespace Asteroids {
             bool isCollidingWithYBoundaries = ((*it)->position.y == CUSTOM_WINDOW_HEIGHT) || ((*it)->position.y == 0);
 
             if(IsCollidingWithPlayer((*it)->position.x, (*it)->position.y)) {
-                auto components = player_.GetComponents();
-                std::list<std::shared_ptr<Component>>::iterator it = components.begin();
-                std::advance(it, 1); // the render component has index 1
-                std::shared_ptr<Component> renderComponent = *it;
-                std::shared_ptr<Asteroids::PlayerComponentRenderer> playerRenderComponent = std::dynamic_pointer_cast<Asteroids::PlayerComponentRenderer>(renderComponent);
-                if(playerRenderComponent) {
-                    playerRenderComponent->TriggerPlayerDeath();
-                } else {
-                    std::cout << "Cast non riuscito" << std::endl;
-                }
+                HandleCollisionWithPlayer();
             }
             if (isCollidingWithXBoundaries || isCollidingWithYBoundaries) {
                 it = asteroids.erase(it);
             } else {
                 ++it;
             }
-
+        }
+    }
+    void AsteroidSpawner::HandleCollisionWithPlayer() {
+        auto components = player_.GetComponents();
+        DisabledPlayerRender(components);
+        DisabledPlayerMovement(components);
+    }
+    void AsteroidSpawner::DisabledPlayerRender(std::list< std::shared_ptr<Component>>& components) {
+        auto it = components.begin();
+        // the process events component has index 2 by "business logic", an hashmap would be better to store the components
+        std::advance(it, 2);
+        std::shared_ptr<Asteroids::PlayerProcessEventsComponent> playerProcessEventsComponent = std::dynamic_pointer_cast<Asteroids::PlayerProcessEventsComponent>(*it);
+        if(playerProcessEventsComponent) {
+            playerProcessEventsComponent->TriggerPlayerDeath();
+        } else {
+            std::cout << "Cast non riuscito" << std::endl;
+        }
+    }
+    void AsteroidSpawner::DisabledPlayerMovement(std::list< std::shared_ptr<Component>>& components) {
+        auto it = components.begin();
+        // the render component has index 1 by "business logic", an hashmap would be better to store the components
+        std::advance(it, 1);
+        std::shared_ptr<Asteroids::PlayerComponentRenderer> playerRenderComponent = std::dynamic_pointer_cast<Asteroids::PlayerComponentRenderer>(*it);
+        if(playerRenderComponent) {
+            playerRenderComponent->TriggerPlayerDeath();
+        } else {
+            std::cout << "Cast non riuscito" << std::endl;
         }
     }
     bool AsteroidSpawner::IsCollidingWithPlayer(float asteroidPosX, float asteroidPosY) {

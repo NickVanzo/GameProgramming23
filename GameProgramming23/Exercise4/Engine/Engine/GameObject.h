@@ -30,7 +30,7 @@ namespace MyEngine {
 		std::string GetName();
 		void SetName(std::string);
         void Destroy();
-        std::list< std::shared_ptr<Component>> GetComponents();
+        std::list< std::shared_ptr<Component>>& GetComponents();
 
 		// private fields
 	private:

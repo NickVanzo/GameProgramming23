@@ -52,7 +52,7 @@ namespace MyEngine {
 		_components.push_back(p_component);
 	}
 
-    std::list< std::shared_ptr<Component>> GameObject::GetComponents() {
+    std::list< std::shared_ptr<Component>>& GameObject::GetComponents() {
         return _components;
     }
 
