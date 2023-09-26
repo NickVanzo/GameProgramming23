@@ -8,6 +8,7 @@
 #include "../Enums/AsteroidSpawnerPositions.h"
 #include <cstdlib>
 #include "../Constants/Engine.h"
+#include "../Player/PlayerComponentRenderer.h"
 namespace Asteroids {
     using namespace glm;
     using namespace std;
@@ -57,7 +58,16 @@ namespace Asteroids {
             bool isCollidingWithYBoundaries = ((*it)->position.y == CUSTOM_WINDOW_HEIGHT) || ((*it)->position.y == 0);
 
             if(IsCollidingWithPlayer((*it)->position.x, (*it)->position.y)) {
-                std::cout << "Player found!" << std::endl;
+                auto components = player_.GetComponents();
+                std::list<std::shared_ptr<Component>>::iterator it = components.begin();
+                std::advance(it, 1); // the render component has index 1
+                std::shared_ptr<Component> renderComponent = *it;
+                std::shared_ptr<Asteroids::PlayerComponentRenderer> playerRenderComponent = std::dynamic_pointer_cast<Asteroids::PlayerComponentRenderer>(renderComponent);
+                if(playerRenderComponent) {
+                    playerRenderComponent->TriggerPlayerDeath();
+                } else {
+                    std::cout << "Cast non riuscito" << std::endl;
+                }
             }
             if (isCollidingWithXBoundaries || isCollidingWithYBoundaries) {
                 it = asteroids.erase(it);

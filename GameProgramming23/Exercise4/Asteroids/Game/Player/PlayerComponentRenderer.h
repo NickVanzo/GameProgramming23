@@ -8,8 +8,11 @@ namespace Asteroids {
     class PlayerComponentRenderer: public MyEngine::Component {
     public:
         sre::Sprite sprite;
+        sre::Sprite deathSprite;
 
         void Render(sre::SpriteBatch::SpriteBatchBuilder&) override;
+        void TriggerPlayerDeath();
+        void SetDeathSprite(sre::Sprite sprite);
     };
 }
 #endif //SIMPLERENDERENGINEPROJECT_PLAYERCOMPONENTRENDERER_H

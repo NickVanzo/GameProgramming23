@@ -42,6 +42,7 @@ int main() {
     auto playerRenderer = std::make_shared<Asteroids::PlayerComponentRenderer>();
     auto playerProcessEventsComponent = std::make_shared<Asteroids::PlayerProcessEventsComponent>();
     playerRenderer->sprite = engine.GetSpriteFromAtlas("playerShip1_blue.png");
+    playerRenderer->deathSprite = engine.GetSpriteFromAtlas("bang.png");
     gameObject->AddComponent(playerController);
     gameObject->AddComponent(playerRenderer);
     gameObject->AddComponent(playerProcessEventsComponent);
@@ -49,7 +50,6 @@ int main() {
     auto asteroidSpawnerGameObject = engine.CreateGameObject("AsteroidSpawner");
     auto upperAsteroidSpawnerGameObject = engine.CreateGameObject("UpperAsteroidSpawner");
     auto asteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner(Asteroids::ASTEROID_SPAWNER_POS::LOWER, *gameObject));
-//    auto upperAsteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner(Asteroids::ASTEROID_SPAWNER_POS::UPPER, *gameObject));
 
     asteroidSpawnerGameObject->AddComponent(asteroidSpawnerUpdateComponent);
 //    upperAsteroidSpawnerGameObject->AddComponent(upperAsteroidSpawnerUpdateComponent);
