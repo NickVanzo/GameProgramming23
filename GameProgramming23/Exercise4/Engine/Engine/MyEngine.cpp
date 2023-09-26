@@ -19,7 +19,6 @@ namespace MyEngine {
     {
         return WIN_SIZE;
     }
-
     void Engine::Init() {
         // initializes random generator
         std::srand(std::time(nullptr));
@@ -63,7 +62,6 @@ namespace MyEngine {
 
         return ret.get();
     }
-
     std::shared_ptr<sre::SpriteAtlas> Engine::GetAtlas() {
         return atlas;
     }

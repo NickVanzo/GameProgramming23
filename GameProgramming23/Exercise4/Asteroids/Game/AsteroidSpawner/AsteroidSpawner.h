@@ -15,8 +15,11 @@ namespace Asteroids {
     private:
         bool IsCollidingWithPlayer(float, float);
         void HandleCollisionWithPlayer();
+        bool IsCollidingWithLaser(glm::vec2&);
         void DisabledPlayerRender(std::list< std::shared_ptr<Component>>&);
         void DisabledPlayerMovement(std::list< std::shared_ptr<Component>>&);
+        void DestroyAsteroid();
+
         MyEngine::GameObject& player_;
         std::list<MyEngine::GameObject*> asteroids;
         float TIME_TO_SPAWN_ASTEROID = 20;

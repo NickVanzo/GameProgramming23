@@ -59,10 +59,12 @@ namespace Asteroids {
 
             if(IsCollidingWithPlayer((*it)->position.x, (*it)->position.y)) {
                 HandleCollisionWithPlayer();
-            }
-            if (isCollidingWithXBoundaries || isCollidingWithYBoundaries) {
+            } else if(IsCollidingWithLaser((*it)->position)) {
                 it = asteroids.erase(it);
-            } else {
+                std::cout << "Asteroids: " << asteroids.size() << std::endl;
+            } else if(isCollidingWithXBoundaries || isCollidingWithYBoundaries) {
+                it = asteroids.erase(it);
+            } else{
                 ++it;
             }
         }
@@ -101,5 +103,22 @@ namespace Asteroids {
         } else {
             return false;
         }
+    }
+    bool AsteroidSpawner::IsCollidingWithLaser(vec2& asteroidPos) {
+        auto components = player_.GetComponents();
+        auto it = components.begin();
+        std::advance(it, 2);
+        std::shared_ptr<Asteroids::PlayerProcessEventsComponent> playerProcessEventsComponent = std::dynamic_pointer_cast<Asteroids::PlayerProcessEventsComponent>(*it);
+        if(playerProcessEventsComponent) {
+            for(auto laser : playerProcessEventsComponent->GetBullets()) {
+                float distanceBetweenAsteroidAndLaser = pow(asteroidPos.y - laser->position.y, 2) + pow(asteroidPos.x - laser->position.x, 2);
+                if(distanceBetweenAsteroidAndLaser <= pow(asteroidsRadius + laser->radius, 2)) {
+                    return true;
+                }
+            }
+        } else {
+            std::cout << "Cast non riuscito" << std::endl;
+        }
+        return false;
     }
 }

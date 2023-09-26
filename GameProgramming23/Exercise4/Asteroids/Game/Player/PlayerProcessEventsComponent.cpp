@@ -41,11 +41,18 @@ namespace Asteroids {
         bulletRenderer->sprite = engine->GetSpriteFromAtlas("laserBlue01.png");
         bulletUpdate->SetStartingPos(glm::vec2(gm->position.x, gm->position.y));
         bulletUpdate->SetRotation(gm->rotation);
+
         gameObject->rotation = gm->rotation;
         gameObject->AddComponent(bulletRenderer);
         gameObject->AddComponent(bulletUpdate);
+        gameObject->SetRadius(90);
+
+        bullets.push_back(gameObject);
     }
     void PlayerProcessEventsComponent::TriggerPlayerDeath() {
         controlsEnabled = false;
+    }
+    std::list<MyEngine::GameObject*> PlayerProcessEventsComponent::GetBullets() {
+        return bullets;
     }
 }

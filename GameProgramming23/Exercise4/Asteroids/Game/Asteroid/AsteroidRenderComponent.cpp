@@ -8,6 +8,9 @@ namespace Asteroids {
 //        MyEngine::GameObject *parent = GetGameObject();
 
 //    }
+AsteroidRenderComponent::~AsteroidRenderComponent() {
+    std::cout << "In the deconstructor of AsteroidRenderComponent" << std::endl;
+}
     void AsteroidRenderComponent::Render(sre::SpriteBatch::SpriteBatchBuilder & builder) {
         MyEngine::GameObject *parent = GetGameObject();
         sprite.setPosition(parent->position);

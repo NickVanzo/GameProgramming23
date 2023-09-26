@@ -41,7 +41,7 @@ namespace MyEngine {
 		float GetTime() const { return time; }
 
 		GameObject* CreateGameObject(std::string name);
-
+        std::unique_ptr<GameObject> CreateGameObjectUP(std::string name);
 	private:
 		std::shared_ptr<GameObject> _root;
 

@@ -10,7 +10,9 @@ public:
     bool controlsEnabled = true;
     void KeyEvent(SDL_Event&) override;
     void TriggerPlayerDeath();
+    std::list<MyEngine::GameObject*> GetBullets();
 private:
+    std::list<MyEngine::GameObject*> bullets = {};
     void Shoot();
 };
 }
