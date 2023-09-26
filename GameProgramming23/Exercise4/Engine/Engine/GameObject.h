@@ -11,11 +11,11 @@ namespace MyEngine {
 
 	class GameObject {
 		friend class Engine;
-
 		// public API
 	public:
 		glm::vec2 position;
 		float rotation;
+        ~GameObject();
 
 		void Init();
 		void Update(float);
@@ -27,6 +27,7 @@ namespace MyEngine {
 
 		std::string GetName();
 		void SetName(std::string);
+        void Destroy();
 
 		// private fields
 	private:

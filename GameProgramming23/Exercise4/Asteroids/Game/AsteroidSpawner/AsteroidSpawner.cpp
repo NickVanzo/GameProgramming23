@@ -20,6 +20,7 @@ namespace Asteroids {
             SpawnAsteroid();
             timeCounter = TIME_TO_SPAWN_ASTEROID;
         }
+        CheckAsteroidCollisionWithBounderies();
     }
     void AsteroidSpawner::SpawnAsteroid() {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
@@ -29,7 +30,7 @@ namespace Asteroids {
         auto asteroidUpdateComponent = std::shared_ptr<Asteroids::AsteroidUpdateComponent>(new Asteroids::AsteroidUpdateComponent());
 
         asteroidRenderComponent->sprite = engine->GetSpriteFromAtlas("meteorBrown_big1.png");
-        gameObject->rotation = (rand() % 360) - 180;
+        gameObject->rotation = rand() % 360 - 180;
 
         float randX = 0;
         float randY = 0;
@@ -50,5 +51,18 @@ namespace Asteroids {
         gameObject->AddComponent(asteroidRenderComponent);
         gameObject->AddComponent(asteroidUpdateComponent);
         asteroids.push_back(gameObject);
+    }
+    void AsteroidSpawner::CheckAsteroidCollisionWithBounderies() {
+        for (auto it = asteroids.begin(); it != asteroids.end();) {
+            bool isCollidingWithXBoundaries = ((*it)->position.x == CUSTOM_WINDOW_WIDTH) || ((*it)->position.x == 0);
+            bool isCollidingWithYBoundaries = ((*it)->position.y == CUSTOM_WINDOW_HEIGHT) || ((*it)->position.y == 0);
+
+            if (isCollidingWithXBoundaries || isCollidingWithYBoundaries) {
+                std::cout << "Asteroid collided" << std::endl;
+                it = asteroids.erase(it); 
+            } else {
+                ++it;
+            }
+        }
     }
 }

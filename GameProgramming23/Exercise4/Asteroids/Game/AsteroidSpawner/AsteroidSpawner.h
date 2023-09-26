@@ -11,9 +11,10 @@ namespace Asteroids {
         AsteroidSpawner(int);
         void Update(float deltaTime);
         void SpawnAsteroid();
+        void CheckAsteroidCollisionWithBounderies();
     private:
         std::list<MyEngine::GameObject*> asteroids;
-        float TIME_TO_SPAWN_ASTEROID = 2;
+        float TIME_TO_SPAWN_ASTEROID = 20;
         float timeCounter = 0;
         int direction;
     };
