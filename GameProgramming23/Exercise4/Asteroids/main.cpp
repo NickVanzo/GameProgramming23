@@ -9,6 +9,8 @@
 #include "Game/Player/PlayerComponentRenderer.h"
 #include "Game/Player/PlayerProcessEventsComponent.h"
 #include "Game/AsteroidSpawner/AsteroidSpawner.h"
+#include "Game/Enums/AsteroidSpawnerPositions.h"
+#include "Game/Constants/Engine.h"
 
 void InitGame();
 void ProcessEvents(SDL_Event& event);
@@ -16,7 +18,7 @@ void Update(float deltaTime);
 void Render();
 
 MyEngine::Engine engine;
-glm::vec2 window_size = glm::vec2(800, 600);
+glm::vec2 window_size = glm::vec2(CUSTOM_WINDOW_WIDTH, CUSTOM_WINDOW_HEIGHT);
 sre::SDLRenderer renderer;
 sre::Camera camera;
 std::shared_ptr<sre::SpriteAtlas> atlas;
@@ -44,8 +46,8 @@ int main() {
 
     auto asteroidSpawnerGameObject = engine.CreateGameObject("AsteroidSpawner");
     auto upperAsteroidSpawnerGameObject = engine.CreateGameObject("UpperAsteroidSpawner");
-    auto asteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner(0));
-    auto upperAsteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner(1));
+    auto asteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner(Asteroids::ASTEROID_SPAWNER_POS::LOWER));
+    auto upperAsteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner(Asteroids::ASTEROID_SPAWNER_POS::UPPER));
 
     asteroidSpawnerGameObject->AddComponent(asteroidSpawnerUpdateComponent);
     upperAsteroidSpawnerGameObject->AddComponent(upperAsteroidSpawnerUpdateComponent);

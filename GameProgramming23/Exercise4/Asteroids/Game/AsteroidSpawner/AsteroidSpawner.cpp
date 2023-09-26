@@ -5,8 +5,9 @@
 #include "../Asteroid/AsteroidRenderComponent.h"
 #include "../Asteroid/AsteroidUpdateComponent.h"
 #include "MyEngine.h"
+#include "../Enums/AsteroidSpawnerPositions.h"
 #include <cstdlib>
-
+#include "../Constants/Engine.h"
 namespace Asteroids {
     using namespace glm;
     using namespace std;
@@ -30,20 +31,22 @@ namespace Asteroids {
         asteroidRenderComponent->sprite = engine->GetSpriteFromAtlas("meteorBrown_big1.png");
         gameObject->rotation = (rand() % 360) - 180;
 
-        if(direction == 0) {
-            //spawn only along the lower part of the screen
-            float randX = rand() % 1200;
-            float randY = 10;
-            gameObject->position = glm::vec2(randX,randY);
-            asteroidUpdateComponent->SetDirection(0);
-        } else {
-            //spawn only along the upper part of the screen
-            float randY = 900;
-            float randX = rand() % 1200;
-            gameObject->position = glm::vec2(randX,randY);
-            asteroidUpdateComponent->SetDirection(1);
-        }
+        float randX = 0;
+        float randY = 0;
 
+        if(direction == LOWER) {
+            //spawn only along the lower part of the screen
+            randX = rand() % (int) CUSTOM_WINDOW_WIDTH;
+            randY = 10;
+            asteroidUpdateComponent->SetDirection(LOWER);
+        } else if(direction == UPPER) {
+            //spawn only along the upper part of the screen
+            randY = CUSTOM_WINDOW_HEIGHT + 400;
+            randX = rand() % (int) CUSTOM_WINDOW_WIDTH;
+            asteroidUpdateComponent->SetDirection(UPPER);
+        } else {
+        }
+        gameObject->position = glm::vec2(randX,randY);
         gameObject->AddComponent(asteroidRenderComponent);
         gameObject->AddComponent(asteroidUpdateComponent);
         asteroids.push_back(gameObject);

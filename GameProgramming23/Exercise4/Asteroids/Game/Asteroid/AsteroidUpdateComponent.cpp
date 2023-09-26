@@ -3,6 +3,7 @@
 //
 
 #include "AsteroidUpdateComponent.h"
+#include "../Enums/AsteroidSpawnerPositions.h"
 #pragma once
 namespace Asteroids {
     using namespace glm;
@@ -12,11 +13,11 @@ namespace Asteroids {
     void AsteroidUpdateComponent::Update(float deltaTime) {
         MyEngine::GameObject* parent = GetGameObject();
         vec2 velocity = vec2(rand() % 5 + 1,rand() % 5 + 1);
-        if(direction == 0) {
+        if(direction == LOWER) {
             parent->position += velocity;
-        } else {
+        } else if(direction == UPPER) {
             parent->position -= velocity;
-        }
+        } else {}
         parent->rotation += + 1 * speed;
     }
 }
