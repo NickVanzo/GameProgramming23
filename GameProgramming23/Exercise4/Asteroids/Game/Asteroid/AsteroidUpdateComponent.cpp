@@ -12,7 +12,7 @@ namespace Asteroids {
     }
     void AsteroidUpdateComponent::Update(float deltaTime) {
         MyEngine::GameObject* parent = GetGameObject();
-        vec2 velocity = vec2(rand() % 5 + 1,rand() % 5 + 1);
+
         if(direction == LOWER) {
             parent->position += velocity;
         } else if(direction == UPPER) {
