@@ -13,9 +13,9 @@ namespace Asteroids {
     void AsteroidUpdateComponent::Update(float deltaTime) {
         MyEngine::GameObject* parent = GetGameObject();
         if(direction == LOWER) {
-            parent->position += velocity;
+//            parent->position += velocity;
         } else if(direction == UPPER) {
-            parent->position -= velocity;
+//            parent->position -= velocity;
         } else {}
         parent->rotation += + 1 * speed;
     }

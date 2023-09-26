@@ -11,9 +11,8 @@
 namespace Asteroids {
     using namespace glm;
     using namespace std;
-    AsteroidSpawner::AsteroidSpawner(int direction) {
-        this->direction = direction;
-    }
+    AsteroidSpawner::AsteroidSpawner(int direction, MyEngine::GameObject& player):
+    direction(direction), player_(player){}
     void AsteroidSpawner::Update(float deltaTime) {
         timeCounter -= deltaTime;
         if(timeCounter < 0) {
@@ -57,11 +56,23 @@ namespace Asteroids {
             bool isCollidingWithXBoundaries = ((*it)->position.x == CUSTOM_WINDOW_WIDTH) || ((*it)->position.x == 0);
             bool isCollidingWithYBoundaries = ((*it)->position.y == CUSTOM_WINDOW_HEIGHT) || ((*it)->position.y == 0);
 
+            if(IsCollidingWithPlayer((*it)->position.x, (*it)->position.y)) {
+                std::cout << "Player found!" << std::endl;
+            }
             if (isCollidingWithXBoundaries || isCollidingWithYBoundaries) {
                 it = asteroids.erase(it);
             } else {
                 ++it;
             }
+
+        }
+    }
+    bool AsteroidSpawner::IsCollidingWithPlayer(float asteroidPosX, float asteroidPosY) {
+        if(&player_ != nullptr) {
+            float distanceBetweenPlayerAndAsteroid = pow(asteroidPosY - player_.position.y, 2) + pow(asteroidPosX - player_.position.x,2);
+            return distanceBetweenPlayerAndAsteroid <= pow(asteroidsRadius + player_.radius, 2);
+        } else {
+            return false;
         }
     }
 }

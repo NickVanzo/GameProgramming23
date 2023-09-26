@@ -15,12 +15,14 @@ namespace MyEngine {
 	public:
 		glm::vec2 position;
 		float rotation;
+        float radius = 0;
         ~GameObject();
 
 		void Init();
 		void Update(float);
 		void Render(sre::SpriteBatch::SpriteBatchBuilder&);
 		void KeyEvent(SDL_Event&);
+        void SetRadius(float);
 
 		void AddChild(std::shared_ptr<GameObject>);
 		void AddComponent(std::shared_ptr<Component>);

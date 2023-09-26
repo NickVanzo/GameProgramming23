@@ -11,6 +11,7 @@
 #include "Game/AsteroidSpawner/AsteroidSpawner.h"
 #include "Game/Enums/AsteroidSpawnerPositions.h"
 #include "Game/Constants/Engine.h"
+#include "Game/Constants/Player.h"
 
 void InitGame();
 void ProcessEvents(SDL_Event& event);
@@ -35,6 +36,7 @@ int main() {
     engine.Init();
 
     auto gameObject = engine.CreateGameObject("Player");
+    gameObject->SetRadius(Asteroids::PLAYER_RADIUS);
 
     auto playerController = std::shared_ptr<Asteroids::PlayerUpdateComponent>(new Asteroids::PlayerUpdateComponent());
     auto playerRenderer = std::make_shared<Asteroids::PlayerComponentRenderer>();
@@ -46,11 +48,11 @@ int main() {
 
     auto asteroidSpawnerGameObject = engine.CreateGameObject("AsteroidSpawner");
     auto upperAsteroidSpawnerGameObject = engine.CreateGameObject("UpperAsteroidSpawner");
-    auto asteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner(Asteroids::ASTEROID_SPAWNER_POS::LOWER));
-    auto upperAsteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner(Asteroids::ASTEROID_SPAWNER_POS::UPPER));
+    auto asteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner(Asteroids::ASTEROID_SPAWNER_POS::LOWER, *gameObject));
+//    auto upperAsteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner(Asteroids::ASTEROID_SPAWNER_POS::UPPER, *gameObject));
 
     asteroidSpawnerGameObject->AddComponent(asteroidSpawnerUpdateComponent);
-    upperAsteroidSpawnerGameObject->AddComponent(upperAsteroidSpawnerUpdateComponent);
+//    upperAsteroidSpawnerGameObject->AddComponent(upperAsteroidSpawnerUpdateComponent);
     renderer.startEventLoop();
 }
 

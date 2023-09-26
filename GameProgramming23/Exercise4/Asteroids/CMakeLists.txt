@@ -16,6 +16,7 @@ add_executable(Asteroids ${Asteroids-src}
         Game/Enums/AsteroidSpawnerPositions.h
         Game/Constants/Engine.h
         Game/Constants/Engine.h
+        Game/Constants/Player.h
 )
 
 target_include_directories(Asteroids PUBLIC ${MYENGINE_INCLUDE_DIR})

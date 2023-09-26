@@ -60,4 +60,8 @@ namespace MyEngine {
 		_name = p_name;
 	}
 
+    void GameObject::SetRadius(float r) {
+        this->radius = r;
+    }
+
 }
