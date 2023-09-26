@@ -7,6 +7,9 @@
 #include "Logger.h"
 
 namespace MyEngine {
+    GameObject::~GameObject() {
+        std::cout << "Destroyed" << std::endl;
+    }
 	// public API
 	void GameObject::Init() {
 		for (auto& component : _components)
@@ -49,6 +52,10 @@ namespace MyEngine {
 		_components.push_back(p_component);
 	}
 
+    std::list< std::shared_ptr<Component>>& GameObject::GetComponents() {
+        return _components;
+    }
+
 	std::string GameObject::GetName() {
 		return _name;
 	}
@@ -56,4 +63,9 @@ namespace MyEngine {
 	void GameObject::SetName(std::string p_name) {
 		_name = p_name;
 	}
+
+    void GameObject::SetRadius(float r) {
+        this->radius = r;
+    }
+
 }

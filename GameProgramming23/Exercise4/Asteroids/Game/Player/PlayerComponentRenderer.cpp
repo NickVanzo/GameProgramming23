@@ -9,4 +9,10 @@ namespace Asteroids {
         sprite.setRotation(parent->rotation);
         builder.addSprite(sprite);
     }
+    void PlayerComponentRenderer::TriggerPlayerDeath() {
+        sprite = deathSprite;
+    }
+    void PlayerComponentRenderer::SetDeathSprite(sre::Sprite sprite) {
+        deathSprite = sprite;
+    }
 }

@@ -7,10 +7,12 @@
 namespace Asteroids {
 class PlayerProcessEventsComponent: public MyEngine::Component {
 public:
-        void KeyEvent(SDL_Event&) override;
+    bool controlsEnabled = true;
+    void KeyEvent(SDL_Event&) override;
+    void TriggerPlayerDeath();
 private:
     void Shoot();
-    };
+};
 }
 
 
