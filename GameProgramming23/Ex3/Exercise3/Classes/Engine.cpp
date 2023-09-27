@@ -1,4 +1,5 @@
 #include "../Headers/Engine.h"
+
 Engine* Engine::engineInstance_{nullptr};
 std::mutex Engine::mutex_;
 Engine::Engine() {}
@@ -60,12 +61,12 @@ void Engine::Render()
     spriteBatchBuilder.addSprite(snakeSprite);
     auto spriteBatch = spriteBatchBuilder.build();
     renderPass.draw(spriteBatch);
-    NotifyRender();
+    NotifyRender(spriteBatchBuilder);
 }
-void Engine::NotifyRender() {
+void Engine::NotifyRender(sre::SpriteBatch::SpriteBatchBuilder& re) {
     auto iterator = listObserver.begin();
     while(iterator != listObserver.end()) {
-        (*iterator)->Render();
+        (*iterator)->Render(re);
         ++iterator;
     }
 }
