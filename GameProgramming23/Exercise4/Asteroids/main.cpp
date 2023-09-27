@@ -42,21 +42,17 @@ int main() {
   auto playerProcessEventsComponent = std::make_shared<Asteroids::PlayerProcessEventsComponent>(gameObject);
   playerRenderer->sprite = atlas->get("playerShip1_blue.png");
   playerRenderer->deathSprite = atlas->get("bang.png");
-//
+
     gameObject->AddComponent(playerController);
     gameObject->AddComponent(playerRenderer);
     gameObject->AddComponent(playerProcessEventsComponent);
 
-//    MyEngine::gameObjects.push_back(gameObject);
-
-
     engine.Init();
-//
-//    std::cout << "" << gameObject.use_count() << std::endl;
-//    engine.RemoveObject(gameObject);
-//    MyEngine::gameObjects.erase(MyEngine::gameObjects.begin());
-//
-//    std::cout << "" << gameObject.use_count() << std::endl;
+
+    engine.RemoveObject(gameObject);
+    gameObject = nullptr;
+    
+    std::cout << "Game objects references: " << gameObject.use_count() << std::endl;
 
     renderer.startEventLoop();
 }

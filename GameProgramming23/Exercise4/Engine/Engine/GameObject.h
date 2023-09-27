@@ -37,7 +37,6 @@ namespace MyEngine {
 		// private fields
 	private:
 		std::weak_ptr<GameObject> _parent;
-		std::weak_ptr<GameObject> _self;
 		std::list<std::shared_ptr<GameObject>> _children = {};
 		std::list< std::shared_ptr<Component>> _components = {};
 		std::string _name;

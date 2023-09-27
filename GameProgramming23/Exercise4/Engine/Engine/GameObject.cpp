@@ -37,6 +37,13 @@ namespace MyEngine {
 		_components.push_back(p_component);
 	}
 
+    void GameObject::RemoveComponents() {
+        for(auto c : _components) {
+            c->_gameObject = nullptr;
+        }
+        _components.clear();
+    }
+
     std::list< std::shared_ptr<Component>>& GameObject::GetComponents() {
         return _components;
     }
