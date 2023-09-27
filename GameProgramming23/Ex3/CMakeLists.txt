@@ -1,6 +1,8 @@
 file(GLOB_RECURSE Sources "*.h" "*.cpp") # will get all the .cpp and all the .h files in directory and subdirectories
 add_executable(Ex3 ${Sources}
-		Exercise3/Headers/Asteroids.h)
+		Exercise3/Headers/Asteroids.h
+        Exercise3/Classes/GameManager.cpp
+		Exercise3/Headers/GameManager.h)
 
 target_link_libraries(Ex3 ${all_libs})
 
