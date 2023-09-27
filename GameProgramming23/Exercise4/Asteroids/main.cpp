@@ -49,17 +49,6 @@ int main() {
 
     engine.Init();
 
-    MyEngine::gameObjects.push_back(gameObject);
-    std::cout << MyEngine::gameObjects.size() << std::endl;
-    MyEngine::gameObjects.erase(MyEngine::gameObjects.begin());
-    std::cout << MyEngine::gameObjects.size() << std::endl;
-//
-//    auto asteroidSpawnerGameObject = engine.CreateGameObject("AsteroidSpawner");
-//    auto upperAsteroidSpawnerGameObject = engine.CreateGameObject("UpperAsteroidSpawner");
-//    auto asteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner(Asteroids::ASTEROID_SPAWNER_POS::LOWER, *gameObject));
-
-//    asteroidSpawnerGameObject->AddComponent(asteroidSpawnerUpdateComponent);
-//    upperAsteroidSpawnerGameObject->AddComponent(upperAsteroidSpawnerUpdateComponent);
     renderer.startEventLoop();
 }
 

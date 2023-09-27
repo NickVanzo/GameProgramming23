@@ -9,7 +9,6 @@
 namespace MyEngine {
     GameObject::~GameObject() {
         std::cout << "Destroyed" << std::endl;
-        _components.clear();
     }
 	// public API
 	void GameObject::Init() {
