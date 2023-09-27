@@ -13,8 +13,10 @@
 namespace Asteroids {
     using namespace glm;
     using namespace std;
-    AsteroidSpawner::AsteroidSpawner(int direction, MyEngine::GameObject& player):
-    direction(direction), player_(player){}
+    AsteroidSpawner::AsteroidSpawner(int direction, std::shared_ptr<MyEngine::GameObject> player, std::shared_ptr<MyEngine::GameObject> parent):
+    direction(direction), player_(player){
+        _gameObject = parent;
+    }
     void AsteroidSpawner::Update(float deltaTime) {
         timeCounter -= deltaTime;
         if(timeCounter < 0) {
@@ -27,10 +29,10 @@ namespace Asteroids {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
         auto gameObject = engine->CreateGameObject("asteroid");
 
-        auto asteroidRenderComponent = std::shared_ptr<Asteroids::AsteroidRenderComponent>(new Asteroids::AsteroidRenderComponent());
-        auto asteroidUpdateComponent = std::shared_ptr<Asteroids::AsteroidUpdateComponent>(new Asteroids::AsteroidUpdateComponent());
+        auto asteroidRenderComponent = std::make_shared<Asteroids::AsteroidRenderComponent>(gameObject);
+        auto asteroidUpdateComponent = std::make_shared<Asteroids::AsteroidUpdateComponent>(gameObject);
 
-        asteroidRenderComponent->sprite = engine->GetSpriteFromAtlas("meteorBrown_big1.png");
+        asteroidRenderComponent->sprite = engine->atlas->get("meteorBrown_big1.png");
         gameObject->rotation = rand() % 360 - 180;
 
         float randX = 0;
@@ -50,25 +52,33 @@ namespace Asteroids {
         gameObject->position = glm::vec2(randX,randY);
         gameObject->AddComponent(asteroidRenderComponent);
         gameObject->AddComponent(asteroidUpdateComponent);
-//        asteroids.push_back(gameObject);
     }
     void AsteroidSpawner::CheckAsteroidCollisionWithBounderies() {
-        for (auto it = asteroids.begin(); it != asteroids.end();) {
-            bool isCollidingWithXBoundaries = ((*it)->position.x == CUSTOM_WINDOW_WIDTH) || ((*it)->position.x == 0);
-            bool isCollidingWithYBoundaries = ((*it)->position.y == CUSTOM_WINDOW_HEIGHT) || ((*it)->position.y == 0);
+        MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
+        std::vector<std::shared_ptr<MyEngine::GameObject>> elemntsToRemove = {};
+        for (auto it = MyEngine::gameObjects.begin(); it != MyEngine::gameObjects.end();) {
+            if((*it)->GetName() == "asteroid") {
+                bool isCollidingWithXBoundaries =  ((*it)->position.x == engine->GetScreenSize().x) || ((*it)->position.x == 0);
+                bool isCollidingWithYBoundaries = ((*it)->position.y ==  engine->GetScreenSize().y) || ((*it)->position.y == 0);
 
-            if(IsCollidingWithPlayer((*it)->position.x, (*it)->position.y)) {
-                HandleCollisionWithPlayer();
+                if(IsCollidingWithPlayer((*it)->position.x, (*it)->position.y)) {
+//                HandleCollisionWithPlayer();
+                }
+                if (isCollidingWithXBoundaries || isCollidingWithYBoundaries) {
+                    std::cout << "Found" << std::endl;
+                    elemntsToRemove.push_back(*it);
+                    ++it;
+                } else {
+                    ++it;
+                }
             }
-            if (isCollidingWithXBoundaries || isCollidingWithYBoundaries) {
-                it = asteroids.erase(it);
-            } else {
-                ++it;
-            }
+        }
+        for(auto e : elemntsToRemove) {
+           std::cout << e->GetName() << std::endl;
         }
     }
     void AsteroidSpawner::HandleCollisionWithPlayer() {
-        auto components = player_.GetComponents();
+        auto components = player_->GetComponents();
         DisabledPlayerRender(components);
         DisabledPlayerMovement(components);
     }
@@ -96,8 +106,8 @@ namespace Asteroids {
     }
     bool AsteroidSpawner::IsCollidingWithPlayer(float asteroidPosX, float asteroidPosY) {
         if(&player_ != nullptr) {
-            float distanceBetweenPlayerAndAsteroid = pow(asteroidPosY - player_.position.y, 2) + pow(asteroidPosX - player_.position.x,2);
-            return distanceBetweenPlayerAndAsteroid <= pow(asteroidsRadius + player_.radius, 2);
+            float distanceBetweenPlayerAndAsteroid = pow(asteroidPosY - player_->position.y, 2) + pow(asteroidPosX - player_->position.x,2);
+            return distanceBetweenPlayerAndAsteroid <= pow(asteroidsRadius + player_->radius, 2);
         } else {
             return false;
         }

@@ -2,22 +2,7 @@
 
 file(GLOB_RECURSE Asteroids-src "*.h" "*.cpp")
 
-add_executable(Asteroids ${Asteroids-src}
-        Game/Laser/BulletComponentRender.cpp
-        Game/Laser/BulletComponentRender.h
-        Game/Laser/BulletComponentUpdate.cpp
-        Game/Laser/BulletComponentUpdate.h
-        Game/AsteroidSpawner/AsteroidSpawner.cpp
-        Game/AsteroidSpawner/AsteroidSpawner.h
-        Game/Asteroid/AsteroidRenderComponent.cpp
-        Game/Asteroid/AsteroidRenderComponent.h
-        Game/Asteroid/AsteroidUpdateComponent.cpp
-        Game/Asteroid/AsteroidUpdateComponent.h
-        Game/Enums/AsteroidSpawnerPositions.h
-        Game/Constants/Engine.h
-        Game/Constants/Engine.h
-        Game/Constants/Player.h
-)
+add_executable(Asteroids ${Asteroids-src})
 
 target_include_directories(Asteroids PUBLIC ${MYENGINE_INCLUDE_DIR})
 

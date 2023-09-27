@@ -63,15 +63,9 @@ namespace MyEngine {
 
     std::shared_ptr<GameObject> Engine::CreateGameObject(std::string name) {
         auto ret = std::make_shared<GameObject>();
+        ret->SetName(name);
         gameObjects.push_back(ret);
+        std::cout << "Added game object to gameObjects with name "<< name <<"! Now the vector has length: " << gameObjects.size() << std::endl;
         return ret;
-    }
-
-    std::shared_ptr<sre::SpriteAtlas> Engine::GetAtlas() {
-        return atlas;
-    }
-
-    sre::Sprite Engine::GetSpriteFromAtlas(std::basic_string<char> name) {
-        return atlas->get(name);
     }
 }

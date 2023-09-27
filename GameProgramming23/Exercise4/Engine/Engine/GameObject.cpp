@@ -9,7 +9,7 @@
 namespace MyEngine {
     GameObject::~GameObject() {
         std::cout << "Destroyed" << std::endl;
-        _components.clear();
+        RemoveComponents();
     }
 
 	void GameObject::Init() {

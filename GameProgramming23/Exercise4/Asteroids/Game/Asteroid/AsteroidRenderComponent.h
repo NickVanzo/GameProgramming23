@@ -6,7 +6,7 @@
 namespace  Asteroids {
     class AsteroidRenderComponent: public MyEngine::Component {
     public:
-//        AsteroidRenderComponent();
+        AsteroidRenderComponent(std::shared_ptr<MyEngine::GameObject>);
         sre::Sprite sprite;
         void Render(sre::SpriteBatch::SpriteBatchBuilder&) override;
     };
