@@ -6,7 +6,7 @@
 
 namespace MyEngine {
     Engine* Engine::_instance = nullptr;
-
+    
     Engine::Engine() {
         assert(_instance == nullptr && " Only one instance of MyEngine::Engine allowed!");
         _instance = this;

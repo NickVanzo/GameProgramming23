@@ -12,8 +12,10 @@
 class GameObject;
 
 namespace MyEngine {
+    static std::vector<GameObject*> gameObjects = {};
 	class Engine {
 	private:
+
 		static Engine* _instance;
 	public:
 		static Engine* GetInstance() { return _instance; }

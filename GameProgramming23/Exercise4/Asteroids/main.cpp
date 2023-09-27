@@ -13,7 +13,6 @@
 #include "Game/Constants/Engine.h"
 #include "Game/Constants/Player.h"
 
-void InitGame();
 void ProcessEvents(SDL_Event& event);
 void Update(float deltaTime);
 void Render();
@@ -38,20 +37,26 @@ int main() {
     auto gameObject = engine.CreateGameObject("Player");
     gameObject->SetRadius(Asteroids::PLAYER_RADIUS);
 
-    auto playerController = std::shared_ptr<Asteroids::PlayerUpdateComponent>(new Asteroids::PlayerUpdateComponent());
-    auto playerRenderer = std::make_shared<Asteroids::PlayerComponentRenderer>();
-    auto playerProcessEventsComponent = std::make_shared<Asteroids::PlayerProcessEventsComponent>();
-    playerRenderer->sprite = engine.GetSpriteFromAtlas("playerShip1_blue.png");
-    playerRenderer->deathSprite = engine.GetSpriteFromAtlas("bang.png");
+  auto playerController = std::shared_ptr<Asteroids::PlayerUpdateComponent>(new Asteroids::PlayerUpdateComponent());
+  auto playerRenderer = std::make_shared<Asteroids::PlayerComponentRenderer>();
+  auto playerProcessEventsComponent = std::make_shared<Asteroids::PlayerProcessEventsComponent>();
+  playerRenderer->sprite = engine.GetSpriteFromAtlas("playerShip1_blue.png");
+  playerRenderer->deathSprite = engine.GetSpriteFromAtlas("bang.png");
+
     gameObject->AddComponent(playerController);
     gameObject->AddComponent(playerRenderer);
     gameObject->AddComponent(playerProcessEventsComponent);
 
-    auto asteroidSpawnerGameObject = engine.CreateGameObject("AsteroidSpawner");
-    auto upperAsteroidSpawnerGameObject = engine.CreateGameObject("UpperAsteroidSpawner");
-    auto asteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner(Asteroids::ASTEROID_SPAWNER_POS::LOWER, *gameObject));
+    MyEngine::gameObjects.push_back(gameObject);
+    std::cout << MyEngine::gameObjects.size() << std::endl;
+    MyEngine::gameObjects.erase(MyEngine::gameObjects.begin());
+    std::cout << MyEngine::gameObjects.size() << std::endl;
+//
+//    auto asteroidSpawnerGameObject = engine.CreateGameObject("AsteroidSpawner");
+//    auto upperAsteroidSpawnerGameObject = engine.CreateGameObject("UpperAsteroidSpawner");
+//    auto asteroidSpawnerUpdateComponent = std::shared_ptr<Asteroids::AsteroidSpawner>(new Asteroids::AsteroidSpawner(Asteroids::ASTEROID_SPAWNER_POS::LOWER, *gameObject));
 
-    asteroidSpawnerGameObject->AddComponent(asteroidSpawnerUpdateComponent);
+//    asteroidSpawnerGameObject->AddComponent(asteroidSpawnerUpdateComponent);
 //    upperAsteroidSpawnerGameObject->AddComponent(upperAsteroidSpawnerUpdateComponent);
     renderer.startEventLoop();
 }
