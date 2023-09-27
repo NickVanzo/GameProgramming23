@@ -5,8 +5,9 @@
 int main() {
     Engine* engine = Engine::GetInstance();
     std::shared_ptr<Asteroids::GameManager> gm = std::shared_ptr<Asteroids::GameManager>();
-    gm->StartGame();
     engine->Init();
+//    gm->StartGame();
+
     return 0;
 }
 

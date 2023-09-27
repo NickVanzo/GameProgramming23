@@ -7,9 +7,9 @@ add_executable(Ex3 ${Sources}
 target_link_libraries(Ex3 ${all_libs})
 
 # Copy project data to output path
-file(COPY data DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-file(COPY data DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
-file(COPY data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY Exercise3/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+file(COPY Exercise3/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+file(COPY Exercise3/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 
 IF (WIN32)

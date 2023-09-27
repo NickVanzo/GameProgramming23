@@ -7,7 +7,7 @@ namespace Asteroids {
     class Player: public GameObject
     {
     public:
-        Player();
+        Player(sre::Sprite);
         ~Player();
         void Init();
         void ProcessEvents(SDL_Event &event);
@@ -16,5 +16,6 @@ namespace Asteroids {
         void RemoveMeFromObserverList();
     private:
         std::shared_ptr<Engine> engine_;
+        sre::Sprite sprite_;
     };
 }

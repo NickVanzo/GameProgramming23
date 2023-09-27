@@ -8,10 +8,8 @@ void Engine::Init()
     renderer.setWindowSize(window_size);
     renderer.init();
     camera.setWindowCoordinates();
-    atlas = sre::SpriteAtlas::create("data/snake.json", "data/snake.png");
-    snakeSprite = atlas->get("snake-body.png");
-    snakeSprite.setPosition(initial_position_snake);
-    sprite = atlas->get("berry.png");
+
+    atlas = sre::SpriteAtlas::create("data/asteroids_sprites.json", "data/asteroids_sprites.png");
 
     renderer.frameUpdate = [this](float delta_time) {
         Update(delta_time);
@@ -57,8 +55,6 @@ void Engine::Render()
     sre::SpriteBatch::SpriteBatchBuilder spriteBatchBuilder
             = sre::SpriteBatch::create();
     // send spriteBatchBuilder to your game elements, so that they can add their sprites for rendering
-    spriteBatchBuilder.addSprite(sprite);
-    spriteBatchBuilder.addSprite(snakeSprite);
     auto spriteBatch = spriteBatchBuilder.build();
     renderPass.draw(spriteBatch);
     NotifyRender(spriteBatchBuilder);

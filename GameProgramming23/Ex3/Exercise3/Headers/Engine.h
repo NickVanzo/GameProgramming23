@@ -20,10 +20,7 @@ public:
     sre::SDLRenderer renderer;
     sre::Camera camera;
     std::shared_ptr<sre::SpriteAtlas> atlas;
-    sre::Sprite sprite;
-    sre::Sprite snakeSprite;
     glm::vec2 window_size = glm::vec2(800, 600);
-    glm::vec2 initial_position_snake = glm::vec2(400, 400);
 
     void Init();
     void ProcessEvents(SDL_Event &event);

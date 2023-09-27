@@ -9,10 +9,16 @@
 namespace Asteroids {
     using namespace std;
     void GameManager::StartGame() {
+        Engine* engine = Engine::GetInstance();
         cout << "Objects: " << gameObjects.size() << endl;
-        shared_ptr<Asteroids::Player> p = make_shared<Asteroids::Player>();
-        Asteroids::gameObjects.push_back(p);
+        sre::Sprite sprite = engine->atlas->get("playerShip1_blue.png");
+        cout << "SPRITE FOUND" << endl;
+        gameObjects.push_back(
+                make_shared<Player>(
+                        sprite
+                ));
+
         cout << "Objects: " << Asteroids::gameObjects.size() << endl;
-        Asteroids::gameObjects.erase(Asteroids::gameObjects.begin());
+        gameObjects.erase(Asteroids::gameObjects.begin());
     }
 }
