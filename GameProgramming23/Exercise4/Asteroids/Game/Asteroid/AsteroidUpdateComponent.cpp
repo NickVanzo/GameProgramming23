@@ -11,7 +11,7 @@ namespace Asteroids {
         this->direction = direction;
     }
     void AsteroidUpdateComponent::Update(float deltaTime) {
-        MyEngine::GameObject* parent = GetGameObject();
+        std::shared_ptr<MyEngine::GameObject> parent = GetGameObject();
         if(direction == LOWER) {
 //            parent->position += velocity;
         } else if(direction == UPPER) {

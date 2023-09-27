@@ -11,7 +11,7 @@ namespace Asteroids {
         MoveLaser();
     }
     void BulletComponentUpdate::MoveLaser() {
-        MyEngine::GameObject* parent = GetGameObject();
+        std::shared_ptr<MyEngine::GameObject> parent = GetGameObject();
         if(parent->position.x == 0 && parent->position.y == 0) {
             parent->position = startingPos_;
         }

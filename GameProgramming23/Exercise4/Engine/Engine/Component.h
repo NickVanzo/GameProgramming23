@@ -19,14 +19,11 @@ namespace MyEngine {
 		virtual void Update(float) {};
 		virtual void Render(sre::SpriteBatch::SpriteBatchBuilder&) {};
 		virtual void KeyEvent(SDL_Event&) {};
-
+        std::shared_ptr<GameObject> _gameObject;
 		// interface used by gameplay components
 	protected:
-		GameObject* GetGameObject();
-
+		std::shared_ptr<GameObject> GetGameObject();
 	private:
-		std::weak_ptr<GameObject> _gameObject;
-
 		void SetGameObject(std::weak_ptr<GameObject>);
 	};
 }

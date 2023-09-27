@@ -37,17 +37,26 @@ int main() {
     auto gameObject = engine.CreateGameObject("Player");
     gameObject->SetRadius(Asteroids::PLAYER_RADIUS);
 
-  auto playerController = std::shared_ptr<Asteroids::PlayerUpdateComponent>(new Asteroids::PlayerUpdateComponent());
-  auto playerRenderer = std::make_shared<Asteroids::PlayerComponentRenderer>();
-  auto playerProcessEventsComponent = std::make_shared<Asteroids::PlayerProcessEventsComponent>();
+  auto playerController = std::shared_ptr<Asteroids::PlayerUpdateComponent>(new Asteroids::PlayerUpdateComponent(gameObject));
+  auto playerRenderer = std::make_shared<Asteroids::PlayerComponentRenderer>(gameObject);
+  auto playerProcessEventsComponent = std::make_shared<Asteroids::PlayerProcessEventsComponent>(gameObject);
   playerRenderer->sprite = atlas->get("playerShip1_blue.png");
   playerRenderer->deathSprite = atlas->get("bang.png");
-
+//
     gameObject->AddComponent(playerController);
     gameObject->AddComponent(playerRenderer);
     gameObject->AddComponent(playerProcessEventsComponent);
 
+//    MyEngine::gameObjects.push_back(gameObject);
+
+
     engine.Init();
+//
+//    std::cout << "" << gameObject.use_count() << std::endl;
+//    engine.RemoveObject(gameObject);
+//    MyEngine::gameObjects.erase(MyEngine::gameObjects.begin());
+//
+//    std::cout << "" << gameObject.use_count() << std::endl;
 
     renderer.startEventLoop();
 }

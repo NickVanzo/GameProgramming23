@@ -38,7 +38,6 @@ int main() {
 	componentRenderer->sprite = atlas->get("berry.png");
 
 	engine.Init();
-
 	renderer.startEventLoop();
 }
 

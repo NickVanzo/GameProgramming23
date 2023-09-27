@@ -12,7 +12,7 @@
 class GameObject;
 
 namespace MyEngine {
-    static std::vector<GameObject*> gameObjects = {};
+    static std::vector<std::shared_ptr<GameObject>> gameObjects = {};
 	class Engine {
 	private:
 
@@ -42,7 +42,8 @@ namespace MyEngine {
 		int GetFrame() const { return frame; }
 		float GetTime() const { return time; }
 
-		GameObject* CreateGameObject(std::string name);
+		std::shared_ptr<GameObject> CreateGameObject(std::string name);
+        void RemoveObject(std::shared_ptr<GameObject>);
 
 	private:
 		std::shared_ptr<GameObject> _root;

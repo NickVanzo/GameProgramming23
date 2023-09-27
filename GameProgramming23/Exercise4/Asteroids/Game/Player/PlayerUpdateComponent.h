@@ -8,7 +8,7 @@
 namespace Asteroids {
     class PlayerUpdateComponent: public MyEngine::Component {
     public:
-
+        PlayerUpdateComponent(std::shared_ptr<MyEngine::GameObject>);
         const glm::vec2 movDirection = glm::vec2(1,0);
         void Init() override;
         void Update(float) override;

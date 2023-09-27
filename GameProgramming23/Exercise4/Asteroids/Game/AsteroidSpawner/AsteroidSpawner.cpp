@@ -50,7 +50,7 @@ namespace Asteroids {
         gameObject->position = glm::vec2(randX,randY);
         gameObject->AddComponent(asteroidRenderComponent);
         gameObject->AddComponent(asteroidUpdateComponent);
-        asteroids.push_back(gameObject);
+//        asteroids.push_back(gameObject);
     }
     void AsteroidSpawner::CheckAsteroidCollisionWithBounderies() {
         for (auto it = asteroids.begin(); it != asteroids.end();) {
