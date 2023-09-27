@@ -7,6 +7,9 @@
 #pragma once
 namespace Asteroids {
     using namespace glm;
+    AsteroidUpdateComponent::~AsteroidUpdateComponent() {
+        std::cout << "in destructor of AsteroidUpdateComponent" << std::endl;
+    }
     void AsteroidUpdateComponent::SetDirection(int direction) {
         this->direction = direction;
     }

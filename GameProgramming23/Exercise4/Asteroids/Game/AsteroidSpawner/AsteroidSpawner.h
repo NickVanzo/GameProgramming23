@@ -21,7 +21,7 @@ namespace Asteroids {
         void DestroyAsteroid();
 
         MyEngine::GameObject& player_;
-        std::list<MyEngine::GameObject*> asteroids;
+        std::list<std::shared_ptr<MyEngine::GameObject>> asteroids;
         float TIME_TO_SPAWN_ASTEROID = 20;
         float timeCounter = 0;
         int direction;

@@ -4,10 +4,6 @@
 #include "AsteroidRenderComponent.h"
 namespace Asteroids {
     using namespace std;
-//    AsteroidRenderComponent::AsteroidRenderComponent() {
-//        MyEngine::GameObject *parent = GetGameObject();
-
-//    }
 AsteroidRenderComponent::~AsteroidRenderComponent() {
     std::cout << "In the deconstructor of AsteroidRenderComponent" << std::endl;
 }

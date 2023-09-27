@@ -25,8 +25,7 @@ namespace Asteroids {
     }
     void AsteroidSpawner::SpawnAsteroid() {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
-        auto gameObject = engine->CreateGameObject("asteroid");
-
+        auto gameObject = std::shared_ptr<MyEngine::GameObject>(engine->CreateGameObject("asteroid"));
         auto asteroidRenderComponent = std::shared_ptr<Asteroids::AsteroidRenderComponent>(new Asteroids::AsteroidRenderComponent());
         auto asteroidUpdateComponent = std::shared_ptr<Asteroids::AsteroidUpdateComponent>(new Asteroids::AsteroidUpdateComponent());
 
@@ -53,17 +52,18 @@ namespace Asteroids {
         asteroids.push_back(gameObject);
     }
     void AsteroidSpawner::CheckAsteroidCollisionWithBounderies() {
+        std::cout << "Asteroids: " << asteroids.size() << std::endl;
         for (auto it = asteroids.begin(); it != asteroids.end();) {
             bool isCollidingWithXBoundaries = ((*it)->position.x == CUSTOM_WINDOW_WIDTH) || ((*it)->position.x == 0);
             bool isCollidingWithYBoundaries = ((*it)->position.y == CUSTOM_WINDOW_HEIGHT) || ((*it)->position.y == 0);
 
             if(IsCollidingWithPlayer((*it)->position.x, (*it)->position.y)) {
-                HandleCollisionWithPlayer();
+//                HandleCollisionWithPlayer();
             } else if(IsCollidingWithLaser((*it)->position)) {
+                std::cout << "Removing" << std::endl;
                 it = asteroids.erase(it);
-                std::cout << "Asteroids: " << asteroids.size() << std::endl;
             } else if(isCollidingWithXBoundaries || isCollidingWithYBoundaries) {
-                it = asteroids.erase(it);
+//                it = asteroids.erase(it);
             } else{
                 ++it;
             }
