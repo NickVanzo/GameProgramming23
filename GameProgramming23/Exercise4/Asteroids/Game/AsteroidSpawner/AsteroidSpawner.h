@@ -18,10 +18,9 @@ namespace Asteroids {
         bool IsCollidingWithLaser(glm::vec2&);
         void DisabledPlayerRender(std::list< std::shared_ptr<Component>>&);
         void DisabledPlayerMovement(std::list< std::shared_ptr<Component>>&);
-        void DestroyAsteroid();
 
         MyEngine::GameObject& player_;
-        std::list<MyEngine::GameObject*> asteroids;
+        std::unordered_map<int, std::shared_ptr<MyEngine::GameObject>> asteroids;
         float TIME_TO_SPAWN_ASTEROID = 20;
         float timeCounter = 0;
         int direction;

@@ -21,11 +21,13 @@ namespace Asteroids {
             SpawnAsteroid();
             timeCounter = TIME_TO_SPAWN_ASTEROID;
         }
-        CheckAsteroidCollisionWithBounderies();
+        if(!asteroids.empty()) {
+            CheckAsteroidCollisionWithBounderies();
+        }
     }
     void AsteroidSpawner::SpawnAsteroid() {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
-        auto gameObject = engine->CreateGameObject("asteroid");
+        auto gameObject = std::shared_ptr<MyEngine::GameObject>(engine->CreateGameObject("asteroid"));
 
         auto asteroidRenderComponent = std::shared_ptr<Asteroids::AsteroidRenderComponent>(new Asteroids::AsteroidRenderComponent());
         auto asteroidUpdateComponent = std::shared_ptr<Asteroids::AsteroidUpdateComponent>(new Asteroids::AsteroidUpdateComponent());
@@ -50,20 +52,24 @@ namespace Asteroids {
         gameObject->position = glm::vec2(randX,randY);
         gameObject->AddComponent(asteroidRenderComponent);
         gameObject->AddComponent(asteroidUpdateComponent);
-        asteroids.push_back(gameObject);
+        asteroids.insert({1, gameObject});
+    std::cout << "Added steroid in map: " << asteroids.size() << std::endl;
     }
     void AsteroidSpawner::CheckAsteroidCollisionWithBounderies() {
         for (auto it = asteroids.begin(); it != asteroids.end();) {
-            bool isCollidingWithXBoundaries = ((*it)->position.x == CUSTOM_WINDOW_WIDTH) || ((*it)->position.x == 0);
-            bool isCollidingWithYBoundaries = ((*it)->position.y == CUSTOM_WINDOW_HEIGHT) || ((*it)->position.y == 0);
+            if(asteroids.size() == 0) return;
+            bool isCollidingWithXBoundaries = ((*it).second->position.x == CUSTOM_WINDOW_WIDTH) || ((*it).second->position.x == 0);
+            bool isCollidingWithYBoundaries = ((*it).second->position.y == CUSTOM_WINDOW_HEIGHT) || ((*it).second->position.y == 0);
 
-            if(IsCollidingWithPlayer((*it)->position.x, (*it)->position.y)) {
+            if(IsCollidingWithPlayer((*it).second->position.x, (*it).second->position.y)) {
                 HandleCollisionWithPlayer();
-            } else if(IsCollidingWithLaser((*it)->position)) {
-                it = asteroids.erase(it);
+            } else if(IsCollidingWithLaser((*it).second->position)) {
+                asteroids.erase(it->first);
+                ++it;
                 std::cout << "Asteroids: " << asteroids.size() << std::endl;
             } else if(isCollidingWithXBoundaries || isCollidingWithYBoundaries) {
-                it = asteroids.erase(it);
+                asteroids.erase(it->first);
+                ++it;
             } else{
                 ++it;
             }
