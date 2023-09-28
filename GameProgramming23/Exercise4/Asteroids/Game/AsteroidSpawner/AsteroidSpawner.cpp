@@ -24,8 +24,16 @@ namespace Asteroids {
             timeCounter = TIME_TO_SPAWN_ASTEROID;
         }
         auto objectsToRemove = CheckAsteroidCollisionWithBounderies();
+
         if(!objectsToRemove.empty()) {
             for(const auto & i : objectsToRemove) {
+                MyEngine::Engine::GetInstance()->RemoveObject(i);
+            }
+        }
+
+        auto objectsCollidingWithLasers = ChecksAsteroidCollisionsWithLasers();
+        if(!objectsCollidingWithLasers.empty()) {
+            for(const auto & i : objectsCollidingWithLasers) {
                 MyEngine::Engine::GetInstance()->RemoveObject(i);
             }
         }
@@ -60,6 +68,32 @@ namespace Asteroids {
 
     }
 
+    std::vector<std::shared_ptr<MyEngine::GameObject>> AsteroidSpawner::ChecksAsteroidCollisionsWithLasers() {
+        MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
+        std::vector<std::shared_ptr<MyEngine::GameObject>> objectsToRemove = {};
+        for(int i = 0; i < engine->gameObjects.size(); i++) {
+            auto asteroidGameObject = engine->gameObjects[i];
+            if(asteroidGameObject == nullptr) continue;
+            if(asteroidGameObject->GetName() == "asteroid") {
+                for(int j = 0; j < engine->gameObjects.size(); j++) {
+                    if(engine->gameObjects[j]->GetName() == "bullet") {
+                        auto bulletGameObject = engine->gameObjects[j];
+                        float distanceBetweenLaserAndAsteroid = pow(asteroidGameObject->position.y - bulletGameObject->position.y, 2) + pow(asteroidGameObject->position.x - bulletGameObject->position.x, 2);
+                        bool areTwoObjectsColliding = distanceBetweenLaserAndAsteroid <= pow(asteroidsRadius + bulletGameObject->radius, 2);
+                        if(areTwoObjectsColliding) {
+                            objectsToRemove.push_back(bulletGameObject);
+                            objectsToRemove.push_back(asteroidGameObject);
+                        }
+                        if(!areTwoObjectsColliding && bulletGameObject->timeAlive > 1) {
+                            objectsToRemove.push_back(bulletGameObject);
+                        }
+                    }
+                }
+            }
+        }
+        return objectsToRemove;
+    }
+
     std::vector<std::shared_ptr<MyEngine::GameObject>> AsteroidSpawner::CheckAsteroidCollisionWithBounderies() {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
         std::vector<std::shared_ptr<MyEngine::GameObject>> objectsToRemove = {};
@@ -69,17 +103,10 @@ namespace Asteroids {
             if(gameObject->GetName() == "asteroid") {
                 bool isCollidingWithXBoundaries = (gameObject->position.x >= engine->GetScreenSize().x) || (gameObject->position.x == 0);
                 bool isCollidingWithYBoundaries = (gameObject->position.y >=  engine->GetScreenSize().y) || (gameObject->position.y == 0);
-                auto lasers = IsCollidingWithLasers(gameObject->position);
-                for(auto l : lasers) {
-                    objectsToRemove.push_back(l);
-                }
-                if(!lasers.empty()) {
-                    objectsToRemove.push_back(gameObject);
-                }
+
                 if(isCollidingWithYBoundaries || isCollidingWithXBoundaries) {
                     objectsToRemove.push_back(gameObject);
                 }
-//
                 if(IsCollidingWithPlayer(gameObject->position.x, gameObject->position.y)) {
                     HandleCollisionWithPlayer();
                 }
@@ -87,21 +114,7 @@ namespace Asteroids {
         }
         return objectsToRemove;
     }
-    std::vector<std::shared_ptr<MyEngine::GameObject>> AsteroidSpawner::IsCollidingWithLasers(glm::vec2 asteroidPos) {
-        MyEngine::Engine* engine =MyEngine::Engine::GetInstance();
-      auto gameObjects = engine->gameObjects;
-      std::vector<std::shared_ptr<MyEngine::GameObject>> objsToRemove = {};
-      for(int i = 0; i < gameObjects.size(); i++) {
-          if(gameObjects[i]->GetName() == "bullet") {
-              auto gameObject = gameObjects[i];
-              float distanceBetweenLaserAndAsteroid = pow(asteroidPos.y - gameObject->position.y, 2) + pow(asteroidPos.x - gameObject->position.x, 2);
-              if(distanceBetweenLaserAndAsteroid <= pow(asteroidsRadius + gameObject->radius, 2) || gameObject->timeAlive > 1) {
-                  objsToRemove.push_back(gameObject);
-              }
-          }
-      }
-      return objsToRemove;
-    }
+
     bool AsteroidSpawner::IsCollidingWithPlayer(float asteroidPosX, float asteroidPosY) {
         if(player != nullptr) {
             float distanceBetweenPlayerAndAsteroid = pow(asteroidPosY - player->position.y, 2) + pow(asteroidPosX - player->position.x,2);

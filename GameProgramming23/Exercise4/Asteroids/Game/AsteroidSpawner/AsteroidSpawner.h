@@ -13,12 +13,12 @@ namespace Asteroids {
         void Update(float deltaTime);
         void SpawnAsteroid();
         std::vector<std::shared_ptr<MyEngine::GameObject>> CheckAsteroidCollisionWithBounderies();
+        std::vector<std::shared_ptr<MyEngine::GameObject>> ChecksAsteroidCollisionsWithLasers();
     private:
         bool IsCollidingWithPlayer(float, float);
         void HandleCollisionWithPlayer();
         void DisabledPlayerRender(std::vector< std::shared_ptr<Component>>&);
         void DisabledPlayerMovement(std::vector< std::shared_ptr<Component>>&);
-        std::vector<std::shared_ptr<MyEngine::GameObject>> IsCollidingWithLasers(glm::vec2 asteroidPos);
         std::shared_ptr<MyEngine::GameObject> player;
         float TIME_TO_SPAWN_ASTEROID = 1;
         float timeCounter = 0;
