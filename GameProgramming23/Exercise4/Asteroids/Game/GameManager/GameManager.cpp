@@ -23,24 +23,24 @@ void GameManager::CreatePlayer() {
     player = engine->CreateGameObject("Player");
     player->SetRadius(Asteroids::PLAYER_RADIUS);
 
-    auto playerController = std::make_unique<Asteroids::PlayerProcessEventsComponent>(player);
-    auto playerRenderer = std::make_unique<Asteroids::PlayerComponentRenderer>(player);
-    auto playerProcessEventsComponent = std::make_unique<Asteroids::PlayerProcessEventsComponent>(player);
+    auto playerController = std::make_shared<Asteroids::PlayerProcessEventsComponent>(player);
+    auto playerRenderer = std::make_shared<Asteroids::PlayerComponentRenderer>(player);
+    auto playerProcessEventsComponent = std::make_shared<Asteroids::PlayerProcessEventsComponent>(player);
     playerRenderer->sprite = engine->atlas->get("playerShip1_blue.png");
     playerRenderer->deathSprite = engine->atlas->get("bang.png");
 
-    player->AddComponent(std::move(playerController));
-    player->AddComponent(std::move(playerRenderer));
-    player->AddComponent(std::move(playerProcessEventsComponent));
+    player->AddComponent(playerController);
+    player->AddComponent(playerRenderer);
+    player->AddComponent(playerProcessEventsComponent);
 
 }
 void GameManager::CreateAsteroidSpawner() {
     MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
     lowerSpawner = engine->CreateGameObject("asteroidSpawner");
-    auto lowerSpawnerUpdateComponent =std::make_unique<Asteroids::AsteroidSpawner>(Asteroids::LOWER, player, lowerSpawner);
-    lowerSpawner->AddComponent(std::move(lowerSpawnerUpdateComponent));
+    auto lowerSpawnerUpdateComponent =std::make_shared<Asteroids::AsteroidSpawner>(Asteroids::LOWER, player, lowerSpawner);
+    lowerSpawner->AddComponent(lowerSpawnerUpdateComponent);
 
     upperSpawner = engine->CreateGameObject("asteroidSpawner");
-    auto upperSpawnerUpdateComponent = std::make_unique<Asteroids::AsteroidSpawner>(Asteroids::UPPER, player, upperSpawner);
-    upperSpawner->AddComponent(std::move(upperSpawnerUpdateComponent));
+    auto upperSpawnerUpdateComponent = std::make_shared<Asteroids::AsteroidSpawner>(Asteroids::UPPER, player, upperSpawner);
+    upperSpawner->AddComponent(upperSpawnerUpdateComponent);
 }

@@ -33,7 +33,7 @@ namespace MyEngine {
 			component->KeyEvent(e);
 	}
 
-	void GameObject::AddComponent(std::unique_ptr<Component> p_component) {
+	void GameObject::AddComponent(std::shared_ptr<Component> p_component) {
 		_components.push_back(std::move(p_component));
 	}
 
@@ -41,8 +41,8 @@ namespace MyEngine {
         _components.clear();
     }
 
-    std::list<std::unique_ptr<Component>> GameObject::GetComponents() {
-//        return _components;
+    std::list<std::shared_ptr<Component>> GameObject::GetComponents() {
+        return _components;
     }
 
 	std::string GameObject::GetName() {

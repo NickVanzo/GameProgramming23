@@ -72,7 +72,6 @@ namespace MyEngine {
         auto ret = std::make_shared<GameObject>();
         ret->SetName(name);
         gameObjects.push_back(ret);
-        std::cout << "Added game object to gameObjects with name "<< name <<"! Now the vector has length: " << gameObjects.size() << std::endl;
         return ret;
     }
 }
