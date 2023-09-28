@@ -18,6 +18,7 @@ namespace MyEngine {
 	}
 
 	void GameObject::Update(float deltaTime) {
+        timeAlive += deltaTime;
         for(int i = 0; i < _components.size(); i++) {
             _components[i]->Update(deltaTime);
         }

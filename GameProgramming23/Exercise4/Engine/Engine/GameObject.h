@@ -32,8 +32,9 @@ namespace MyEngine {
 		std::string GetName();
 		void SetName(std::string);
         std::vector< std::shared_ptr<Component>> GetComponents();
-
+        float timeAlive = 0;
 		// private fields
+
 	private:
 		std::vector<std::shared_ptr<Component>> _components = {};
 		std::string _name;

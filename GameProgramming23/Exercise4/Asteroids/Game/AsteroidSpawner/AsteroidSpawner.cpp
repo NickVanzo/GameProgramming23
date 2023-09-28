@@ -95,7 +95,7 @@ namespace Asteroids {
           if(gameObjects[i]->GetName() == "bullet") {
               auto gameObject = gameObjects[i];
               float distanceBetweenLaserAndAsteroid = pow(asteroidPos.y - gameObject->position.y, 2) + pow(asteroidPos.x - gameObject->position.x, 2);
-              if(distanceBetweenLaserAndAsteroid <= pow(asteroidsRadius + gameObject->radius, 2)) {
+              if(distanceBetweenLaserAndAsteroid <= pow(asteroidsRadius + gameObject->radius, 2) || gameObject->timeAlive > 1) {
                   objsToRemove.push_back(gameObject);
               }
           }
