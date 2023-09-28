@@ -5,7 +5,7 @@
 #include "Engine/MyEngine.h"
 
 namespace Asteroids {
-    PlayerUpdateComponent::PlayerUpdateComponent(std::shared_ptr<MyEngine::GameObject> g) {
+    PlayerUpdateComponent::PlayerUpdateComponent(std::weak_ptr<MyEngine::GameObject> g) {
         _gameObject = g;
     }
     void PlayerUpdateComponent::Init() {}

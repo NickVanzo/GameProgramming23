@@ -6,9 +6,11 @@
 namespace Asteroids {
     using namespace glm;
     void BulletComponentRender::Render(sre::SpriteBatch::SpriteBatchBuilder & builder) {
-        std::shared_ptr<MyEngine::GameObject> parent = GetGameObject();
-        sprite.setPosition(parent->position);
-        sprite.setRotation(parent->rotation);
-        builder.addSprite(sprite);
+        std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
+        if(parent.lock().get()) {
+            sprite.setPosition(parent.lock().get()->position);
+            sprite.setRotation(parent.lock().get()->rotation);
+            builder.addSprite(sprite);
+        }
     }
 }

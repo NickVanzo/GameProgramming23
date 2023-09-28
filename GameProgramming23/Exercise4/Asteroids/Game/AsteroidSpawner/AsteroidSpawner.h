@@ -8,7 +8,7 @@
 namespace Asteroids {
     class AsteroidSpawner: public MyEngine::Component {
     public:
-        AsteroidSpawner(int, std::shared_ptr<MyEngine::GameObject> player, std::shared_ptr<MyEngine::GameObject> parent);
+        AsteroidSpawner(int, std::weak_ptr<MyEngine::GameObject> player, std::weak_ptr<MyEngine::GameObject> parent);
         void Update(float deltaTime);
         void SpawnAsteroid();
         void CheckAsteroidCollisionWithBounderies();
@@ -17,8 +17,8 @@ namespace Asteroids {
         void HandleCollisionWithPlayer();
         void DisabledPlayerRender(std::list< std::shared_ptr<Component>>&);
         void DisabledPlayerMovement(std::list< std::shared_ptr<Component>>&);
-        std::shared_ptr<MyEngine::GameObject> player_;
-        std::list<std::shared_ptr<MyEngine::GameObject>> asteroids;
+        std::weak_ptr<MyEngine::GameObject> player_;
+        std::weak_ptr<MyEngine::GameObject> asteroids;
         float TIME_TO_SPAWN_ASTEROID = 20;
         float timeCounter = 0;
         int direction;

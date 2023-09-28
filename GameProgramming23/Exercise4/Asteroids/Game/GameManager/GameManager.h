@@ -7,6 +7,7 @@
 
 class GameManager {
 public:
+    ~GameManager();
     void StartGame();
     void CreatePlayer();
     void CreateAsteroidSpawner();

@@ -27,18 +27,15 @@ namespace MyEngine {
 		void AddChild(std::shared_ptr<GameObject>);
         void RemoveChild(std::shared_ptr<GameObject>);
         void RemoveComponents();
-		void AddComponent(std::shared_ptr<Component>);
-
+		void AddComponent(std::unique_ptr<Component>);
 
 		std::string GetName();
 		void SetName(std::string);
-        std::list< std::shared_ptr<Component>>& GetComponents();
+        std::list< std::unique_ptr<Component>> GetComponents();
 
 		// private fields
 	private:
-		std::weak_ptr<GameObject> _parent;
-		std::list<std::shared_ptr<GameObject>> _children = {};
-		std::list< std::shared_ptr<Component>> _components = {};
+		std::list<std::unique_ptr<Component>> _components = {};
 		std::string _name;
 	};
 }

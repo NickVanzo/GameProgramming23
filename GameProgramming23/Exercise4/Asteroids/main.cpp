@@ -8,7 +8,6 @@
 #include "Game/Player/PlayerUpdateComponent.h"
 #include "Game/Player/PlayerComponentRenderer.h"
 #include "Game/Constants/Engine.h"
-#include "Game/GameManager/GameManager.h"
 void ProcessEvents(SDL_Event& event);
 void Update(float deltaTime);
 void Render();
@@ -20,7 +19,6 @@ sre::Camera camera;
 
 
 int main() {
-    std::unique_ptr<GameManager> gameManager = std::unique_ptr<GameManager>();
     renderer.frameRender = Render;
     renderer.frameUpdate = Update;
     renderer.keyEvent = ProcessEvents;
@@ -31,7 +29,7 @@ int main() {
     engine.atlas = sre::SpriteAtlas::create("data/asteroids_sprites.json", "data/asteroids_sprites.png");
 
     engine.Init();
-    gameManager->StartGame();
+
     renderer.startEventLoop();
 }
 

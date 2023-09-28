@@ -7,19 +7,19 @@
 #pragma once
 namespace Asteroids {
     using namespace glm;
-    AsteroidUpdateComponent::AsteroidUpdateComponent(std::shared_ptr<MyEngine::GameObject> p) {
+    AsteroidUpdateComponent::AsteroidUpdateComponent(std::weak_ptr<MyEngine::GameObject> p) {
         _gameObject = p;
     }
     void AsteroidUpdateComponent::SetDirection(int direction) {
         this->direction = direction;
     }
     void AsteroidUpdateComponent::Update(float deltaTime) {
-        std::shared_ptr<MyEngine::GameObject> parent = GetGameObject();
+        std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
         if(direction == LOWER) {
-            parent->position += velocity;
+            parent.lock().get()->position += velocity;
         } else if(direction == UPPER) {
-            parent->position -= velocity;
+            parent.lock().get()->position -= velocity;
         } else {}
-        parent->rotation += + 1 * speed;
+        parent.lock().get()->rotation += + 1 * speed;
     }
 }

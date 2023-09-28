@@ -6,30 +6,30 @@
 #include "MyEngine.h"
 
 namespace Asteroids {
-    PlayerProcessEventsComponent::PlayerProcessEventsComponent(std::shared_ptr<MyEngine::GameObject> p) {
+    PlayerProcessEventsComponent::PlayerProcessEventsComponent(std::weak_ptr<MyEngine::GameObject> p) {
         _gameObject = p;
     }
     void PlayerProcessEventsComponent::KeyEvent(SDL_Event& event) {
         if(controlsEnabled) {
-            std::shared_ptr<MyEngine::GameObject> parent = GetGameObject();
+            std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
             switch (event.key.keysym.scancode) {
                 case SDL_SCANCODE_SPACE:
 //                    Shoot();
                     break;
                 case SDL_SCANCODE_D:
-                    parent->rotation -= 10;
+                    parent.lock().get()->rotation -= 10;
                     break;
                 case SDL_SCANCODE_A:
-                    parent->rotation += 10;
+                    parent.lock().get()->rotation += 10;
                     break;
                 case SDL_SCANCODE_W:
                     float speed = 50;
-                    float sin = glm::sin(glm::radians(parent->rotation));
-                    float cos = glm::cos(glm::radians(parent->rotation));
+                    float sin = glm::sin(glm::radians(parent.lock().get()->rotation));
+                    float cos = glm::cos(glm::radians(parent.lock().get()->rotation));
                     float xPos = sin * speed;
                     float yPos = cos * speed;
-                    parent->position.x -= xPos;
-                    parent->position.y += yPos;
+                    parent.lock().get()->position.x -= xPos;
+                    parent.lock().get()->position.y += yPos;
                     break;
             }
         }

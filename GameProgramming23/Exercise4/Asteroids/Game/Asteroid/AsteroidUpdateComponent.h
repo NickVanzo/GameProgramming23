@@ -7,7 +7,7 @@ namespace Asteroids {
     using namespace glm;
     class AsteroidUpdateComponent: public MyEngine::Component {
     public:
-        AsteroidUpdateComponent(std::shared_ptr<MyEngine::GameObject>);
+        AsteroidUpdateComponent(std::weak_ptr<MyEngine::GameObject>);
         void Update(float deltaTime) override;
         void SetDirection(int);
     private:

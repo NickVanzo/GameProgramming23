@@ -3,13 +3,13 @@
 //
 #include "PlayerComponentRenderer.h"
 namespace Asteroids {
-    PlayerComponentRenderer::PlayerComponentRenderer(std::shared_ptr<MyEngine::GameObject> g) {
+    PlayerComponentRenderer::PlayerComponentRenderer(std::weak_ptr<MyEngine::GameObject> g) {
         _gameObject = g;
     }
     void PlayerComponentRenderer::Render(sre::SpriteBatch::SpriteBatchBuilder & builder) {
-        std::shared_ptr<MyEngine::GameObject> parent = GetGameObject();
-        sprite.setPosition(parent->position);
-        sprite.setRotation(parent->rotation);
+        std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
+        sprite.setPosition(parent.lock().get()->position);
+        sprite.setRotation(parent.lock().get()->rotation);
         builder.addSprite(sprite);
     }
     void PlayerComponentRenderer::TriggerPlayerDeath() {

@@ -11,14 +11,14 @@ namespace Asteroids {
         MoveLaser();
     }
     void BulletComponentUpdate::MoveLaser() {
-        std::shared_ptr<MyEngine::GameObject> parent = GetGameObject();
-        if(parent->position.x == 0 && parent->position.y == 0) {
-            parent->position = startingPos_;
+        std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
+        if(parent.lock().get()->position.x == 0 && parent.lock().get()->position.y == 0) {
+            parent.lock().get()->position = startingPos_;
         }
-        float rotationInRadians = radians(parent->rotation + 90);
+        float rotationInRadians = radians(parent.lock().get()->rotation + 90);
         vec2 direction = vec2(cos(rotationInRadians), sin(rotationInRadians));
-        parent->position += direction * bulletSpeed;
-        parent->rotation = rotation_;
+        parent.lock().get()->position += direction * bulletSpeed;
+        parent.lock().get()->rotation = rotation_;
     }
 
     void BulletComponentUpdate::SetStartingPos(glm::vec2 initialPos) {

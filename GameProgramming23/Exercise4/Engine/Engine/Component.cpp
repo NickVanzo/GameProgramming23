@@ -3,7 +3,7 @@
 #include "Logger.h"
 
 namespace MyEngine {
-    std::shared_ptr<GameObject> Component::GetGameObject() {
+    std::weak_ptr<GameObject> Component::GetGameObject() {
 		return _gameObject;
 	}
 }

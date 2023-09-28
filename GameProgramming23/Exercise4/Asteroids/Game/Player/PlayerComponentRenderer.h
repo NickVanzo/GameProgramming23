@@ -7,7 +7,7 @@
 namespace Asteroids {
     class PlayerComponentRenderer: public MyEngine::Component {
     public:
-        PlayerComponentRenderer(std::shared_ptr<MyEngine::GameObject>);
+        PlayerComponentRenderer(std::weak_ptr<MyEngine::GameObject>);
         sre::Sprite sprite;
         sre::Sprite deathSprite;
 

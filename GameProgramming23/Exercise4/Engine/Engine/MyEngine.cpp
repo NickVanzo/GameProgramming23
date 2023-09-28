@@ -6,7 +6,11 @@
 
 namespace MyEngine {
     Engine* Engine::_instance = nullptr;
-    
+    Engine::~Engine() {
+        std::cout << "Distruttore di MyEngine" << std::endl;
+        gameObjects.clear();
+        std::cout << "Game objects: " << gameObjects.size() << std::endl;
+    }
     Engine::Engine() {
         assert(_instance == nullptr && " Only one instance of MyEngine::Engine allowed!");
         _instance = this;
@@ -21,6 +25,8 @@ namespace MyEngine {
         // initializes random generator
         std::srand(std::time(nullptr));
         _camera.setWindowCoordinates();
+        gameManager = std::make_shared<GameManager>();
+        gameManager->StartGame();
         for(auto g : gameObjects)
             g->Init();
     }
