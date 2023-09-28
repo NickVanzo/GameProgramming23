@@ -13,5 +13,5 @@ public:
     void CreateAsteroidSpawner();
     std::shared_ptr<MyEngine::GameObject> player;
     std::shared_ptr<MyEngine::GameObject> upperSpawner;
-    std::shared_ptr<Asteroids::AsteroidSpawner> lowerSpawner;
+    std::shared_ptr<MyEngine::GameObject> lowerSpawner;
 };

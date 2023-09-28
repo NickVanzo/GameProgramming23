@@ -36,7 +36,11 @@ void GameManager::CreatePlayer() {
 }
 void GameManager::CreateAsteroidSpawner() {
     MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
+    lowerSpawner = engine->CreateGameObject("asteroidSpawner");
+    auto lowerSpawnerUpdateComponent =std::make_unique<Asteroids::AsteroidSpawner>(Asteroids::LOWER, player, lowerSpawner);
+    lowerSpawner->AddComponent(std::move(lowerSpawnerUpdateComponent));
+
     upperSpawner = engine->CreateGameObject("asteroidSpawner");
-    auto upperSpawnerUpdateComponent =std::make_unique<Asteroids::AsteroidSpawner>(Asteroids::LOWER, player, upperSpawner);
+    auto upperSpawnerUpdateComponent = std::make_unique<Asteroids::AsteroidSpawner>(Asteroids::UPPER, player, upperSpawner);
     upperSpawner->AddComponent(std::move(upperSpawnerUpdateComponent));
 }
