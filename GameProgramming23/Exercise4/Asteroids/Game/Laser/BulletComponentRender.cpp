@@ -5,10 +5,15 @@
 #include "BulletComponentRender.h"
 namespace Asteroids {
     using namespace glm;
+    BulletComponentRender::BulletComponentRender(std::shared_ptr<MyEngine::GameObject> parent) {
+        _gameObject = parent;
+    }
     void BulletComponentRender::Render(sre::SpriteBatch::SpriteBatchBuilder & builder) {
-        MyEngine::GameObject *parent = GetGameObject();
-        sprite.setPosition(parent->position);
-        sprite.setRotation(parent->rotation);
-        builder.addSprite(sprite);
+        std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
+        if(parent.lock().get()) {
+            sprite.setPosition(parent.lock().get()->position);
+            sprite.setRotation(parent.lock().get()->rotation);
+            builder.addSprite(sprite);
+        }
     }
 }

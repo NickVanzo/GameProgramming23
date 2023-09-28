@@ -8,51 +8,43 @@
 
 namespace MyEngine {
     GameObject::~GameObject() {
-        std::cout << "Destroyed" << std::endl;
+        std::cout << "Destroyed object: " << _name << std::endl;
+        RemoveComponents();
     }
-	// public API
+
 	void GameObject::Init() {
 		for (auto& component : _components)
 			component->Init();
-
-		for (auto& child : _children)
-			child->Init();
 	}
 
 	void GameObject::Update(float deltaTime) {
-		for (auto& component : _components)
-			component->Update(deltaTime);
-
-		for (auto& child : _children)
-			child->Update(deltaTime);
+        timeAlive += deltaTime;
+        for(int i = 0; i < _components.size(); i++) {
+            _components[i]->Update(deltaTime);
+        }
 	}
 
 	void GameObject::Render(sre::SpriteBatch::SpriteBatchBuilder& spriteBatchBuilder) {
-		for (auto& component : _components)
-			component->Render(spriteBatchBuilder);
-
-		for (auto& child : _children)
-			child->Render(spriteBatchBuilder);
+        for(int i = 0; i < _components.size(); i++) {
+            _components[i]->Render(spriteBatchBuilder);
+        }
 	}
 
 	void GameObject::KeyEvent(SDL_Event& e) {
-		for (auto& component : _components)
-			component->KeyEvent(e);
-
-		for (auto& child : _children)
-			child->KeyEvent(e);
-	}
-
-	void GameObject::AddChild(std::shared_ptr<GameObject> p_object) {
-		_children.push_back(p_object);
+        for(int i = 0; i < _components.size(); i++) {
+            _components[i]->KeyEvent(e);
+        }
 	}
 
 	void GameObject::AddComponent(std::shared_ptr<Component> p_component) {
-		p_component->SetGameObject(_self);
-		_components.push_back(p_component);
+		_components.push_back(std::move(p_component));
 	}
 
-    std::list< std::shared_ptr<Component>>& GameObject::GetComponents() {
+    void GameObject::RemoveComponents() {
+        _components.clear();
+    }
+
+    std::vector<std::shared_ptr<Component>> GameObject::GetComponents() {
         return _components;
     }
 
@@ -67,5 +59,4 @@ namespace MyEngine {
     void GameObject::SetRadius(float r) {
         this->radius = r;
     }
-
 }

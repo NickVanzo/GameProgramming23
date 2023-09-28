@@ -11,22 +11,16 @@ namespace MyEngine {
 
 	class Component {
 		friend class GameObject;
-
-	private:
-
 	public:
+        ~Component();
 		virtual void Init() {};
 		virtual void Update(float) {};
 		virtual void Render(sre::SpriteBatch::SpriteBatchBuilder&) {};
 		virtual void KeyEvent(SDL_Event&) {};
-
-		// interface used by gameplay components
+        std::weak_ptr<MyEngine::GameObject> _gameObject;
 	protected:
-		GameObject* GetGameObject();
-
+		std::weak_ptr<GameObject> GetGameObject();
 	private:
-		std::weak_ptr<GameObject> _gameObject;
-
 		void SetGameObject(std::weak_ptr<GameObject>);
 	};
 }

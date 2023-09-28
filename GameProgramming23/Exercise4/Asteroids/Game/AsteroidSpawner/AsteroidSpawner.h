@@ -4,25 +4,26 @@
 
 #include "GameObject.h"
 #include "Component.h"
+
 #pragma once
 namespace Asteroids {
     class AsteroidSpawner: public MyEngine::Component {
     public:
-        AsteroidSpawner(int, MyEngine::GameObject&);
+        AsteroidSpawner(int, std::shared_ptr<MyEngine::GameObject> player, std::weak_ptr<MyEngine::GameObject> parent);
         void Update(float deltaTime);
         void SpawnAsteroid();
-        void CheckAsteroidCollisionWithBounderies();
+        std::vector<std::shared_ptr<MyEngine::GameObject>> CheckAsteroidCollisionWithBounderies();
     private:
         bool IsCollidingWithPlayer(float, float);
         void HandleCollisionWithPlayer();
-        void DisabledPlayerRender(std::list< std::shared_ptr<Component>>&);
-        void DisabledPlayerMovement(std::list< std::shared_ptr<Component>>&);
-        MyEngine::GameObject& player_;
-        std::list<MyEngine::GameObject*> asteroids;
-        float TIME_TO_SPAWN_ASTEROID = 20;
+        void DisabledPlayerRender(std::vector< std::shared_ptr<Component>>&);
+        void DisabledPlayerMovement(std::vector< std::shared_ptr<Component>>&);
+        std::vector<std::shared_ptr<MyEngine::GameObject>> IsCollidingWithLasers(glm::vec2 asteroidPos);
+        std::shared_ptr<MyEngine::GameObject> player;
+        float TIME_TO_SPAWN_ASTEROID = 1;
         float timeCounter = 0;
         int direction;
-        float asteroidsRadius = 90.0f;
+        float asteroidsRadius = 120.0f;
     };
 }
 

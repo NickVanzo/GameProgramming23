@@ -1,29 +1,28 @@
 #pragma once
-
 #include <chrono>
-
 #include "sre/Camera.hpp"
 #include "sre/SpriteAtlas.hpp"
 #include "SDL.h"
-
 #include "GameObject.h"
-
+#include "../../Asteroids/Game/GameManager/GameManager.h"
 
 class GameObject;
 
 namespace MyEngine {
+
 	class Engine {
 	private:
+
 		static Engine* _instance;
 	public:
 		static Engine* GetInstance() { return _instance; }
 	public:
-		const glm::vec2 WIN_SIZE = glm::vec2(800, 600);
+        ~Engine();
+        std::shared_ptr<GameManager> gameManager;
+		const glm::vec2 WIN_SIZE = glm::vec2(2000, 1200);
         std::shared_ptr<sre::SpriteAtlas> atlas;
 		const std::chrono::duration<double> MAX_FRAME_TIME = std::chrono::duration<double>(1 / 60.0);
-
 		Engine();
-
 		void Init();
 		void ProcessEvents(SDL_Event& event);
 		void Update(float);
@@ -40,11 +39,10 @@ namespace MyEngine {
 		int GetFrame() const { return frame; }
 		float GetTime() const { return time; }
 
-		GameObject* CreateGameObject(std::string name);
-
+		std::shared_ptr<MyEngine::GameObject> CreateGameObject(std::string name);
+        void RemoveObject(std::shared_ptr<MyEngine::GameObject>);
+        std::vector<std::shared_ptr<MyEngine::GameObject>> gameObjects = {};
 	private:
-		std::shared_ptr<GameObject> _root;
-
 		std::chrono::time_point<std::chrono::steady_clock>	time_start;
 		std::chrono::time_point<std::chrono::steady_clock>	time_end;
 		std::chrono::time_point<std::chrono::steady_clock>	time_end_computation;

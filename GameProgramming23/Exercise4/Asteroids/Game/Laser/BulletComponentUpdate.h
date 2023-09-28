@@ -7,7 +7,9 @@
 namespace Asteroids{
     class BulletComponentUpdate: public MyEngine::Component {
     public:
+        BulletComponentUpdate(std::shared_ptr<MyEngine::GameObject>);
         float bulletSpeed = 10;
+        float time = 0.0;
         void SetRotation(float rotation);
         void SetStartingPos(glm::vec2);
         void Update(float deltaTime) override;

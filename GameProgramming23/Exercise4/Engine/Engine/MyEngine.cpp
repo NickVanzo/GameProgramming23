@@ -6,13 +6,13 @@
 
 namespace MyEngine {
     Engine* Engine::_instance = nullptr;
-
+    Engine::~Engine() {
+        std::cout << "Distruttore di MyEngine" << std::endl;
+        gameObjects.clear();
+    }
     Engine::Engine() {
         assert(_instance == nullptr && " Only one instance of MyEngine::Engine allowed!");
         _instance = this;
-
-        _root = std::make_shared<GameObject>();
-        _root->SetName("root");
     }
 
     glm::vec2 Engine::GetScreenSize() const
@@ -23,20 +23,25 @@ namespace MyEngine {
     void Engine::Init() {
         // initializes random generator
         std::srand(std::time(nullptr));
-        atlas = sre::SpriteAtlas::create("data/asteroids_sprites.json", "data/asteroids_sprites.png");
         _camera.setWindowCoordinates();
-
-        _root->Init();
+        gameManager = std::make_shared<GameManager>();
+        gameManager->StartGame();
+        for(auto g : gameObjects)
+            g->Init();
     }
 
     void Engine::ProcessEvents(SDL_Event& event) {
-        _root->KeyEvent(event);
+        for(int i = 0; i <gameObjects.size(); i++) {
+            gameObjects[i]->KeyEvent(event);
+        }
     }
 
     void Engine::Update(float deltaTime) {
         ++frame;
         time += deltaTime;
-        _root->Update(deltaTime);
+        for(int i = 0; i < gameObjects.size(); i++) {
+            gameObjects[i]->Update(deltaTime);
+        }
     }
 
     void Engine::Render()
@@ -48,27 +53,26 @@ namespace MyEngine {
 
         sre::SpriteBatch::SpriteBatchBuilder spriteBatchBuilder = sre::SpriteBatch::create();
 
-        _root->Render(spriteBatchBuilder);
+        for(int i = 0; i < gameObjects.size(); i++) {
+            gameObjects[i]->Render(spriteBatchBuilder);
+        }
 
         auto spriteBatch = spriteBatchBuilder.build();
         renderPass.draw(spriteBatch);
     }
 
-    GameObject* Engine::CreateGameObject(std::string name) {
+    void Engine::RemoveObject(std::shared_ptr<MyEngine::GameObject> p) {
+        for(int i = 0; i < gameObjects.size(); i++) {
+            if(gameObjects[i] == p) {
+                gameObjects.erase(gameObjects.begin() + i);
+            }
+        }
+    }
+
+    std::shared_ptr<GameObject> Engine::CreateGameObject(std::string name) {
         auto ret = std::make_shared<GameObject>();
-        ret->_self = ret;
-        ret->_parent;
         ret->SetName(name);
-        _root->AddChild(ret);
-
-        return ret.get();
-    }
-
-    std::shared_ptr<sre::SpriteAtlas> Engine::GetAtlas() {
-        return atlas;
-    }
-
-    sre::Sprite Engine::GetSpriteFromAtlas(std::basic_string<char> name) {
-        return atlas->get(name);
+        gameObjects.push_back(ret);
+        return ret;
     }
 }

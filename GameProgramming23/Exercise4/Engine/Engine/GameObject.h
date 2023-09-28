@@ -25,19 +25,18 @@ namespace MyEngine {
         void SetRadius(float);
 
 		void AddChild(std::shared_ptr<GameObject>);
+        void RemoveChild(std::shared_ptr<GameObject>);
+        void RemoveComponents();
 		void AddComponent(std::shared_ptr<Component>);
 
 		std::string GetName();
 		void SetName(std::string);
-        void Destroy();
-        std::list< std::shared_ptr<Component>>& GetComponents();
-
+        std::vector< std::shared_ptr<Component>> GetComponents();
+        float timeAlive = 0;
 		// private fields
+
 	private:
-		std::weak_ptr<GameObject> _parent;
-		std::weak_ptr<GameObject> _self;
-		std::list<std::shared_ptr<GameObject>> _children = {};
-		std::list< std::shared_ptr<Component>> _components = {};
+		std::vector<std::shared_ptr<Component>> _components = {};
 		std::string _name;
 	};
 }

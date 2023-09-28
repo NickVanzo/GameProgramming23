@@ -7,8 +7,8 @@
 namespace Asteroids {
     class BulletComponentRender: public MyEngine::Component{
     public:
+        BulletComponentRender(std::shared_ptr<MyEngine::GameObject>);
         sre::Sprite sprite;
-
         void Render(sre::SpriteBatch::SpriteBatchBuilder&) override;
     };
 }
