@@ -31,11 +31,11 @@ namespace MyEngine {
 
 		std::string GetName();
 		void SetName(std::string);
-        std::list< std::shared_ptr<Component>> GetComponents();
+        std::vector< std::shared_ptr<Component>> GetComponents();
 
 		// private fields
 	private:
-		std::list<std::shared_ptr<Component>> _components = {};
+		std::vector<std::shared_ptr<Component>> _components = {};
 		std::string _name;
 	};
 }

@@ -18,19 +18,21 @@ namespace MyEngine {
 	}
 
 	void GameObject::Update(float deltaTime) {
-		for (auto& component : _components){
-            component->Update(deltaTime);
+        for(int i = 0; i < _components.size(); i++) {
+            _components[i]->Update(deltaTime);
         }
 	}
 
 	void GameObject::Render(sre::SpriteBatch::SpriteBatchBuilder& spriteBatchBuilder) {
-		for (auto& component : _components)
-			component->Render(spriteBatchBuilder);
+        for(int i = 0; i < _components.size(); i++) {
+            _components[i]->Render(spriteBatchBuilder);
+        }
 	}
 
 	void GameObject::KeyEvent(SDL_Event& e) {
-		for (auto& component : _components)
-			component->KeyEvent(e);
+        for(int i = 0; i < _components.size(); i++) {
+            _components[i]->KeyEvent(e);
+        }
 	}
 
 	void GameObject::AddComponent(std::shared_ptr<Component> p_component) {
@@ -41,7 +43,7 @@ namespace MyEngine {
         _components.clear();
     }
 
-    std::list<std::shared_ptr<Component>> GameObject::GetComponents() {
+    std::vector<std::shared_ptr<Component>> GameObject::GetComponents() {
         return _components;
     }
 

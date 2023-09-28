@@ -87,7 +87,7 @@ namespace Asteroids {
         DisabledPlayerRender(components);
 //        DisabledPlayerMovement(components);
     }
-    void AsteroidSpawner::DisabledPlayerRender(std::list< std::shared_ptr<Component>>& components) {
+    void AsteroidSpawner::DisabledPlayerRender(std::vector< std::shared_ptr<Component>>& components) {
         auto it = components.begin();
         // the process events component has index 2 by "business logic", an hashmap would be better to store the components
         std::advance(it, 2);
@@ -98,7 +98,7 @@ namespace Asteroids {
             std::cout << "Cast non riuscito" << std::endl;
         }
     }
-    void AsteroidSpawner::DisabledPlayerMovement(std::list< std::shared_ptr<Component>>& components) {
+    void AsteroidSpawner::DisabledPlayerMovement(std::vector< std::shared_ptr<Component>>& components) {
         auto it = components.begin();
         // the render component has index 1 by "business logic", an hashmap would be better to store the components
         std::advance(it, 1);

@@ -1,4 +1,6 @@
 #include "PlayerProcessEventsComponent.h"
+
+#include <memory>
 #include "PlayerUpdateComponent.h"
 #include "../Laser/BulletComponentRender.h"
 #include "../Laser/BulletComponentUpdate.h"
@@ -14,7 +16,7 @@ namespace Asteroids {
             std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
             switch (event.key.keysym.scancode) {
                 case SDL_SCANCODE_SPACE:
-//                    Shoot();
+                    Shoot();
                     break;
                 case SDL_SCANCODE_D:
                     parent.lock().get()->rotation -= 10;
@@ -34,20 +36,21 @@ namespace Asteroids {
             }
         }
     }
-//    void PlayerProcessEventsComponent::Shoot() {
-//        MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
-//        MyEngine::GameObject* gm = GetGameObject();
-//
-//        auto gameObject = engine->CreateGameObject("bullet");
-//        auto bulletUpdate = std::shared_ptr<Asteroids::BulletComponentUpdate>(new Asteroids::BulletComponentUpdate());
-//        auto bulletRenderer = std::make_shared<Asteroids::BulletComponentRender>();
-//        bulletRenderer->sprite = engine->GetSpriteFromAtlas("laserBlue01.png");
-//        bulletUpdate->SetStartingPos(glm::vec2(gm->position.x, gm->position.y));
-//        bulletUpdate->SetRotation(gm->rotation);
-//        gameObject->rotation = gm->rotation;
-//        gameObject->AddComponent(bulletRenderer);
-//        gameObject->AddComponent(bulletUpdate);
-//    }
+    void PlayerProcessEventsComponent::Shoot() {
+        MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
+        std::weak_ptr<MyEngine::GameObject> gm = GetGameObject();
+
+        auto gameObject = engine->CreateGameObject("bullet");
+        auto bulletUpdate = std::make_shared<Asteroids::BulletComponentUpdate>(gameObject);
+        auto bulletRenderer = std::make_shared<Asteroids::BulletComponentRender>(gameObject);
+        bulletRenderer->sprite = engine->atlas->get("laserBlue01.png");
+
+        bulletUpdate->SetStartingPos(glm::vec2(gm.lock()->position.x, gm.lock()->position.y));
+        bulletUpdate->SetRotation(gm.lock()->rotation);
+        gameObject->rotation = gm.lock()->rotation;
+        gameObject->AddComponent(bulletRenderer);
+        gameObject->AddComponent(bulletUpdate);
+    }
     void PlayerProcessEventsComponent::TriggerPlayerDeath() {
         controlsEnabled = false;
     }

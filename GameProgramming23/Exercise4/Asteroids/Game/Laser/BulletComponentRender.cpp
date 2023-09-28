@@ -5,6 +5,9 @@
 #include "BulletComponentRender.h"
 namespace Asteroids {
     using namespace glm;
+    BulletComponentRender::BulletComponentRender(std::shared_ptr<MyEngine::GameObject> parent) {
+        _gameObject = parent;
+    }
     void BulletComponentRender::Render(sre::SpriteBatch::SpriteBatchBuilder & builder) {
         std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
         if(parent.lock().get()) {

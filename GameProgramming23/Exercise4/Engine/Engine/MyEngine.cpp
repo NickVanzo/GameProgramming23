@@ -31,8 +31,9 @@ namespace MyEngine {
     }
 
     void Engine::ProcessEvents(SDL_Event& event) {
-        for(auto g : gameObjects)
-            g->KeyEvent(event);
+        for(int i = 0; i <gameObjects.size(); i++) {
+            gameObjects[i]->KeyEvent(event);
+        }
     }
 
     void Engine::Update(float deltaTime) {
@@ -52,8 +53,8 @@ namespace MyEngine {
 
         sre::SpriteBatch::SpriteBatchBuilder spriteBatchBuilder = sre::SpriteBatch::create();
 
-        for(auto g : gameObjects) {
-            g->Render(spriteBatchBuilder);
+        for(int i = 0; i < gameObjects.size(); i++) {
+            gameObjects[i]->Render(spriteBatchBuilder);
         }
 
         auto spriteBatch = spriteBatchBuilder.build();
@@ -72,6 +73,7 @@ namespace MyEngine {
         auto ret = std::make_shared<GameObject>();
         ret->SetName(name);
         gameObjects.push_back(ret);
+        std::cout << "New game object with name "<< name <<" created, length: " << gameObjects.size() << std::endl;
         return ret;
     }
 }

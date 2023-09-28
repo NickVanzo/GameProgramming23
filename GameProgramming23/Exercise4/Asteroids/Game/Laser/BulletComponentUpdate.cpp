@@ -7,12 +7,15 @@
 
 namespace Asteroids {
     using namespace glm;
+    BulletComponentUpdate::BulletComponentUpdate(std::shared_ptr<MyEngine::GameObject> parent) {
+        _gameObject = parent;
+    }
     void BulletComponentUpdate::Update(float deltaTime) {
         MoveLaser();
     }
     void BulletComponentUpdate::MoveLaser() {
         std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
-        if(parent.lock().get()->position.x == 0 && parent.lock().get()->position.y == 0) {
+        if(parent.lock()->position.x == 0 && parent.lock()->position.y == 0) {
             parent.lock().get()->position = startingPos_;
         }
         float rotationInRadians = radians(parent.lock().get()->rotation + 90);
