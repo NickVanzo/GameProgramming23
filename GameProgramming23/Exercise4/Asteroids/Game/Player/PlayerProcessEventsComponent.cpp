@@ -10,31 +10,38 @@
 namespace Asteroids {
     PlayerProcessEventsComponent::PlayerProcessEventsComponent(std::weak_ptr<MyEngine::GameObject> p) {
         _gameObject = p;
+        controlsEnabled = true;
     }
     void PlayerProcessEventsComponent::KeyEvent(SDL_Event& event) {
-        if(controlsEnabled) {
+        std::cout << "controls enabled: " <<controlsEnabled<<std::endl;
             std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
-            switch (event.key.keysym.scancode) {
-                case SDL_SCANCODE_SPACE:
-                    Shoot();
-                    break;
-                case SDL_SCANCODE_D:
-                    parent.lock().get()->rotation -= 10;
-                    break;
-                case SDL_SCANCODE_A:
-                    parent.lock().get()->rotation += 10;
-                    break;
-                case SDL_SCANCODE_W:
-                    float speed = 50;
-                    float sin = glm::sin(glm::radians(parent.lock().get()->rotation));
-                    float cos = glm::cos(glm::radians(parent.lock().get()->rotation));
-                    float xPos = sin * speed;
-                    float yPos = cos * speed;
-                    parent.lock().get()->position.x -= xPos;
-                    parent.lock().get()->position.y += yPos;
-                    break;
-            }
-        }
+            if(controlsEnabled) {
+                switch (event.key.keysym.scancode) {
+                    case SDL_SCANCODE_SPACE:
+                        if(controlsEnabled) {
+                            Shoot();
+                        } else {
+                            std::cout << "restart" << std::endl;
+                        };
+                        break;
+                    case SDL_SCANCODE_D:
+                        parent.lock().get()->rotation -= 10;
+                        break;
+                    case SDL_SCANCODE_A:
+                        parent.lock().get()->rotation += 10;
+                        break;
+                    case SDL_SCANCODE_W:
+                        float speed = 50;
+                        float sin = glm::sin(glm::radians(parent.lock().get()->rotation));
+                        float cos = glm::cos(glm::radians(parent.lock().get()->rotation));
+                        float xPos = sin * speed;
+                        float yPos = cos * speed;
+                        parent.lock().get()->position.x -= xPos;
+                        parent.lock().get()->position.y += yPos;
+                        break;
+                }
+            };
+
     }
     void PlayerProcessEventsComponent::Shoot() {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();

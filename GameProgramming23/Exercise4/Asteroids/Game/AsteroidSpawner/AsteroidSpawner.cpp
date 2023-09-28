@@ -80,9 +80,9 @@ namespace Asteroids {
                     objectsToRemove.push_back(gameObject);
                 }
 //
-//                if(IsCollidingWithPlayer(gameObject->position.x, gameObject->position.y)) {
-//                    HandleCollisionWithPlayer();
-//                }
+                if(IsCollidingWithPlayer(gameObject->position.x, gameObject->position.y)) {
+                    HandleCollisionWithPlayer();
+                }
             }
         }
         return objectsToRemove;
@@ -111,10 +111,9 @@ namespace Asteroids {
         }
     }
     void AsteroidSpawner::HandleCollisionWithPlayer() {
-//        std::cout << "Player position: " << player->position.x << " " << player->position.y << std::endl;
         auto components = player->GetComponents();
         DisabledPlayerRender(components);
-//        DisabledPlayerMovement(components);
+        DisabledPlayerMovement(components);
     }
     void AsteroidSpawner::DisabledPlayerRender(std::vector< std::shared_ptr<Component>>& components) {
         auto it = components.begin();

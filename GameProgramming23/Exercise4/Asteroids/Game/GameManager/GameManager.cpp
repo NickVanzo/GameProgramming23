@@ -23,7 +23,7 @@ void GameManager::CreatePlayer() {
     player = engine->CreateGameObject("Player");
     player->SetRadius(Asteroids::PLAYER_RADIUS);
 
-    auto playerController = std::make_shared<Asteroids::PlayerProcessEventsComponent>(player);
+    auto playerController = std::make_shared<Asteroids::PlayerUpdateComponent>(player);
     auto playerRenderer = std::make_shared<Asteroids::PlayerComponentRenderer>(player);
     auto playerProcessEventsComponent = std::make_shared<Asteroids::PlayerProcessEventsComponent>(player);
     playerRenderer->sprite = engine->atlas->get("playerShip1_blue.png");

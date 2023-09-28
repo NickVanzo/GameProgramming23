@@ -8,7 +8,7 @@ namespace Asteroids {
 class PlayerProcessEventsComponent: public MyEngine::Component {
 public:
     PlayerProcessEventsComponent(std::weak_ptr<MyEngine::GameObject>);
-    bool controlsEnabled = true;
+    bool controlsEnabled;
     void KeyEvent(SDL_Event&) override;
     void TriggerPlayerDeath();
 private:
