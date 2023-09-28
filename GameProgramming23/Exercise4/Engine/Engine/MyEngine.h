@@ -22,9 +22,7 @@ namespace MyEngine {
 		const glm::vec2 WIN_SIZE = glm::vec2(1200, 1200);
         std::shared_ptr<sre::SpriteAtlas> atlas;
 		const std::chrono::duration<double> MAX_FRAME_TIME = std::chrono::duration<double>(1 / 60.0);
-
 		Engine();
-
 		void Init();
 		void ProcessEvents(SDL_Event& event);
 		void Update(float);
@@ -41,9 +39,9 @@ namespace MyEngine {
 		int GetFrame() const { return frame; }
 		float GetTime() const { return time; }
 
-		std::shared_ptr<GameObject> CreateGameObject(std::string name);
-        void RemoveObject(std::shared_ptr<GameObject>);
-        std::vector<std::shared_ptr<GameObject>> gameObjects = {};
+		std::shared_ptr<MyEngine::GameObject> CreateGameObject(std::string name);
+        void RemoveObject(std::shared_ptr<MyEngine::GameObject>);
+        std::vector<std::shared_ptr<MyEngine::GameObject>> gameObjects = {};
 	private:
 		std::chrono::time_point<std::chrono::steady_clock>	time_start;
 		std::chrono::time_point<std::chrono::steady_clock>	time_end;

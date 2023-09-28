@@ -26,56 +26,50 @@ namespace Asteroids {
         CheckAsteroidCollisionWithBounderies();
     }
     void AsteroidSpawner::SpawnAsteroid() {
-//        MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
-//        auto gameObject = engine->CreateGameObject("asteroid");
-//        std::weak_ptr<MyEngine::GameObject> obj = gameObject;
-//        auto asteroidRenderComponent = std::weak_ptr<Asteroids::AsteroidRenderComponent>(obj);
-//        auto asteroidUpdateComponent = std::make_unique<Asteroids::AsteroidUpdateComponent>(obj);
-//
-//        asteroidRenderComponent->sprite = engine->atlas->get("meteorBrown_big1.png");
-//        gameObject->rotation = rand() % 360 - 180;
-//
-//        float randX = 0;
-//        float randY = 0;
-//
-//        if(direction == LOWER) {
-//            //spawn only along the lower part of the screen
-//            randX = rand() % (int) CUSTOM_WINDOW_WIDTH;
-//            randY = 10;
-//            asteroidUpdateComponent->SetDirection(LOWER);
-//        } else if(direction == UPPER) {
-//            //spawn only along the upper part of the screen
-//            randY = CUSTOM_WINDOW_HEIGHT + 400;
-//            randX = rand() % (int) CUSTOM_WINDOW_WIDTH;
-//            asteroidUpdateComponent->SetDirection(UPPER);
-//        }
-//        gameObject->position = glm::vec2(randX,randY);
-//        gameObject->AddComponent(asteroidRenderComponent);
-//        gameObject->AddComponent(asteroidUpdateComponent);
+        MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
+        auto gameObject = engine->CreateGameObject("asteroid");
+        std::weak_ptr<MyEngine::GameObject> obj = gameObject;
+        auto asteroidRenderComponent = std::make_unique<Asteroids::AsteroidRenderComponent>(obj);
+        auto asteroidUpdateComponent = std::make_unique<Asteroids::AsteroidUpdateComponent>(obj);
+
+        asteroidRenderComponent->sprite = engine->atlas->get("meteorBrown_big1.png");
+        gameObject->rotation = rand() % 360 - 180;
+
+        float randX = 0;
+        float randY = 0;
+
+        if(direction == LOWER) {
+            //spawn only along the lower part of the screen
+            randX = rand() % (int) CUSTOM_WINDOW_WIDTH;
+            randY = 10;
+            asteroidUpdateComponent->SetDirection(LOWER);
+        } else if(direction == UPPER) {
+            //spawn only along the upper part of the screen
+            randY = CUSTOM_WINDOW_HEIGHT + 400;
+            randX = rand() % (int) CUSTOM_WINDOW_WIDTH;
+            asteroidUpdateComponent->SetDirection(UPPER);
+        }
+        gameObject->position = glm::vec2(randX,randY);
+        gameObject->AddComponent(std::move(asteroidRenderComponent));
+        gameObject->AddComponent(std::move(asteroidUpdateComponent));
+
     }
     void AsteroidSpawner::CheckAsteroidCollisionWithBounderies() {
-//        MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
-//        std::vector<std::shared_ptr<MyEngine::GameObject>> elemntsToRemove = {};
-//        for (auto it = MyEngine::gameObjects.begin(); it != MyEngine::gameObjects.end();) {
-//            if((*it)->GetName() == "asteroid") {
-//                bool isCollidingWithXBoundaries =  ((*it)->position.x == engine->GetScreenSize().x) || ((*it)->position.x == 0);
-//                bool isCollidingWithYBoundaries = ((*it)->position.y ==  engine->GetScreenSize().y) || ((*it)->position.y == 0);
-//
-//                if(IsCollidingWithPlayer((*it)->position.x, (*it)->position.y)) {
-////                HandleCollisionWithPlayer();
-//                }
-//                if (isCollidingWithXBoundaries || isCollidingWithYBoundaries) {
-//                    std::cout << "Found" << std::endl;
-//                    elemntsToRemove.push_back(*it);
-//                    ++it;
-//                } else {
-//                    ++it;
-//                }
-//            }
-//        }
-//        for(auto e : elemntsToRemove) {
-//           std::cout << e->GetName() << std::endl;
-//        }
+        MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
+
+        for(int i = 0; i < engine->gameObjects.size(); ++i) {
+            auto gameObject = engine->gameObjects[i];
+            if(gameObject== nullptr) continue;
+            if(gameObject->GetName() == "asteroid") {
+                bool isCollidingWithXBoundaries = (gameObject->position.x >= engine->GetScreenSize().x) || (gameObject->position.x == 0);
+                bool isCollidingWithYBoundaries = (gameObject->position.y >=  engine->GetScreenSize().y) || (gameObject->position.y == 0);
+
+                if(isCollidingWithYBoundaries || isCollidingWithXBoundaries) {
+                    engine->gameObjects.erase(engine->gameObjects.begin() + i);
+                    std::cout << "something" << std::endl;
+                }
+            }
+        }
     }
     void AsteroidSpawner::HandleCollisionWithPlayer() {
         auto components = player_.lock().get()->GetComponents();

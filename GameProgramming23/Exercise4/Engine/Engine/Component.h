@@ -12,6 +12,7 @@ namespace MyEngine {
 	class Component {
 		friend class GameObject;
 	public:
+        ~Component();
 		virtual void Init() {};
 		virtual void Update(float) {};
 		virtual void Render(sre::SpriteBatch::SpriteBatchBuilder&) {};

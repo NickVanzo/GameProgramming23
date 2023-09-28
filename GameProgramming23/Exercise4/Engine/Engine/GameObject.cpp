@@ -38,10 +38,7 @@ namespace MyEngine {
 	}
 
     void GameObject::RemoveComponents() {
-//        for(auto c : _components) {
-//            c->_gameObject = nullptr;
-//        }
-//        _components.clear();
+        _components.clear();
     }
 
     std::list<std::unique_ptr<Component>> GameObject::GetComponents() {
