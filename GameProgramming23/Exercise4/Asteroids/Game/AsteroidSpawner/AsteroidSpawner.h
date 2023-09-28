@@ -11,7 +11,7 @@ namespace Asteroids {
         AsteroidSpawner(int, std::weak_ptr<MyEngine::GameObject> player, std::weak_ptr<MyEngine::GameObject> parent);
         void Update(float deltaTime);
         void SpawnAsteroid();
-        void CheckAsteroidCollisionWithBounderies();
+        std::vector<std::shared_ptr<MyEngine::GameObject>> CheckAsteroidCollisionWithBounderies();
     private:
         bool IsCollidingWithPlayer(float, float);
         void HandleCollisionWithPlayer();
@@ -19,7 +19,7 @@ namespace Asteroids {
         void DisabledPlayerMovement(std::list< std::shared_ptr<Component>>&);
         std::weak_ptr<MyEngine::GameObject> player_;
         std::weak_ptr<MyEngine::GameObject> asteroids;
-        float TIME_TO_SPAWN_ASTEROID = 20;
+        float TIME_TO_SPAWN_ASTEROID = 2;
         float timeCounter = 0;
         int direction;
         float asteroidsRadius = 90.0f;

@@ -38,8 +38,8 @@ namespace MyEngine {
     void Engine::Update(float deltaTime) {
         ++frame;
         time += deltaTime;
-        for(auto g : gameObjects) {
-            g->Update(deltaTime);
+        for(int i = 0; i < gameObjects.size(); i++) {
+            gameObjects[i]->Update(deltaTime);
         }
     }
 
@@ -62,9 +62,7 @@ namespace MyEngine {
 
     void Engine::RemoveObject(std::shared_ptr<MyEngine::GameObject> p) {
         for(int i = 0; i < gameObjects.size(); i++) {
-            if(gameObjects[i] != nullptr && gameObjects[i] == p) {
-                std::cout << "Asteroid to destroy found " << std::endl;
-                std::cout << "References: " << p.use_count() << std::endl;
+            if(gameObjects[i] == p) {
                 gameObjects.erase(gameObjects.begin() + i);
             }
         }

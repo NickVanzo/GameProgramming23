@@ -18,9 +18,9 @@ namespace MyEngine {
 	}
 
 	void GameObject::Update(float deltaTime) {
-		for (auto& component : _components)
-			component->Update(deltaTime);
-
+		for (auto& component : _components){
+            component->Update(deltaTime);
+        }
 	}
 
 	void GameObject::Render(sre::SpriteBatch::SpriteBatchBuilder& spriteBatchBuilder) {

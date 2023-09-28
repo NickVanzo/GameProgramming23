@@ -23,7 +23,12 @@ namespace Asteroids {
             SpawnAsteroid();
             timeCounter = TIME_TO_SPAWN_ASTEROID;
         }
-        CheckAsteroidCollisionWithBounderies();
+        auto objectsToRemove = CheckAsteroidCollisionWithBounderies();
+        if(!objectsToRemove.empty()) {
+            for(const auto & i : objectsToRemove) {
+                MyEngine::Engine::GetInstance()->RemoveObject(i);
+            }
+        }
     }
     void AsteroidSpawner::SpawnAsteroid() {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
@@ -54,9 +59,10 @@ namespace Asteroids {
         gameObject->AddComponent(std::move(asteroidUpdateComponent));
 
     }
-    void AsteroidSpawner::CheckAsteroidCollisionWithBounderies() {
-        MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
 
+    std::vector<std::shared_ptr<MyEngine::GameObject>> AsteroidSpawner::CheckAsteroidCollisionWithBounderies() {
+        MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
+        std::vector<std::shared_ptr<MyEngine::GameObject>> objectsToRemove = {};
         for(int i = 0; i < engine->gameObjects.size(); ++i) {
             auto gameObject = engine->gameObjects[i];
             if(gameObject== nullptr) continue;
@@ -65,11 +71,11 @@ namespace Asteroids {
                 bool isCollidingWithYBoundaries = (gameObject->position.y >=  engine->GetScreenSize().y) || (gameObject->position.y == 0);
 
                 if(isCollidingWithYBoundaries || isCollidingWithXBoundaries) {
-                    engine->gameObjects.erase(engine->gameObjects.begin() + i);
-                    std::cout << "something" << std::endl;
+                    objectsToRemove.push_back(gameObject);
                 }
             }
         }
+        return objectsToRemove;
     }
     void AsteroidSpawner::HandleCollisionWithPlayer() {
         auto components = player_.lock().get()->GetComponents();
