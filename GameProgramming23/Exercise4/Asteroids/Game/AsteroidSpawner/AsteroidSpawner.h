@@ -18,11 +18,12 @@ namespace Asteroids {
         void HandleCollisionWithPlayer();
         void DisabledPlayerRender(std::vector< std::shared_ptr<Component>>&);
         void DisabledPlayerMovement(std::vector< std::shared_ptr<Component>>&);
+        std::vector<std::shared_ptr<MyEngine::GameObject>> IsCollidingWithLasers(glm::vec2 asteroidPos);
         std::shared_ptr<MyEngine::GameObject> player;
-        float TIME_TO_SPAWN_ASTEROID = 10;
+        float TIME_TO_SPAWN_ASTEROID = 1;
         float timeCounter = 0;
         int direction;
-        float asteroidsRadius = 90.0f;
+        float asteroidsRadius = 120.0f;
     };
 }
 

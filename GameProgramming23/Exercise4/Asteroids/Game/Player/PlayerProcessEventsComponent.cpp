@@ -47,6 +47,7 @@ namespace Asteroids {
 
         bulletUpdate->SetStartingPos(glm::vec2(gm.lock()->position.x, gm.lock()->position.y));
         bulletUpdate->SetRotation(gm.lock()->rotation);
+        gameObject->radius = 20.0f;
         gameObject->rotation = gm.lock()->rotation;
         gameObject->AddComponent(bulletRenderer);
         gameObject->AddComponent(bulletUpdate);

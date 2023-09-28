@@ -69,7 +69,13 @@ namespace Asteroids {
             if(gameObject->GetName() == "asteroid") {
                 bool isCollidingWithXBoundaries = (gameObject->position.x >= engine->GetScreenSize().x) || (gameObject->position.x == 0);
                 bool isCollidingWithYBoundaries = (gameObject->position.y >=  engine->GetScreenSize().y) || (gameObject->position.y == 0);
-
+                auto lasers = IsCollidingWithLasers(gameObject->position);
+                for(auto l : lasers) {
+                    objectsToRemove.push_back(l);
+                }
+                if(!lasers.empty()) {
+                    objectsToRemove.push_back(gameObject);
+                }
                 if(isCollidingWithYBoundaries || isCollidingWithXBoundaries) {
                     objectsToRemove.push_back(gameObject);
                 }
@@ -80,6 +86,29 @@ namespace Asteroids {
             }
         }
         return objectsToRemove;
+    }
+    std::vector<std::shared_ptr<MyEngine::GameObject>> AsteroidSpawner::IsCollidingWithLasers(glm::vec2 asteroidPos) {
+        MyEngine::Engine* engine =MyEngine::Engine::GetInstance();
+      auto gameObjects = engine->gameObjects;
+      std::vector<std::shared_ptr<MyEngine::GameObject>> objsToRemove = {};
+      for(int i = 0; i < gameObjects.size(); i++) {
+          if(gameObjects[i]->GetName() == "bullet") {
+              auto gameObject = gameObjects[i];
+              float distanceBetweenLaserAndAsteroid = pow(asteroidPos.y - gameObject->position.y, 2) + pow(asteroidPos.x - gameObject->position.x, 2);
+              if(distanceBetweenLaserAndAsteroid <= pow(asteroidsRadius + gameObject->radius, 2)) {
+                  objsToRemove.push_back(gameObject);
+              }
+          }
+      }
+      return objsToRemove;
+    }
+    bool AsteroidSpawner::IsCollidingWithPlayer(float asteroidPosX, float asteroidPosY) {
+        if(player != nullptr) {
+            float distanceBetweenPlayerAndAsteroid = pow(asteroidPosY - player->position.y, 2) + pow(asteroidPosX - player->position.x,2);
+            return distanceBetweenPlayerAndAsteroid <= pow(asteroidsRadius + player->radius, 2);
+        } else {
+            return false;
+        }
     }
     void AsteroidSpawner::HandleCollisionWithPlayer() {
 //        std::cout << "Player position: " << player->position.x << " " << player->position.y << std::endl;
@@ -109,12 +138,5 @@ namespace Asteroids {
             std::cout << "Cast non riuscito" << std::endl;
         }
     }
-    bool AsteroidSpawner::IsCollidingWithPlayer(float asteroidPosX, float asteroidPosY) {
-        if(player != nullptr) {
-            float distanceBetweenPlayerAndAsteroid = pow(asteroidPosY - player->position.y, 2) + pow(asteroidPosX - player->position.x,2);
-            return distanceBetweenPlayerAndAsteroid <= pow(asteroidsRadius + player->radius, 2);
-        } else {
-            return false;
-        }
-    }
+
 }

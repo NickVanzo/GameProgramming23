@@ -73,7 +73,6 @@ namespace MyEngine {
         auto ret = std::make_shared<GameObject>();
         ret->SetName(name);
         gameObjects.push_back(ret);
-        std::cout << "New game object with name "<< name <<" created, length: " << gameObjects.size() << std::endl;
         return ret;
     }
 }
