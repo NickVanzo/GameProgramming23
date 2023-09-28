@@ -19,7 +19,7 @@ namespace MyEngine {
 	public:
         ~Engine();
         std::shared_ptr<GameManager> gameManager;
-		const glm::vec2 WIN_SIZE = glm::vec2(1200, 1200);
+		const glm::vec2 WIN_SIZE = glm::vec2(2000, 1200);
         std::shared_ptr<sre::SpriteAtlas> atlas;
 		const std::chrono::duration<double> MAX_FRAME_TIME = std::chrono::duration<double>(1 / 60.0);
 		Engine();

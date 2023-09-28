@@ -13,7 +13,6 @@ namespace Asteroids {
         controlsEnabled = true;
     }
     void PlayerProcessEventsComponent::KeyEvent(SDL_Event& event) {
-        std::cout << "controls enabled: " <<controlsEnabled<<std::endl;
             std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
             if(controlsEnabled) {
                 switch (event.key.keysym.scancode) {

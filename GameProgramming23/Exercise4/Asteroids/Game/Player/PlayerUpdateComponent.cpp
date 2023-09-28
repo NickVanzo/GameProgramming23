@@ -6,11 +6,13 @@
 
 namespace Asteroids {
     PlayerUpdateComponent::PlayerUpdateComponent(std::weak_ptr<MyEngine::GameObject> g) {
-        _gameObject = g;
-    }
-    void PlayerUpdateComponent::Init() {}
-    void PlayerUpdateComponent::Update(float deltaTime) {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
-        glm::vec2 basePos = engine->GetScreenSize() / 2.f;
+        _gameObject = g;
+        _gameObject.lock()->position = engine->GetScreenSize() / 2.f;
+    }
+    void PlayerUpdateComponent::Init() {
+
+    }
+    void PlayerUpdateComponent::Update(float deltaTime) {
     }
 }
