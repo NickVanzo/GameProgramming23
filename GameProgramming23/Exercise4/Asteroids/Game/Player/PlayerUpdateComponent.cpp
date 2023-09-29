@@ -11,12 +11,17 @@ namespace Asteroids {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
         _gameObject = g;
         _gameObject.lock()->position = engine->GetScreenSize() / 2.f;
+
     }
     void PlayerUpdateComponent::Init() {}
-    void PlayerUpdateComponent::Update(float deltaTime) {}
+    void PlayerUpdateComponent::Update(float deltaTime) {
+        _gameObject.lock()->position += velocity;
+        velocity *= friction;
+    }
     void PlayerUpdateComponent::KeyEvent(SDL_Event & event) {
         std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
-        switch (event.key.keysym.scancode) {
+        auto button =event.key.keysym.scancode;
+        switch (button) {
             case SDL_SCANCODE_SPACE:
                 if(controlsEnabled) {
                     Shoot();
@@ -31,13 +36,11 @@ namespace Asteroids {
                 parent.lock().get()->rotation += 10;
                 break;
             case SDL_SCANCODE_W:
-                float speed = 50;
-                float sin = glm::sin(glm::radians(parent.lock().get()->rotation));
-                float cos = glm::cos(glm::radians(parent.lock().get()->rotation));
+                float sin = glm::sin(glm::radians(_gameObject.lock()->rotation));
+                float cos = glm::cos(glm::radians(_gameObject.lock()->rotation));
                 float xPos = sin * speed * controlsEnabled;
                 float yPos = cos * speed * controlsEnabled;
-                parent.lock().get()->position.x -= xPos;
-                parent.lock().get()->position.y += yPos;
+                velocity += glm::vec2(-xPos, yPos);
                 break;
         }
     }

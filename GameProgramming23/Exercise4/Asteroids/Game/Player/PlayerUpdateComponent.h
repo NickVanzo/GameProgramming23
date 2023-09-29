@@ -9,14 +9,16 @@ namespace Asteroids {
     class PlayerUpdateComponent: public MyEngine::Component {
     public:
         PlayerUpdateComponent(std::weak_ptr<MyEngine::GameObject>);
-        const glm::vec2 movDirection = glm::vec2(1,0);
+        glm::vec2 velocity = glm::vec2(0,0);
+        float friction = 0.99f;
+        float maximumVelocity;
         void Init() override;
         void Update(float) override;
         void KeyEvent(SDL_Event&) override;
         void TriggerPlayerDeath();
     private:
         void Shoot();
-        float speed = 90.0f;
+        float speed = 1.0f;
         bool controlsEnabled = true;
     };
 }
