@@ -30,6 +30,11 @@ namespace MyEngine {
             g->Init();
     }
 
+    void Engine::RestartGame() {
+        gameObjects.clear();
+        Init();
+    }
+
     void Engine::ProcessEvents(SDL_Event& event) {
         for(int i = 0; i <gameObjects.size(); i++) {
             gameObjects[i]->KeyEvent(event);

@@ -14,13 +14,12 @@ namespace Asteroids {
     }
     void PlayerProcessEventsComponent::KeyEvent(SDL_Event& event) {
             std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
-            if(controlsEnabled) {
                 switch (event.key.keysym.scancode) {
                     case SDL_SCANCODE_SPACE:
                         if(controlsEnabled) {
                             Shoot();
                         } else {
-                            std::cout << "restart" << std::endl;
+                            MyEngine::Engine::GetInstance()->RestartGame();
                         };
                         break;
                     case SDL_SCANCODE_D:
@@ -33,14 +32,12 @@ namespace Asteroids {
                         float speed = 50;
                         float sin = glm::sin(glm::radians(parent.lock().get()->rotation));
                         float cos = glm::cos(glm::radians(parent.lock().get()->rotation));
-                        float xPos = sin * speed;
-                        float yPos = cos * speed;
+                        float xPos = sin * speed * controlsEnabled;
+                        float yPos = cos * speed * controlsEnabled;
                         parent.lock().get()->position.x -= xPos;
                         parent.lock().get()->position.y += yPos;
                         break;
                 }
-            };
-
     }
     void PlayerProcessEventsComponent::Shoot() {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();

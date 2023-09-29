@@ -24,6 +24,7 @@ namespace MyEngine {
 		const std::chrono::duration<double> MAX_FRAME_TIME = std::chrono::duration<double>(1 / 60.0);
 		Engine();
 		void Init();
+        void RestartGame();
 		void ProcessEvents(SDL_Event& event);
 		void Update(float);
 		void Render();
