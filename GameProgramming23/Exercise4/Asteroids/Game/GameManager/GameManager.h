@@ -11,6 +11,7 @@ public:
     void StartGame();
     void CreatePlayer();
     void CreateAsteroidSpawner();
+    float points = 0;
     std::shared_ptr<MyEngine::GameObject> player;
     std::shared_ptr<MyEngine::GameObject> upperSpawner;
     std::shared_ptr<MyEngine::GameObject> lowerSpawner;

@@ -23,7 +23,7 @@ namespace Asteroids {
             SpawnAsteroid();
             timeCounter = TIME_TO_SPAWN_ASTEROID;
         }
-        auto objectsToRemove = CheckAsteroidCollisionWithBounderies();
+        auto objectsToRemove = CheckAsteroidCollisionWithBounderiesOrPlayer();
 
         if(!objectsToRemove.empty()) {
             for(const auto & i : objectsToRemove) {
@@ -71,6 +71,7 @@ namespace Asteroids {
     std::vector<std::shared_ptr<MyEngine::GameObject>> AsteroidSpawner::ChecksAsteroidCollisionsWithLasers() {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
         std::vector<std::shared_ptr<MyEngine::GameObject>> objectsToRemove = {};
+        auto gameManager = engine->GetGameManager();
         for(int i = 0; i < engine->gameObjects.size(); i++) {
             auto asteroidGameObject = engine->gameObjects[i];
             if(asteroidGameObject == nullptr) continue;
@@ -81,6 +82,8 @@ namespace Asteroids {
                         float distanceBetweenLaserAndAsteroid = pow(asteroidGameObject->position.y - bulletGameObject->position.y, 2) + pow(asteroidGameObject->position.x - bulletGameObject->position.x, 2);
                         bool areTwoObjectsColliding = distanceBetweenLaserAndAsteroid <= pow(asteroidsRadius + bulletGameObject->radius, 2);
                         if(areTwoObjectsColliding) {
+                            gameManager->points++;
+                            std::cout << gameManager->points << std::endl;
                             objectsToRemove.push_back(bulletGameObject);
                             objectsToRemove.push_back(asteroidGameObject);
                         }
@@ -94,7 +97,7 @@ namespace Asteroids {
         return objectsToRemove;
     }
 
-    std::vector<std::shared_ptr<MyEngine::GameObject>> AsteroidSpawner::CheckAsteroidCollisionWithBounderies() {
+    std::vector<std::shared_ptr<MyEngine::GameObject>> AsteroidSpawner::CheckAsteroidCollisionWithBounderiesOrPlayer() {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
         std::vector<std::shared_ptr<MyEngine::GameObject>> objectsToRemove = {};
         for(int i = 0; i < engine->gameObjects.size(); ++i) {
@@ -130,7 +133,7 @@ namespace Asteroids {
     }
     void AsteroidSpawner::DisabledPlayerRender(std::vector< std::shared_ptr<Component>>& components) {
         auto it = components.begin();
-        // the process events component has index 2 by "business logic", an hashmap would be better to store the components
+        // the process events component has index 0 by "business logic", an hashmap would be better to store the components
         // the render component has index 1 by "business logic", an hashmap would be better to store the components
         std::advance(it, 1);
         std::shared_ptr<Asteroids::PlayerComponentRenderer> playerRenderComponent = std::dynamic_pointer_cast<Asteroids::PlayerComponentRenderer>(*it);

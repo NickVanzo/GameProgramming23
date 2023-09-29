@@ -15,7 +15,7 @@ GameManager::~GameManager() {
 }
 void GameManager::StartGame() {
     CreatePlayer();
-//    CreateAsteroidSpawner();
+    CreateAsteroidSpawner();
 }
 void GameManager::CreatePlayer() {
     MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
@@ -29,7 +29,6 @@ void GameManager::CreatePlayer() {
 
     player->AddComponent(playerController);
     player->AddComponent(playerRenderer);
-
 }
 void GameManager::CreateAsteroidSpawner() {
     MyEngine::Engine* engine = MyEngine::Engine::GetInstance();

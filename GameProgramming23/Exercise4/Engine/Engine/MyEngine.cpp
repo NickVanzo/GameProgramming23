@@ -14,12 +14,10 @@ namespace MyEngine {
         assert(_instance == nullptr && " Only one instance of MyEngine::Engine allowed!");
         _instance = this;
     }
-
     glm::vec2 Engine::GetScreenSize() const
     {
         return WIN_SIZE;
     }
-
     void Engine::Init() {
         // initializes random generator
         std::srand(std::time(nullptr));
@@ -28,6 +26,10 @@ namespace MyEngine {
         gameManager->StartGame();
         for(auto g : gameObjects)
             g->Init();
+    }
+
+    std::shared_ptr<GameManager> Engine::GetGameManager() {
+        return gameManager;
     }
 
     void Engine::RestartGame() {

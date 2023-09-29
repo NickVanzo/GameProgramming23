@@ -28,6 +28,7 @@ namespace MyEngine {
 		void ProcessEvents(SDL_Event& event);
 		void Update(float);
 		void Render();
+        std::shared_ptr<GameManager> GetGameManager();
 
 		float GetFPS() const { return 1.0 / time_elapsed.count(); }
 		float GetTimeElapsedMs() const { return 1000 * time_elapsed.count(); }

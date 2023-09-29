@@ -11,10 +11,11 @@ namespace Asteroids {
         MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
         _gameObject = g;
         _gameObject.lock()->position = engine->GetScreenSize() / 2.f;
-
     }
     void PlayerUpdateComponent::Init() {}
     void PlayerUpdateComponent::Update(float deltaTime) {
+        _gameObject.lock()->position.x = fmod(_gameObject.lock()->position.x, MyEngine::Engine::GetInstance()->GetScreenSize().x);
+        _gameObject.lock()->position.y = fmod(_gameObject.lock()->position.y, MyEngine::Engine::GetInstance()->GetScreenSize().y);
         _gameObject.lock()->position += velocity;
         velocity *= friction;
     }
@@ -40,7 +41,11 @@ namespace Asteroids {
                 float cos = glm::cos(glm::radians(_gameObject.lock()->rotation));
                 float xPos = sin * speed * controlsEnabled;
                 float yPos = cos * speed * controlsEnabled;
-                velocity += glm::vec2(-xPos, yPos);
+                if(velocity.x <= maximumVelocity) {
+                    velocity.x -= xPos;
+                }
+                if(velocity.y <= maximumVelocity)
+                    velocity.y += yPos;
                 break;
         }
     }

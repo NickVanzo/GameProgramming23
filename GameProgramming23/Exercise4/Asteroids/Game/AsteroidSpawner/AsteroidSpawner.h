@@ -12,7 +12,7 @@ namespace Asteroids {
         AsteroidSpawner(int, std::shared_ptr<MyEngine::GameObject> player, std::weak_ptr<MyEngine::GameObject> parent);
         void Update(float deltaTime);
         void SpawnAsteroid();
-        std::vector<std::shared_ptr<MyEngine::GameObject>> CheckAsteroidCollisionWithBounderies();
+        std::vector<std::shared_ptr<MyEngine::GameObject>> CheckAsteroidCollisionWithBounderiesOrPlayer();
         std::vector<std::shared_ptr<MyEngine::GameObject>> ChecksAsteroidCollisionsWithLasers();
     private:
         bool IsCollidingWithPlayer(float, float);

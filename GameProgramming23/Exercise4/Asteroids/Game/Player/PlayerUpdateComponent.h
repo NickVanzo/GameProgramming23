@@ -11,7 +11,7 @@ namespace Asteroids {
         PlayerUpdateComponent(std::weak_ptr<MyEngine::GameObject>);
         glm::vec2 velocity = glm::vec2(0,0);
         float friction = 0.99f;
-        float maximumVelocity;
+        float maximumVelocity = 10.0f;
         void Init() override;
         void Update(float) override;
         void KeyEvent(SDL_Event&) override;
