@@ -12,6 +12,12 @@ namespace Asteroids {
         const glm::vec2 movDirection = glm::vec2(1,0);
         void Init() override;
         void Update(float) override;
+        void KeyEvent(SDL_Event&) override;
+        void TriggerPlayerDeath();
+    private:
+        void Shoot();
+        float speed = 90.0f;
+        bool controlsEnabled = true;
     };
 }
 #endif //SIMPLERENDERENGINEPROJECT_PLAYERCOMPONENTINPUT_H
