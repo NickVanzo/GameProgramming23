@@ -8,7 +8,6 @@
 #include "Engine/MyEngine.h"
 #include "../Player/PlayerUpdateComponent.h"
 #include "../Player/PlayerComponentRenderer.h"
-#include "../Player/PlayerProcessEventsComponent.h"
 #include "../Constants/Player.h"
 #include "../Enums/AsteroidSpawnerPositions.h"
 GameManager::~GameManager() {
@@ -16,7 +15,7 @@ GameManager::~GameManager() {
 }
 void GameManager::StartGame() {
     CreatePlayer();
-    CreateAsteroidSpawner();
+//    CreateAsteroidSpawner();
 }
 void GameManager::CreatePlayer() {
     MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
@@ -25,13 +24,11 @@ void GameManager::CreatePlayer() {
 
     auto playerController = std::make_shared<Asteroids::PlayerUpdateComponent>(player);
     auto playerRenderer = std::make_shared<Asteroids::PlayerComponentRenderer>(player);
-    auto playerProcessEventsComponent = std::make_shared<Asteroids::PlayerProcessEventsComponent>(player);
     playerRenderer->sprite = engine->atlas->get("playerShip1_blue.png");
     playerRenderer->deathSprite = engine->atlas->get("bang.png");
 
     player->AddComponent(playerController);
     player->AddComponent(playerRenderer);
-    player->AddComponent(playerProcessEventsComponent);
 
 }
 void GameManager::CreateAsteroidSpawner() {

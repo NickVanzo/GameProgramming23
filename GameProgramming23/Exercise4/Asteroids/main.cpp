@@ -8,6 +8,7 @@
 #include "Game/Player/PlayerUpdateComponent.h"
 #include "Game/Player/PlayerComponentRenderer.h"
 #include "Game/Constants/Engine.h"
+
 void ProcessEvents(SDL_Event& event);
 void Update(float deltaTime);
 void Render();
