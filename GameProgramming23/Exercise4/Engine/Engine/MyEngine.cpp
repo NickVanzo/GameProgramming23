@@ -1,8 +1,15 @@
 #include "MyEngine.h"
-
 #include <random>
-
 #include "sre/RenderPass.hpp"
+#include "../../Asteroids/rapidjson/writer.h"
+#include "../../Asteroids/rapidjson/stringbuffer.h"
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <filesystem>
+#include "../../Asteroids/rapidjson/document.h"
+
+using namespace rapidjson;
 
 namespace MyEngine {
     Engine* Engine::_instance = nullptr;
@@ -16,7 +23,7 @@ namespace MyEngine {
     }
     glm::vec2 Engine::GetScreenSize() const
     {
-        return WIN_SIZE;
+        return windowSize;
     }
     void Engine::Init() {
         // initializes random generator
@@ -24,10 +31,29 @@ namespace MyEngine {
         _camera.setWindowCoordinates();
         gameManager = std::make_shared<GameManager>();
         gameManager->StartGame();
+
+        //initialize the Gameplay data from the gamedata JSON file
+        gamedataDoc = std::make_shared<Document>(ReadGameDataFromJson());
         for(auto g : gameObjects)
             g->Init();
     }
-
+    Document Engine::ReadGameDataFromJson() {
+        std::cout << "PARSING DATA FROM JSON" << std::endl;
+        std::ifstream file("../../../../GameProgramming23/Exercise4/Asteroids/gamedata/gamedata.json");
+        if(!file.is_open()) {
+            std::cerr << "Failed to open JSON file." << std::endl;
+            //throw error
+        }
+        std::string jsonString;
+        std::string line;
+        while(getline(file, line)) {
+            jsonString += line;
+        }
+        Document doc;
+        doc.Parse(jsonString.c_str());
+        std::cout << "FINISHED PARSING GAME DATA FROM JSON" << std::endl;
+        return doc;
+    }
     std::shared_ptr<GameManager> Engine::GetGameManager() {
         return gameManager;
     }
