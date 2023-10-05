@@ -35,19 +35,19 @@ namespace MyEngine {
 		std::shared_ptr<MyEngine::GameObject> CreateGameObject(std::string name);
         void RemoveObject(std::shared_ptr<MyEngine::GameObject>);
         std::vector<std::shared_ptr<MyEngine::GameObject>> gameObjects = {};
-        std::shared_ptr<rapidjson::Document> GetGameDataDoc();
+        rapidjson::Document* GetGameDataDoc();
 	private:
 		std::chrono::time_point<std::chrono::steady_clock>	time_start;
 		std::chrono::time_point<std::chrono::steady_clock>	time_end;
 		std::chrono::time_point<std::chrono::steady_clock>	time_end_computation;
 		std::chrono::duration<double>						time_elapsed;
 		std::chrono::duration<double>						time_computation;
-        std::shared_ptr<rapidjson::Document> gamedataDoc;
+        rapidjson::Document* gamedataDoc;
 		int frame;
 		float time;
 		unsigned char input = -1;
 		sre::Camera _camera;
-        rapidjson::Document ReadGameDataFromJson();
+        static rapidjson::Document* ReadGameDataFromJson();
 
 	};
 }

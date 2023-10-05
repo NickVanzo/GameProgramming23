@@ -3,6 +3,30 @@
     "window": {
       "width": 1000,
       "height": 1000
-    }
+    },
+    "gameObjects": [
+      {
+        "id": "PLAYER",
+        "metadata": {
+          "radius": 0.0
+        },
+        "components": [
+          {
+            "id": "UPDATE",
+            "metadata": {
+              "friction": 0.99,
+              "maximumVelocity": 10.0,
+              "speed": 1.0,
+              "controlsEnabled": true
+            }
+          },
+          {
+            "id": "RENDER",
+            "metadata": {}
+          }
+
+        ]
+      }
+    ]
   }
 }

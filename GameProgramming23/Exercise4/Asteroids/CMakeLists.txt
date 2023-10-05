@@ -2,7 +2,9 @@
 
 file(GLOB_RECURSE Asteroids-src "*.h" "*.cpp")
 
-add_executable(Asteroids ${Asteroids-src})
+add_executable(Asteroids ${Asteroids-src}
+        Factory/Factory.cpp
+        Factory/Factory.h)
 
 target_include_directories(Asteroids PUBLIC ${MYENGINE_INCLUDE_DIR})
 

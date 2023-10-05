@@ -20,6 +20,7 @@ namespace MyEngine {
     Engine::Engine() {
         assert(_instance == nullptr && " Only one instance of MyEngine::Engine allowed!");
         _instance = this;
+
     }
     glm::vec2 Engine::GetScreenSize() const
     {
@@ -29,15 +30,16 @@ namespace MyEngine {
         // initializes random generator
         std::srand(std::time(nullptr));
         _camera.setWindowCoordinates();
+        gamedataDoc = ReadGameDataFromJson();
         gameManager = std::make_shared<GameManager>();
         gameManager->StartGame();
 
         //initialize the Gameplay data from the gamedata JSON file
-        gamedataDoc = std::make_shared<Document>(ReadGameDataFromJson());
+
         for(auto g : gameObjects)
             g->Init();
     }
-    Document Engine::ReadGameDataFromJson() {
+    rapidjson::Document* Engine::ReadGameDataFromJson() {
         std::cout << "PARSING DATA FROM JSON" << std::endl;
         std::ifstream file("../../../../GameProgramming23/Exercise4/Asteroids/gamedata/gamedata.json");
         if(!file.is_open()) {
@@ -49,8 +51,8 @@ namespace MyEngine {
         while(getline(file, line)) {
             jsonString += line;
         }
-        Document doc;
-        doc.Parse(jsonString.c_str());
+        auto* doc = new rapidjson::Document;
+        doc->Parse(jsonString.c_str());
         std::cout << "FINISHED PARSING GAME DATA FROM JSON" << std::endl;
         return doc;
     }
@@ -107,5 +109,9 @@ namespace MyEngine {
         ret->SetName(name);
         gameObjects.push_back(ret);
         return ret;
+    }
+
+    rapidjson::Document* Engine::GetGameDataDoc() {
+        return gamedataDoc;
     }
 }
