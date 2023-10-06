@@ -1,10 +1,13 @@
-file(GLOB_RECURSE Sources "*.h" "*.cpp") # will get all the .cpp and all the .h files in directory and subdirectories
-add_executable(Ex3 ${Sources}
-        Exercise3/Headers/Map.h
-		Exercise3/Classes/Map.cpp
-        ../Exercise6/ExampleGame/main.cpp)
+# Game Only
 
-target_link_libraries(Ex3 ${all_libs})
+file(GLOB_RECURSE MyGame-src "*.h" "*.cpp")
+
+
+add_executable(MyGame ${MyGame-src})
+
+target_include_directories(MyGame PUBLIC ${MYENGINE_INCLUDE_DIR})
+
+target_link_libraries(MyGame MyEngine ${all_libs})
 
 # Copy project data to output path
 file(COPY data DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
