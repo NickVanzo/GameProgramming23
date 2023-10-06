@@ -86,23 +86,23 @@ namespace MyEngine {
 			glm::mat4_cast(glm::quat(glm::radians(rot)));
 	}
 
-	rapidjson::Value GameObject::SerializeTransform(glm::mat4& transform) {
-		rapidjson::Value ret(rapidjson::kObjectType);
-		rapidjson::Document::AllocatorType& allocator = rapidjson::Document::AllocatorType::MemoryPoolAllocator();
-
-		glm::vec3 position, scale;
-		glm::quat rotation;
-
-		// we don't really care about these for gameObjects, but we need to matck glm::decompose() signature
-		glm::vec3 skew; glm::vec4 perspective;
-
-		glm::decompose(transform, scale, rotation, position, skew, perspective);
-
-		ret["position"] = SerializeVector(position);
-		ret["rotation"] = SerializeVector(glm::degrees(glm::eulerAngles(rotation)));
-		ret["scale"] = SerializeVector(scale);
-		return ret;
-	}
+//	rapidjson::Value GameObject::SerializeTransform(glm::mat4& transform) {
+//		rapidjson::Value ret(rapidjson::kObjectType);
+//		rapidjson::Document::AllocatorType& allocator = rapidjson::Document::AllocatorType::MemoryPoolAllocator();
+//
+//		glm::vec3 position, scale;
+//		glm::quat rotation;
+//
+//		// we don't really care about these for gameObjects, but we need to matck glm::decompose() signature
+//		glm::vec3 skew; glm::vec4 perspective;
+//
+//		glm::decompose(transform, scale, rotation, position, skew, perspective);
+//
+//		ret["position"] = SerializeVector(position);
+//		ret["rotation"] = SerializeVector(glm::degrees(glm::eulerAngles(rotation)));
+//		ret["scale"] = SerializeVector(scale);
+//		return ret;
+//	}
 
 	glm::vec3 GameObject::DeserializeVector(rapidjson::Value& vectorData) {
 		assert(vectorData.IsArray() && "Trying to deserialize a vector from non-vector json value");
@@ -114,16 +114,16 @@ namespace MyEngine {
 
 		return ret;
 	}
-
-	rapidjson::Value GameObject::SerializeVector(glm::vec3& vector) {
-		rapidjson::Value ret(rapidjson::kArrayType);
-		//rapidjson::Document d;
-		//rapidjson::Document::AllocatorType& allocator = d.GetAllocator();
-		rapidjson::Document::AllocatorType& allocator = rapidjson::Document::AllocatorType::MemoryPoolAllocator();
-
-		for (int i = 0; i < vector.length(); ++i)
-			ret.PushBack(vector[i], allocator);
-
-		return ret;
-	}
+//
+//	rapidjson::Value GameObject::SerializeVector(glm::vec3& vector) {
+//		rapidjson::Value ret(rapidjson::kArrayType);
+//		//rapidjson::Document d;
+//		//rapidjson::Document::AllocatorType& allocator = d.GetAllocator();
+//		rapidjson::Document::AllocatorType& allocator = rapidjson::Document::AllocatorType::MemoryPoolAllocator();
+//
+//		for (int i = 0; i < vector.length(); ++i)
+//			ret.PushBack(vector[i], allocator);
+//
+//		return ret;
+//	}
 }
