@@ -15,6 +15,6 @@ int main() {
 	MyEngine::ComponentFactory::RegisterComponentOfType("CONTROLLER", std::make_shared<ComponentController>());
 	MyEngine::ComponentFactory::RegisterComponentOfType("CAMERA", std::make_shared<ComponentCamera>());
 	MyEngine::ComponentFactory::RegisterComponentOfType("CUBE_RENDERER", std::make_shared<ComponentRendererMesh>());
-	engine.Init("/Users/nicolovanzo/Documents/ITU/SimpleRenderEngineProject-bin/GameProgramming23/Exercise6/ExampleGame/data/scene.json");
+	engine.Init("data/scene.json");
 
 }
