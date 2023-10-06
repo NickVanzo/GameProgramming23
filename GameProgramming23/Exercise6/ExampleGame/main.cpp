@@ -8,7 +8,6 @@
 #include "Game/ComponentController.h"
 
 MyEngine::Engine engine;
-
 std::shared_ptr<sre::SpriteAtlas> atlas;
 
 int main() {
@@ -16,5 +15,4 @@ int main() {
 	MyEngine::ComponentFactory::RegisterComponentOfType("CAMERA", std::make_shared<ComponentCamera>());
 	MyEngine::ComponentFactory::RegisterComponentOfType("CUBE_RENDERER", std::make_shared<ComponentRendererMesh>());
 	engine.Init("data/scene.json");
-
 }

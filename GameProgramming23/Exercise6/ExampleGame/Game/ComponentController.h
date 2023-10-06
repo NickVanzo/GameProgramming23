@@ -9,4 +9,8 @@ class ComponentController : public MyEngine::Component {
 	void Render(sre::RenderPass&) override;
     float mov_speed = 0.0f;
     float rot_speed = 0.0f;
+    float max_speed = 0.5f;
+    float friction = 0.99f;
+    float z_mov = 0.0f;
+
 };
