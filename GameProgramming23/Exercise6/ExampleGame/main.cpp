@@ -1,7 +1,7 @@
 #include "sre/SpriteAtlas.hpp"
 
-#include "Engine/MyEngine.h"
-#include "Engine/ComponentFactory.h"
+#include "../Engine/Engine/MyEngine.h"
+#include "../Engine/Engine/ComponentFactory.h"
 
 #include "Game/ComponentCamera.h"
 #include "Game/ComponentRendererMesh.h"
@@ -15,6 +15,6 @@ int main() {
 	MyEngine::ComponentFactory::RegisterComponentOfType("CONTROLLER", std::make_shared<ComponentController>());
 	MyEngine::ComponentFactory::RegisterComponentOfType("CAMERA", std::make_shared<ComponentCamera>());
 	MyEngine::ComponentFactory::RegisterComponentOfType("CUBE_RENDERER", std::make_shared<ComponentRendererMesh>());
-	engine.Init("C:/Users/carve/dev/ITU/SimpleRenderEngineProject-bin/GameProgramming23/Ex4/ExampleGame/Debug/data/scene.json");
+	engine.Init("/Users/nicolovanzo/Documents/ITU/SimpleRenderEngineProject-bin/GameProgramming23/Exercise6/ExampleGame/data/scene.json");
 
 }
