@@ -28,7 +28,7 @@ void ComponentController::KeyEvent(SDL_Event& event)
         glm::mat4 translation = glm::translate(glm::mat4(1.0f), v);
         GetGameObject()->transform = translation * GetGameObject()->transform;
     } else if(keyPressed == SDL_SCANCODE_S) {
-        glm::vec3 v = max_speed * cameraForward * friction * max_speed;
+        glm::vec3 v = -(max_speed * cameraForward * friction * max_speed);
         glm::mat4 translation = glm::translate(glm::mat4(1.0f), v);
         GetGameObject()->transform = translation * GetGameObject()->transform;
     } else if(keyPressed == SDL_SCANCODE_D) {
