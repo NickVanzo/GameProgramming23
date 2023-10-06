@@ -8,8 +8,9 @@ namespace Asteroids {
     }
     void PlayerComponentRenderer::Render(sre::SpriteBatch::SpriteBatchBuilder & builder) {
         std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
-        sprite.setPosition(parent.lock().get()->position);
-        sprite.setRotation(parent.lock().get()->rotation);
+        glm::vec3 positionFromMatrix = parent.lock()->transform[3];
+        sprite.setPosition(positionFromMatrix);
+        sprite.setRotation(parent.lock()->rotation);
         builder.addSprite(sprite);
     }
     void PlayerComponentRenderer::TriggerPlayerDeath() {

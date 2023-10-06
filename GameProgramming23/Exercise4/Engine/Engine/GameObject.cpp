@@ -13,6 +13,7 @@ namespace MyEngine {
     }
 
 	void GameObject::Init() {
+        transform = glm::mat4(1);
 		for (auto& component : _components)
 			component->Init();
 	}

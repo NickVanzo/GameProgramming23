@@ -1,0 +1,17 @@
+NORMALIZATION
+Obtain a vector with a length of 1. This is useful for bouncings for example.
+
+CROSS PRODUCT
+Takes two vectors and returns a vector. It is used to get a normal vector to a plane. The normal vector is used a lot in graphics. 
+
+EULER'S ANGLES
+Expresses rotation as a combination of rotations around x,y,z axis.
+
+QUATERNIONS
+Construct that can describe complex rotations without incurring in gimbal locks.
+The rotation is expressed in a different space. They can move between vectors or matrices easily.
+
+MESH ANATOMY
+Mesh: data structure to represent 3D geometrical information. Data needed: vertices, edges, faces. A face can have many edges. It is common to have quads but the GPU understands quads.
+
+UV Coordinates: map 2D to a 3D surface

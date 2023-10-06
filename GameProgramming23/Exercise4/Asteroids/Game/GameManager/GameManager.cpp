@@ -8,7 +8,6 @@
 #include "Engine/MyEngine.h"
 #include "../Player/PlayerUpdateComponent.h"
 #include "../Player/PlayerComponentRenderer.h"
-#include "../Constants/Player.h"
 #include "../Enums/AsteroidSpawnerPositions.h"
 #include "../../Factory/Factory.h"
 GameManager::~GameManager() {
@@ -22,7 +21,7 @@ void GameManager::CreatePlayer() {
     std::shared_ptr<Factory> factory = std::make_shared<Factory>();
     MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
     std::shared_ptr<MyEngine::GameObject> gm = factory->CreateGameObject("PLAYER");
-//    engine->gameObjects.push_back(gm);
+    engine->gameObjects.push_back(gm);
 }
 void GameManager::CreateAsteroidSpawner() {
     MyEngine::Engine* engine = MyEngine::Engine::GetInstance();

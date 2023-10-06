@@ -34,9 +34,10 @@ namespace MyEngine {
         std::vector< std::shared_ptr<Component>> GetComponents();
         float timeAlive = 0;
 		// private fields
-
+        glm::mat4 transform;
 	private:
 		std::vector<std::shared_ptr<Component>> _components = {};
 		std::string _name;
+
 	};
 }

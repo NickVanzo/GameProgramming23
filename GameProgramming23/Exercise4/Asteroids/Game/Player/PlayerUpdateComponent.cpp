@@ -1,6 +1,8 @@
 //
 // Created by Nicolò Vanzo on 22/09/23.
 //
+#include <glm/glm.hpp>
+#include "glm/gtc/matrix_transform.hpp"
 #include "PlayerUpdateComponent.h"
 #include "Engine/MyEngine.h"
 #include "../Laser/BulletComponentRender.h"
@@ -14,10 +16,9 @@ namespace Asteroids {
     }
     void PlayerUpdateComponent::Init() {}
     void PlayerUpdateComponent::Update(float deltaTime) {
-        _gameObject.lock()->position.x = fmod(_gameObject.lock()->position.x, MyEngine::Engine::GetInstance()->GetScreenSize().x);
-        _gameObject.lock()->position.y = fmod(_gameObject.lock()->position.y, MyEngine::Engine::GetInstance()->GetScreenSize().y);
-        _gameObject.lock()->position += velocity;
-        velocity *= friction;
+        glm::vec3 v = glm::vec3(velocity.x, velocity.y, 0.0f);
+        glm::mat4 translation = glm::translate(glm::mat4(1.0f), v * deltaTime * friction);
+        _gameObject.lock()->transform = translation * _gameObject.lock()->transform;
     }
     void PlayerUpdateComponent::KeyEvent(SDL_Event & event) {
         std::weak_ptr<MyEngine::GameObject> parent = GetGameObject();
