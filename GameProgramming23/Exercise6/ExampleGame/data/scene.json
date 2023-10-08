@@ -29,6 +29,18 @@
 							"movSpeed": 1,
 							"rotSpeed": 1
 						}
+					},
+					{
+						"typeId": "LEVEL_LAYOUT_MANAGER",
+						"serializedData": {
+							"layout": [
+								[1,1,1,1],
+								[1,-1,-1,1],
+								[1,-1,-1,1],
+								[1,-1,-1,1],
+								[1,1,1,1,1]
+							]
+						}
 					}
 				],
 				"children": []

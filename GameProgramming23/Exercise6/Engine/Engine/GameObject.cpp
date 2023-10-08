@@ -21,6 +21,7 @@ namespace MyEngine {
 		for (auto& componentData : data["components"].GetArray())
 		{
 			auto TMP_id = componentData["typeId"].GetString();
+            std::cout << "Component: " << componentData["typeId"].GetString() << std::endl;
 			auto component = ComponentFactory::GetComponentOfType(componentData["typeId"].GetString());
 			AddComponent(component);
 			component->Init(componentData["serializedData"]);
