@@ -11,6 +11,5 @@ class ComponentController : public MyEngine::Component {
     float rot_speed = 0.0f;
     float max_speed = 0.5f;
     float friction = 0.99f;
-    float z_mov = 0.0f;
 
 };

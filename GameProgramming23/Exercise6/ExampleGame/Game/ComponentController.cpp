@@ -13,10 +13,6 @@ void ComponentController::Init(rapidjson::Value& serializedData) {
 }
 
 void ComponentController::Update(float deltaTime) {
-
-//            glm::vec3 v = glm::vec3(velocity.x, velocity.y, 0.0f);
-//    glm::mat4 translation = glm::translate(glm::mat4(1.0f), v * deltaTime * friction);
-//    _gameObject.lock()->transform = translation * _gameObject.lock()->transform;
 }
 
 void ComponentController::KeyEvent(SDL_Event& event)
