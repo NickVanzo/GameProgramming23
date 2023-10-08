@@ -11,6 +11,9 @@ public:
     ~LevelLayoutManager();
     void Init(rapidjson::Value& serializedData) override;
     void Update(float) override;
+    void SetupLayoutFromJSON(rapidjson::Value &serializedData);
 private:
-    int layout[5][5];
+    static const int ROWS = 5;
+    static const int COLUMNS = 4;
+    int _layout[ROWS][COLUMNS];
 };

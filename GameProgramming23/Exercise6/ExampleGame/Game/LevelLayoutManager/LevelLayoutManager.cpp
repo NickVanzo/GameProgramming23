@@ -12,14 +12,19 @@ LevelLayoutManager::~LevelLayoutManager() {
 }
 
 void LevelLayoutManager::Init(rapidjson::Value &serializedData) {
-
-    if(serializedData.HasMember("layout")) {
-//        auto& projectionParams = serializedData["components"];
-        std::cout << "Member layout found in serialized data" << std::endl;
-    } else {
-        std::cout << "Member layout not found in serialized data" << std::endl;
+    SetupLayoutFromJSON(serializedData);
+}
+void LevelLayoutManager::SetupLayoutFromJSON(rapidjson::Value &serializedData) {
+    if(serializedData.HasMember("layout") && serializedData["layout"].IsArray()) {
+        auto& layout = serializedData["layout"];
+        for(rapidjson::SizeType i = 0; i < layout.Size(); ++i) {
+            auto& row = layout[i];
+            if(row.IsArray()) {
+                for(rapidjson::SizeType j = 0; j < row.Size(); ++j) {
+                    _layout[i][j] = row[j].GetInt();
+                }
+            }
+        }
     }
 }
-void LevelLayoutManager::Update(float) {
-    std::cout << "updating" << std::endl;
-}
+void LevelLayoutManager::Update(float) {}
