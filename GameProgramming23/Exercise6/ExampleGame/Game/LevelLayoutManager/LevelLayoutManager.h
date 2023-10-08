@@ -2,18 +2,20 @@
 // Created by Nicolò Vanzo on 08/10/23.
 //
 
-#include "Engine/Component.h"
+#include "../../Engine/Engine/GameObject.h"
+#include "../../Engine/Engine/MyEngine.h"
+
 #pragma once
 
-class LevelLayoutManager: public MyEngine::Component {
+class LevelLayoutManager: public MyEngine::GameObject {
 public:
-    LevelLayoutManager();
+    LevelLayoutManager(rapidjson::Value& data);
     ~LevelLayoutManager();
-    void Init(rapidjson::Value& serializedData) override;
-    void Update(float) override;
     void SetupLayoutFromJSON(rapidjson::Value &serializedData);
 private:
     static const int ROWS = 5;
     static const int COLUMNS = 4;
     int _layout[ROWS][COLUMNS];
+
+
 };

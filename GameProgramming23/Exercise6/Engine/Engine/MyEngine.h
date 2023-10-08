@@ -7,7 +7,7 @@
 #include "sre/SDLRenderer.hpp"
 #include "sre/Camera.hpp"
 #include "sre/SpriteAtlas.hpp"
-
+#include "../../ExampleGame/Game/GameManager/GameManager.h"
 #include "SDL.h"
 
 #include "GameObject.h"
@@ -42,11 +42,12 @@ namespace MyEngine {
 		float GetTime() const { return time; }
 		sre::Camera* GetCamera() { return &_camera; };
 
-		std::weak_ptr<GameObject> CreateGameObject(std::string name);
+		std::shared_ptr<GameObject> CreateGameObject(std::string name);
 		std::weak_ptr<GameObject> CreateGameObject(std::string name, std::weak_ptr<GameObject> parent);
 		void DestroyGameObject(GameObject* gameObject);
 
 	private:
+        std::shared_ptr<GameManager> gameManager;
 		std::shared_ptr<GameObject> _root;
 
 		std::chrono::time_point<std::chrono::steady_clock>	time_start;

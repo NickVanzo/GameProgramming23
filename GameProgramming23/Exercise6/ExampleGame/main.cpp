@@ -10,11 +10,11 @@
 
 MyEngine::Engine engine;
 std::shared_ptr<sre::SpriteAtlas> atlas;
+std::shared_ptr<LevelLayoutManager> lvlManager;
 
 int main() {
 	MyEngine::ComponentFactory::RegisterComponentOfType("CONTROLLER", std::make_shared<ComponentController>());
 	MyEngine::ComponentFactory::RegisterComponentOfType("CAMERA", std::make_shared<ComponentCamera>());
 	MyEngine::ComponentFactory::RegisterComponentOfType("CUBE_RENDERER", std::make_shared<ComponentRendererMesh>());
-    MyEngine::ComponentFactory::RegisterComponentOfType("LEVEL_LAYOUT_MANAGER", std::make_shared<LevelLayoutManager>());
 	engine.Init("../../../../GameProgramming23/Exercise6/ExampleGame/data/scene.json");
 }

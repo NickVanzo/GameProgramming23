@@ -1,8 +1,8 @@
 #include "ComponentRendererMesh.h"
-#include "glm/gtx/euler_angles.hpp"
 #include "glm/gtx/transform.hpp"
 
 void ComponentRendererMesh::Init(rapidjson::Value& serializedData) {
+    std::cout << "In init of ComponentRendererMesh" << std::endl;
     _texture = sre::Texture::create().withFile("data/level0.png")
             .withGenerateMipmaps(false)
             .withFilterSampling(false)
@@ -25,6 +25,7 @@ void ComponentRendererMesh::Update(float deltaTime) {
 }
 
 void ComponentRendererMesh::Render(sre::RenderPass& renderPass) {
+        std::cout << "Rendering" << std::endl;
         renderPass.draw(_mesh, GetGameObject()->transform, _material);
 
         //draw second face

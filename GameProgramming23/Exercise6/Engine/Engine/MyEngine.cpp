@@ -9,7 +9,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
 #include "rapidjson/stringbuffer.h"
-
+#include "../../ExampleGame/Game/GameManager/GameManager.h"
 #include "rapidjson/writer.h"
 
 namespace MyEngine {
@@ -43,6 +43,10 @@ namespace MyEngine {
 		rapidjson::IStreamWrapper isw(fis);
 		rapidjson::Document document;
 		document.ParseStream(isw);
+
+        // create game manager
+        gameManager = std::make_shared<GameManager>();
+        gameManager->StartGame(document["root"]);
 
 		_root = std::shared_ptr<GameObject>(CreateGameObject("root"));
 		_root->_parent = std::shared_ptr<GameObject>(nullptr); // we make sure that the root has no parent
@@ -81,13 +85,12 @@ namespace MyEngine {
 		}
 	}
 
-	std::weak_ptr<GameObject> Engine::CreateGameObject(std::string name) {
+	std::shared_ptr<GameObject> Engine::CreateGameObject(std::string name) {
 		auto ret = std::make_shared<GameObject>();
 		ret->_self = ret;
 		ret->_parent = _root;
 		ret->SetName(name);
 		_root->AddChild(ret);
-
 		return ret;
 	}
 

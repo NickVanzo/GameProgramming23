@@ -5,7 +5,9 @@ file(GLOB_RECURSE MyGame-src "*.h" "*.cpp")
 
 add_executable(MyGame ${MyGame-src}
         Game/LevelLayoutManager/LevelLayoutManager.cpp
-        Game/LevelLayoutManager/LevelLayoutManager.h)
+        Game/LevelLayoutManager/LevelLayoutManager.h
+        Game/GameManager/GameManager.cpp
+        Game/GameManager/GameManager.h)
 
 target_include_directories(MyGame PUBLIC ${MYENGINE_INCLUDE_DIR})
 

@@ -1,19 +1,20 @@
 //
 // Created by Nicolò Vanzo on 08/10/23.
 //
-#include "LevelLayoutManager.h"
-
-LevelLayoutManager::LevelLayoutManager() {
+#include "MyEngine.h"
+#include "../ComponentRendererMesh.h"
+#include "Engine/ComponentFactory.h"
+LevelLayoutManager::LevelLayoutManager(rapidjson::Value& data) {
     std::cout << "Level layout in the wild" << std::endl;
+    auto cubeRendered = MyEngine::ComponentFactory::GetComponentOfType("CUBE_RENDERER");
+    this->AddComponent(cubeRendered);
+    cubeRendered->Init(data);
 }
 
 LevelLayoutManager::~LevelLayoutManager() {
     std::cout << "Level layout freed" << std::endl;
 }
 
-void LevelLayoutManager::Init(rapidjson::Value &serializedData) {
-    SetupLayoutFromJSON(serializedData);
-}
 void LevelLayoutManager::SetupLayoutFromJSON(rapidjson::Value &serializedData) {
     if(serializedData.HasMember("layout") && serializedData["layout"].IsArray()) {
         auto& layout = serializedData["layout"];
@@ -27,4 +28,3 @@ void LevelLayoutManager::SetupLayoutFromJSON(rapidjson::Value &serializedData) {
         }
     }
 }
-void LevelLayoutManager::Update(float) {}
