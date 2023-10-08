@@ -114,6 +114,10 @@ namespace MyEngine {
 
 		return ret;
 	}
+
+    glm::vec3 GameObject::GetPosition() {
+        return glm::vec3(transform[3]);
+    }
 //
 //	rapidjson::Value GameObject::SerializeVector(glm::vec3& vector) {
 //		rapidjson::Value ret(rapidjson::kArrayType);

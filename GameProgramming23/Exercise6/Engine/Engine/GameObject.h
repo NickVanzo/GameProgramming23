@@ -31,6 +31,7 @@ namespace MyEngine {
 
 		std::string GetName();
 		void SetName(std::string);
+        glm::vec3 GetPosition();
 
 		// private fields
 	private:

@@ -19,7 +19,12 @@ private:
 	const glm::vec2 tileSize = glm::vec2(64, 64);
 	const glm::vec2 tileSizeWithBorder = glm::vec2(65, 65);
 
-	const std::vector<glm::vec3> positions = { glm::vec3(-.5, -.5, .5), glm::vec3(-.5, .5, .5), glm::vec3(.5, .5, .5), glm::vec3(.5, -.5, .5) };
+    std::vector<glm::vec3> positions = {
+            glm::vec3(-.5, -.5, .5),
+            glm::vec3(-.5, .5, .5),
+            glm::vec3(.5, .5, .5),
+            glm::vec3(.5, -.5, .5)
+    };
 	const std::vector<uint16_t> idxs = { 3, 1, 0, 3, 2, 1 };
 	const glm::vec2 min = glm::vec2(1, 1 * tileSizeWithBorder.y) / textureSize;
 	const glm::vec2 max = min + tileSize / textureSize;

@@ -1,10 +1,8 @@
 #include "ComponentRendererMesh.h"
-
+#include "glm/gtx/euler_angles.hpp"
 #include "glm/gtx/transform.hpp"
 
 void ComponentRendererMesh::Init(rapidjson::Value& serializedData) {
-    std::cout << "minx: " << min.x << " min.y " << min.y << std::endl;
-    std::cout << "maxx: " << max.x << " max.y " << max.y << std::endl;
     _texture = sre::Texture::create().withFile("data/level0.png")
             .withGenerateMipmaps(false)
             .withFilterSampling(false)
@@ -18,33 +16,30 @@ void ComponentRendererMesh::Init(rapidjson::Value& serializedData) {
         .withUVs(uvs)
         .withIndices(idxs, sre::MeshTopology::Triangles, 0)
         .build();
+
+    glm::vec3 gameObjectPos = GetGameObject()->GetPosition();
 }
 
 void ComponentRendererMesh::Update(float deltaTime) {
-    //GetGameObject()->transform = glm::rotate(GetGameObject()->transform, glm::pi<float>() * deltaTime, glm::vec3(0, 1, 0));
+//    GetGameObject()->transform = glm::rotate(GetGameObject()->transform, glm::pi<float>() * deltaTime, glm::vec3(0, 1, 0));
 }
 
 void ComponentRendererMesh::Render(sre::RenderPass& renderPass) {
-    renderPass.draw(_mesh, GetGameObject()->transform, _material);
-//    static auto cube = sre::Mesh::create().withCube(0.5f).build();
-//    static std::vector<std::shared_ptr<sre::Material> > materials = {
-//            sre::Shader::getUnlit()->createMaterial(),
-//            sre::Shader::getUnlit()->createMaterial(),
-//            sre::Shader::getUnlit()->createMaterial()
-//    };
-//
-//    std::vector<glm::vec3> positions = {
-//            {-1,0,-2},
-//            { 0,0,-3},
-//            { 1,0,-4}
-//    };
-//    std::vector<sre::Color> colors = {
-//            {1,0,0,1},
-//            {0,1,0,1},
-//            {0,0,1,1},
-//    };
-//    for (int i = 0; i < positions.size(); i++) {
-//        materials[i]->setTexture(_texture);
-//        renderPass.draw(cube, glm::translate(positions[i]), materials[i]);
-//    }
+        renderPass.draw(_mesh, GetGameObject()->transform, _material);
+
+        //draw second face
+        glm::mat4 secondFaceTransform = GetGameObject()->transform;
+        secondFaceTransform = glm::rotate(secondFaceTransform, glm::radians(90.0f), glm::vec3(0,1,0));
+        renderPass.draw(_mesh, secondFaceTransform, _material);
+
+        //draw third face
+        glm::mat4 thirdFaceTransform = GetGameObject()->transform;
+        thirdFaceTransform = glm::rotate(thirdFaceTransform, glm::radians(-90.0f), glm::vec3(0,1,0));
+        renderPass.draw(_mesh, thirdFaceTransform, _material);
+
+        //draw fourth face
+        glm::mat4 fourthFaceTransform = GetGameObject()->transform;
+        fourthFaceTransform = glm::translate(fourthFaceTransform, glm::vec3(0,0,0));
+        fourthFaceTransform = glm::rotate(fourthFaceTransform, glm::radians(180.0f), glm::vec3(0,1,0));
+        renderPass.draw(_mesh, fourthFaceTransform, _material);
 }
