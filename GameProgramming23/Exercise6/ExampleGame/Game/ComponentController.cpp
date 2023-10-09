@@ -8,12 +8,17 @@
 #include "MyEngine.h"
 
 void ComponentController::Init(rapidjson::Value& serializedData) {
-	mov_speed = serializedData["movSpeed"].GetFloat();
-	rot_speed = serializedData["rotSpeed"].GetFloat();
     GetGameObject()->transform = glm::translate(glm::vec3(2,0,4));
 }
 
 void ComponentController::Update(float deltaTime) {
+    if(velocity != 0) {
+        glm::vec3 v = glm::vec3(0, 0, -velocity * friction * 10);
+        GetGameObject()->transform = glm::translate(GetGameObject()->transform, v * deltaTime);
+    }
+
+
+    velocity = 0;
 }
 
 void ComponentController::KeyEvent(SDL_Event& event)
@@ -21,24 +26,21 @@ void ComponentController::KeyEvent(SDL_Event& event)
     glm::vec3 cameraForward = -glm::normalize(glm::vec3(GetGameObject()->transform[2]));
     auto keyPressed =event.key.keysym.scancode;
     if(keyPressed == SDL_SCANCODE_W) {
-        glm::vec3 v = cameraForward  * friction * max_speed;
-        glm::mat4 translation = glm::translate(glm::mat4(1.0f), v);
-        GetGameObject()->transform = translation * GetGameObject()->transform;
+        velocity += 1;
     } else if(keyPressed == SDL_SCANCODE_S) {
-        glm::vec3 v = -(max_speed * cameraForward * friction * max_speed);
-        glm::mat4 translation = glm::translate(glm::mat4(1.0f), v);
-        GetGameObject()->transform = translation * GetGameObject()->transform;
+        velocity -= 1;
     } else if(keyPressed == SDL_SCANCODE_D) {
         glm::vec3 yAxis = glm::vec3(0,1,0);
         float angle = glm::radians(-4.0f);
         glm::mat4 rotation = glm::rotate(glm::mat4(1.0f),angle, yAxis);
         GetGameObject()->transform = GetGameObject()->transform * rotation;
-    } else {
+    } else if(keyPressed == SDL_SCANCODE_A) {
         glm::vec3 yAxis = glm::vec3(0,1,0);
         float angle = glm::radians(4.0f);
         glm::mat4 rotation = glm::rotate(angle, yAxis);
         GetGameObject()->transform = GetGameObject()->transform * rotation;
-    }
+    } else {}
+
 }
 
 void ComponentController::Render(sre::RenderPass&) {
