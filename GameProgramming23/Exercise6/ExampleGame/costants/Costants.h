@@ -3,6 +3,6 @@
 //
 #pragma once
 namespace MyEngine {
-    const int ROWS = 1;
-    const int COLUMNS = 1;
+    const int ROWS = 10;
+    const int COLUMNS =10;
 }

@@ -8,7 +8,7 @@
 #include "MyEngine.h"
 
 void ComponentController::Init(rapidjson::Value& serializedData) {
-    GetGameObject()->transform = glm::translate(glm::vec3(2,0,4));
+    GetGameObject()->transform = glm::translate(glm::vec3(3,0,4));
 }
 
 void ComponentController::Update(float deltaTime) {

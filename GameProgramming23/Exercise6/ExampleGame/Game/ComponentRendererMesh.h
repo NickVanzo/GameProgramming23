@@ -3,11 +3,17 @@
 #include "Engine/Component.h"
 #include "../costants/Costants.h"
 
-struct VoidSpace {
-    int x;
-    int y;
-};
-
+/**
+ * To setup correctly the tiles in the JSON file keep in mind this:
+ *    you need to specify just even numbers, this is because the number selected is the tile in "light" mode, while
+ *    the tile in "shadow" is the next selected + 1
+ *    Example: I want to render the blue wall with the skeleton, it's position is: 14
+ * You can render directly the shadows tiles but that would mix the tiles.
+ *    Example: I want to render the blue wall with the skeleton shadowed, It's position is: 15 but then
+ *    in this case it's actual shadow becomes the empty blue wall at 16
+ *
+ *  When you edit the JSON file update the ROWS and COLUMNS variables in the costants header
+ */
 class ComponentRendererMesh : public MyEngine::Component {
 public:
 	void Init(rapidjson::Value& serializedData) override;

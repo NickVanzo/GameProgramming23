@@ -43,7 +43,7 @@ void ComponentRendererMesh::CreateFacesInLight(float tileNumber, int i, int j) {
 void ComponentRendererMesh::CreateFacesInShadow(float tileNumber, int i, int j) {
     auto x = floor(fmod(tileNumber, 16)) + 1;
     auto y = 5 - floor(tileNumber / 16);
-    _meshes[i+1][j+1] = sre::Mesh::create()
+    _darkMeshes[i][j] = sre::Mesh::create()
             .withPositions(positions)
             .withUVs(CalculateUvs(x,  y))
             .withIndices(idxs, sre::MeshTopology::Triangles, 0)
@@ -73,7 +73,7 @@ void ComponentRendererMesh::Render(sre::RenderPass& renderPass) {
                 auto tileValue = _layout[i][j];
                 if(tileValue != -1) {
                     auto mesh = _meshes[i][j];
-                    auto meshInShadow = _meshes[i+1][j+1];
+                    auto meshInShadow = _darkMeshes[i][j];
 
                     glm::mat4 firstFaceTransorm = startingPos;
                     firstFaceTransorm = glm::translate(firstFaceTransorm, glm::vec3(i,0,j));
