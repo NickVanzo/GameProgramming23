@@ -15,10 +15,12 @@ public:
 	void Render(sre::RenderPass& renderPass) override;
 private:
     void SetupLayoutFromJSON(rapidjson::Value &serializedData);
-    void CreateMesh(float, int, int);
+    void CreateFacesInLight(float, int, int);
+    void CreateFacesInShadow(float, int, int);
     std::vector<glm::vec4> CalculateUvs(float posX, float posY);
     int _layout[MyEngine::ROWS][MyEngine::COLUMNS];
     std::shared_ptr<sre::Mesh> _meshes[MyEngine::ROWS][MyEngine::COLUMNS];
+    std::shared_ptr<sre::Mesh> _darkMeshes[MyEngine::ROWS][MyEngine::COLUMNS];
 
 	std::shared_ptr<sre::Mesh> _mesh;
 	std::shared_ptr<sre::Material> _material;
