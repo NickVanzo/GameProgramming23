@@ -10,12 +10,11 @@
 class LevelLayoutManager: public MyEngine::GameObject {
 public:
     LevelLayoutManager(rapidjson::Value& data);
+    void Init(rapidjson::Value& data);
     ~LevelLayoutManager();
     void SetupLayoutFromJSON(rapidjson::Value &serializedData);
-private:
     static const int ROWS = 5;
     static const int COLUMNS = 4;
+private:
     int _layout[ROWS][COLUMNS];
-
-
 };

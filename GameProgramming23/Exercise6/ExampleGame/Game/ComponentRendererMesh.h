@@ -9,6 +9,14 @@ public:
 	void Render(sre::RenderPass& renderPass) override;
 
 private:
+    void SetupLayoutFromJSON(rapidjson::Value &serializedData);
+    void CreateMesh(float,float);
+    std::vector<glm::vec4> CalculateUvs(float posX, float posY);
+    static const int ROWS = 5;
+    static const int COLUMNS = 4;
+    int _layout[ROWS][COLUMNS];
+    std::vector<std::shared_ptr<sre::Mesh>> _meshes;
+
 	std::shared_ptr<sre::Mesh> _mesh;
 	std::shared_ptr<sre::Material> _material;
 	std::shared_ptr<sre::Texture> _texture;
@@ -26,12 +34,4 @@ private:
             glm::vec3(.5, -.5, .5)
     };
 	const std::vector<uint16_t> idxs = { 3, 1, 0, 3, 2, 1 };
-	const glm::vec2 min = glm::vec2(1, 1 * tileSizeWithBorder.y) / textureSize;
-	const glm::vec2 max = min + tileSize / textureSize;
-    const std::vector<glm::vec4> uvs = {
-            glm::vec4(min.x, min.y, 0, 0),
-            glm::vec4(min.x, max.y, 0, 0),
-            glm::vec4(max.x, max.y, 0, 0),
-            glm::vec4(max.x, min.y, 0, 0)
-    };
 };

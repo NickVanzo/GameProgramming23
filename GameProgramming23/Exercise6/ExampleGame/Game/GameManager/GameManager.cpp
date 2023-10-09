@@ -12,5 +12,4 @@ GameManager::~GameManager() {
 void GameManager::StartGame(rapidjson::Value& data) {
     auto engine = MyEngine::Engine::GetInstance();
     lvlLayoutManager = engine->CreateGameObject("LEVELMANAGER");
-
 }

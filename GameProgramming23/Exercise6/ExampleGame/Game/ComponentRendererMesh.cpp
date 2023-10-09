@@ -11,13 +11,45 @@ void ComponentRendererMesh::Init(rapidjson::Value& serializedData) {
     _material = sre::Shader::getUnlit()->createMaterial();
     _material->setTexture(_texture);
 
-	_mesh = sre::Mesh::create()
-        .withPositions(positions)
-        .withUVs(uvs)
-        .withIndices(idxs, sre::MeshTopology::Triangles, 0)
-        .build();
+    SetupLayoutFromJSON(serializedData);
+}
 
-    glm::vec3 gameObjectPos = GetGameObject()->GetPosition();
+void ComponentRendererMesh::SetupLayoutFromJSON(rapidjson::Value &serializedData) {
+    if(serializedData.HasMember("layout") && serializedData["layout"].IsArray()) {
+        auto& layout = serializedData["layout"];
+        for(rapidjson::SizeType i = 0; i < layout.Size(); ++i) {
+            auto& row = layout[i];
+            if(row.IsArray()) {
+                for(rapidjson::SizeType j = 0; j < row.Size(); ++j) {
+                    _layout[i][j] = row[j].GetInt();
+                    CreateMesh(i, j);
+                }
+            }
+        }
+    } else {
+        std::cout << "Layout not found" << std::endl;
+    }
+}
+
+void ComponentRendererMesh::CreateMesh(float tilePosX, float tilePosY) {
+    _meshes.push_back(
+            sre::Mesh::create()
+                              .withPositions(positions)
+                              .withUVs(CalculateUvs(tilePosX, tilePosY))
+                              .withIndices(idxs, sre::MeshTopology::Triangles, 0)
+                              .build());
+}
+
+std::vector<glm::vec4> ComponentRendererMesh::CalculateUvs(float tilePosX, float tilePosY) {
+    const glm::vec2 min = glm::vec2(tilePosX * tileSizeWithBorder.x, tilePosY * tileSizeWithBorder.y) / textureSize;
+    const glm::vec2 max = min + tileSize / textureSize;
+    const std::vector<glm::vec4> uvs = {
+            glm::vec4(min.x, min.y, 0, 0),
+            glm::vec4(min.x, max.y, 0, 0),
+            glm::vec4(max.x, max.y, 0, 0),
+            glm::vec4(max.x, min.y, 0, 0)
+    };
+    return uvs;
 }
 
 void ComponentRendererMesh::Update(float deltaTime) {
@@ -25,22 +57,32 @@ void ComponentRendererMesh::Update(float deltaTime) {
 }
 
 void ComponentRendererMesh::Render(sre::RenderPass& renderPass) {
-        std::cout << "Rendering" << std::endl;
-        renderPass.draw(_mesh, GetGameObject()->transform, _material);
+        glm::mat4 startingPos = GetGameObject()->transform;
+        for(int i = 0; i < _meshes.size(); ++i) {
+            for(int j = 0; j < 1; ++j) {
+                auto mesh = _meshes[i];
 
-        //draw second face
-        glm::mat4 secondFaceTransform = GetGameObject()->transform;
-        secondFaceTransform = glm::rotate(secondFaceTransform, glm::radians(90.0f), glm::vec3(0,1,0));
-        renderPass.draw(_mesh, secondFaceTransform, _material);
+                glm::mat4 firstFaceTransorm = startingPos;
+                firstFaceTransorm = glm::translate(firstFaceTransorm, glm::vec3(i - j,0,0));
+                renderPass.draw(mesh, firstFaceTransorm, _material);
 
-        //draw third face
-        glm::mat4 thirdFaceTransform = GetGameObject()->transform;
-        thirdFaceTransform = glm::rotate(thirdFaceTransform, glm::radians(-90.0f), glm::vec3(0,1,0));
-        renderPass.draw(_mesh, thirdFaceTransform, _material);
+                //draw second face
+                glm::mat4 secondFaceTransform = startingPos;
+                secondFaceTransform = glm::translate(secondFaceTransform, glm::vec3(i - j,0,0));
+                secondFaceTransform = glm::rotate(secondFaceTransform, glm::radians(90.0f), glm::vec3(0,1,0));
+                renderPass.draw(mesh, secondFaceTransform, _material);
 
-        //draw fourth face
-        glm::mat4 fourthFaceTransform = GetGameObject()->transform;
-        fourthFaceTransform = glm::translate(fourthFaceTransform, glm::vec3(0,0,0));
-        fourthFaceTransform = glm::rotate(fourthFaceTransform, glm::radians(180.0f), glm::vec3(0,1,0));
-        renderPass.draw(_mesh, fourthFaceTransform, _material);
+                //draw third face
+                glm::mat4 thirdFaceTransform = startingPos;
+                thirdFaceTransform = glm::translate(thirdFaceTransform, glm::vec3(i - j,0,0));
+                thirdFaceTransform = glm::rotate(thirdFaceTransform, glm::radians(-90.0f), glm::vec3(0,1,0));
+                renderPass.draw(mesh, thirdFaceTransform, _material);
+
+                //draw fourth face
+                glm::mat4 fourthFaceTransform = startingPos;
+                fourthFaceTransform = glm::translate(fourthFaceTransform, glm::vec3(i - j,0,0));
+                fourthFaceTransform = glm::rotate(fourthFaceTransform, glm::radians(180.0f), glm::vec3(0,1,0));
+                renderPass.draw(mesh, fourthFaceTransform, _material);
+            }
+        }
 }
