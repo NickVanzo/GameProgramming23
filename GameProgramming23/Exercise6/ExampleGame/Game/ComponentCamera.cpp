@@ -23,7 +23,7 @@ void ComponentCamera::Init(rapidjson::Value& serializedData) {
 		case ProjectionType::Perspective:  _camera->setPerspectiveProjection(p_0, p_1, p_2);  break;
 	}
 
-	_camera->lookAt(glm::vec3(0, 0, 0), glm::vec3(0, 0, -1), glm::vec3{ 0,1,0 });
+	_camera->lookAt(glm::vec3(0, 0, 0), glm::vec3(0, 0, 1), glm::vec3{ 0,1,0 });
 }
 
 void ComponentCamera::Update(float) {

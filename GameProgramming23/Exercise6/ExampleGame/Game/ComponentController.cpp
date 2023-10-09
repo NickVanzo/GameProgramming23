@@ -12,35 +12,32 @@ void ComponentController::Init(rapidjson::Value& serializedData) {
 }
 
 void ComponentController::Update(float deltaTime) {
+    glm::vec3 cameraForward = glm::normalize(glm::vec3(GetGameObject()->transform[2]));
     if(velocity != 0) {
-        glm::vec3 v = glm::vec3(0, 0, -velocity * friction * 10);
+        glm::vec3 v = glm::vec3(0, 0,  velocity * speed);
         GetGameObject()->transform = glm::translate(GetGameObject()->transform, v * deltaTime);
     }
 
+    if(rotation != 0) {
+        GetGameObject()->transform = GetGameObject()->transform * glm::rotate(angle * -rotation * deltaTime * speedRotation, yAxis);
+    }
 
     velocity = 0;
+    rotation = 0;
 }
 
 void ComponentController::KeyEvent(SDL_Event& event)
 {
-    glm::vec3 cameraForward = -glm::normalize(glm::vec3(GetGameObject()->transform[2]));
     auto keyPressed =event.key.keysym.scancode;
     if(keyPressed == SDL_SCANCODE_W) {
-        velocity += 1;
-    } else if(keyPressed == SDL_SCANCODE_S) {
         velocity -= 1;
+    } else if(keyPressed == SDL_SCANCODE_S) {
+        velocity += 1;
     } else if(keyPressed == SDL_SCANCODE_D) {
-        glm::vec3 yAxis = glm::vec3(0,1,0);
-        float angle = glm::radians(-4.0f);
-        glm::mat4 rotation = glm::rotate(glm::mat4(1.0f),angle, yAxis);
-        GetGameObject()->transform = GetGameObject()->transform * rotation;
+        rotation = +1;
     } else if(keyPressed == SDL_SCANCODE_A) {
-        glm::vec3 yAxis = glm::vec3(0,1,0);
-        float angle = glm::radians(4.0f);
-        glm::mat4 rotation = glm::rotate(angle, yAxis);
-        GetGameObject()->transform = GetGameObject()->transform * rotation;
-    } else {}
-
+        rotation = -1;
+    }
 }
 
 void ComponentController::Render(sre::RenderPass&) {

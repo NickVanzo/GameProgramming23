@@ -22,7 +22,6 @@ void ComponentRendererMesh::SetupLayoutFromJSON(rapidjson::Value &serializedData
                 for(rapidjson::SizeType j = 0; j < row.Size(); ++j) {
                     _layout[i][j] = row[j].GetInt();
                     CreateMesh(_layout[i][j], i, j);
-                    std::cout << "Tile found in: [" << i << "," << j << "]" << "->" << row[j].GetInt() << std::endl;
                 }
             }
         }
@@ -32,9 +31,12 @@ void ComponentRendererMesh::SetupLayoutFromJSON(rapidjson::Value &serializedData
 }
 
 void ComponentRendererMesh::CreateMesh(float tileNumber, int i, int j) {
+    auto x = floor(fmod(tileNumber, 16));
+    auto y = 5 - floor(tileNumber / 16);
+    std::cout << y << std::endl;
     _meshes[i][j] = sre::Mesh::create()
                               .withPositions(positions)
-                              .withUVs(CalculateUvs(floor(tileNumber / 6), floor(fmod(tileNumber, 16)) ))
+                              .withUVs(CalculateUvs(x,  y))
                               .withIndices(idxs, sre::MeshTopology::Triangles, 0)
                               .build();
 }
