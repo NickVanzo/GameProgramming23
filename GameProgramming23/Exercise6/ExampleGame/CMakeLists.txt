@@ -7,7 +7,8 @@ add_executable(MyGame ${MyGame-src}
         Game/LevelLayoutManager/LevelLayoutManager.cpp
         Game/LevelLayoutManager/LevelLayoutManager.h
         Game/GameManager/GameManager.cpp
-        Game/GameManager/GameManager.h)
+        Game/GameManager/GameManager.h
+        costants/Costants.h)
 
 target_include_directories(MyGame PUBLIC ${MYENGINE_INCLUDE_DIR})
 

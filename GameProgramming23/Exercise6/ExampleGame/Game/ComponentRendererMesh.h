@@ -1,21 +1,24 @@
 #pragma once
 
 #include "Engine/Component.h"
+#include "../costants/Costants.h"
+
+struct VoidSpace {
+    int x;
+    int y;
+};
 
 class ComponentRendererMesh : public MyEngine::Component {
 public:
 	void Init(rapidjson::Value& serializedData) override;
 	void Update(float deltaTime) override;
 	void Render(sre::RenderPass& renderPass) override;
-
 private:
     void SetupLayoutFromJSON(rapidjson::Value &serializedData);
-    void CreateMesh(float,float);
+    void CreateMesh(float, int, int);
     std::vector<glm::vec4> CalculateUvs(float posX, float posY);
-    static const int ROWS = 5;
-    static const int COLUMNS = 4;
-    int _layout[ROWS][COLUMNS];
-    std::vector<std::shared_ptr<sre::Mesh>> _meshes;
+    int _layout[MyEngine::ROWS][MyEngine::COLUMNS];
+    std::shared_ptr<sre::Mesh> _meshes[MyEngine::ROWS][MyEngine::COLUMNS];
 
 	std::shared_ptr<sre::Mesh> _mesh;
 	std::shared_ptr<sre::Material> _material;

@@ -4,7 +4,7 @@
 
 #include "../../Engine/Engine/GameObject.h"
 #include "../../Engine/Engine/MyEngine.h"
-
+#include "../../costants/Costants.h"
 #pragma once
 
 class LevelLayoutManager: public MyEngine::GameObject {
@@ -13,8 +13,6 @@ public:
     void Init(rapidjson::Value& data);
     ~LevelLayoutManager();
     void SetupLayoutFromJSON(rapidjson::Value &serializedData);
-    static const int ROWS = 5;
-    static const int COLUMNS = 4;
 private:
-    int _layout[ROWS][COLUMNS];
+    int _layout[MyEngine::ROWS][MyEngine::COLUMNS];
 };

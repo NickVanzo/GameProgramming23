@@ -10,6 +10,7 @@
 void ComponentController::Init(rapidjson::Value& serializedData) {
 	mov_speed = serializedData["movSpeed"].GetFloat();
 	rot_speed = serializedData["rotSpeed"].GetFloat();
+    GetGameObject()->transform = glm::translate(glm::vec3(2,0,4));
 }
 
 void ComponentController::Update(float deltaTime) {
