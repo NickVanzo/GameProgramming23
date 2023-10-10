@@ -83,7 +83,7 @@ void ComponentRendererMesh::Render(sre::RenderPass& renderPass) {
                     glm::mat4 secondFaceTransform = startingPos;
                     secondFaceTransform = glm::translate(secondFaceTransform, glm::vec3(i,0,j));
                     secondFaceTransform = glm::rotate(secondFaceTransform, glm::radians(90.0f), glm::vec3(0,1,0));
-                    renderPass.draw(meshInShadow, secondFaceTransform, _material);
+                    renderPass.draw(mesh, secondFaceTransform, _material);
 
                     //draw third face
                     glm::mat4 thirdFaceTransform = startingPos;
@@ -95,7 +95,7 @@ void ComponentRendererMesh::Render(sre::RenderPass& renderPass) {
                     glm::mat4 fourthFaceTransform = startingPos;
                     fourthFaceTransform = glm::translate(fourthFaceTransform, glm::vec3(i,0,j));
                     fourthFaceTransform = glm::rotate(fourthFaceTransform, glm::radians(180.0f), glm::vec3(0,1,0));
-                    renderPass.draw(mesh, fourthFaceTransform, _material);
+                    renderPass.draw(meshInShadow, fourthFaceTransform, _material);
                 } else {
 //                    std::cout << "Found -1 in position: [" << i << "," << j << "]" << std::endl;
                 }
