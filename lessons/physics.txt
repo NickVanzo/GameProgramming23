@@ -1,0 +1,33 @@
+Physics
+
+1. Physics Simulation
+	Physics concepts in games: 
+	Speed (Scalar, length, duration, example: driving 50 km/h
+	Velocity: v
+	Acceleration
+	Force: change v over time
+	Impulse: change v instantly
+	Drag
+	Angular velocity
+	Torque
+	Mass
+
+Usually physics simulation are done in a fixed timestamp, we use fixed timesteps
+Types of physics body: static, dynamic, kinematic
+
+1. Static: no movement under simulation, can be moved by user manually, has no velocity (like walls)
+2. Fully simulated, mass = density * volume, move according to forces (balls)
+3. Move according to velocity, does not respond to forces 
+
+If an object is set to sleep the physics simulations are not performed on it
+
+Integratin Box2D
+Physics need to receive data from the game engine but they also update them. Each collision fires some callbacks. 
+The game can update itself but the physics engine always override it, this is not always the case, in Unity it's the opposite (the game has more priority)
+
+while (gameLoop) {
+	//do physics simulation
+	//game logic update
+	//rendering
+	//wait for next frame
+}
