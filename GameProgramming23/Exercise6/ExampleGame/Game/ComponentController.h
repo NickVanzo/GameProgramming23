@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Component.h"
+#include "Engine/Component.h"
 
 class ComponentController : public MyEngine::Component {
 	void Init(rapidjson::Value&) override;
@@ -14,5 +14,4 @@ class ComponentController : public MyEngine::Component {
     float rotation = 0;
     float speed = 30;
     float friction = 0.99f;
-
 };

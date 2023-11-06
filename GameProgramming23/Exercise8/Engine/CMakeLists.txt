@@ -4,7 +4,8 @@ file(GLOB_RECURSE MyEngine-hpp "*.h")
 
 set(MYENGINE_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE PATH "" FORCE)
 
-add_library(MyEngine ${MyEngine-src} ${MyEngine-hpp})
+add_library(MyEngine ${MyEngine-src} ${MyEngine-hpp}
+        ../../Exercise6/ExampleGame/Game/ComponentController.h)
 
 message(424243)
 message(${EXTRA_LIBS})

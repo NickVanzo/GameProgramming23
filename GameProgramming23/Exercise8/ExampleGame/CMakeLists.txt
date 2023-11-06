@@ -5,7 +5,6 @@ file(GLOB_RECURSE MyGame-src "*.h" "*.cpp")
 
 add_executable(MyGame ${MyGame-src})
 
-message(424242)
 message(${MYENGINE_INCLUDE_DIR})
 
 target_include_directories(MyGame PUBLIC ${MYENGINE_INCLUDE_DIR})
