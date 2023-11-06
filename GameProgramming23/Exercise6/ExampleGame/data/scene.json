@@ -1,0 +1,67 @@
+{
+	"root": {
+		"name": "_root",
+		"transform": {
+			"position": [0, 0, 0],
+			"rotation": [0, 0, 0],
+			"scale": [1, 1, 1]
+		},
+		"components": [],
+		"children": [
+			{
+				"name": "lvlManager",
+				"transform": {
+					"position": [0, 0, 0],
+					"rotation": [0, 0, 0],
+					"scale": [1, 1, 1]
+				},
+				"components": [
+					{
+						"typeId": "CUBE_RENDERER",
+						"serializedData": {
+							"layout": [
+								[30, 40, 20, 60, 10, 50, 70, 80, 0, 90],
+								[2, -1, -1, -1, -1, -1, -1, -1, -1, 4],
+								[4, -1, -1, -1, -1, -1, -1, -1, -1, 2],
+								[6, -1, -1, -1, -1, -1, -1, -1, -1, 6],
+								[8, -1, -1, -1, -1, -1, -1, -1, -1, 8],
+								[10, -1, -1, -1, -1, -1, 0, -1, -1
+								, 10],
+								[12, -1, -1, -1, -1, -1, -1, -1, -1, 12],
+								[14, -1, -1, -1, -1, -1, -1, -1, -1, 14],
+								[16, -1, -1, -1, -1, -1, -1, -1, -1, 16],
+								[18, 50, 70, 80, 0, 90, 30, 60, 40, 18]
+							]
+						}
+					}
+				],
+				"children": []
+			},
+			{
+				"name": "camera",
+				"transform": {
+					"position": [-2, 0, 2],
+					"rotation": [0, -35, 0],
+					"scale": [1, 1, 1]
+				},
+				"components": [
+					{
+						"typeId": "CAMERA",
+						"serializedData": {
+							"projectionType": 1,
+							"projectionParams": [45,0.1,1000]
+						}
+					},
+					{
+						"typeId": "CONTROLLER",
+						"serializedData": {
+							"movSpeed": 1,
+							"rotSpeed": 1
+						}
+					}
+				],
+				"children": []
+			}
+		]
+	}
+}

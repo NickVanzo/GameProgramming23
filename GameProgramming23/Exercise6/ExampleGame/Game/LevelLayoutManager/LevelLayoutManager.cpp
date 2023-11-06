@@ -1,0 +1,39 @@
+//
+// Created by Nicolò Vanzo on 08/10/23.
+//
+#include "MyEngine.h"
+#include "../ComponentRendererMesh.h"
+#include "Engine/ComponentFactory.h"
+
+void LevelLayoutManager::Init(rapidjson::Value &data) {
+    std::cout << "Level layout in the wild" << std::endl;
+    SetupLayoutFromJSON(data["children"][0]["components"][0]["serializedData"]);
+}
+
+LevelLayoutManager::LevelLayoutManager(rapidjson::Value& data) {
+    auto cubeRendered = MyEngine::ComponentFactory::GetComponentOfType("CUBE_RENDERER");
+    this->AddComponent(cubeRendered);
+    cubeRendered->Init(data);
+}
+
+LevelLayoutManager::~LevelLayoutManager() {
+    std::cout << "Level layout freed" << std::endl;
+}
+
+void LevelLayoutManager::SetupLayoutFromJSON(rapidjson::Value &serializedData) {
+    if(serializedData.HasMember("layout") && serializedData["layout"].IsArray()) {
+        auto& layout = serializedData["layout"];
+        for(rapidjson::SizeType i = 0; i < layout.Size(); ++i) {
+            auto& row = layout[i];
+            if(row.IsArray()) {
+                for(rapidjson::SizeType j = 0; j < row.Size(); ++j) {
+                    std::cout << "Setup layout: " << row[j].GetInt() << std::endl;
+                    _layout[i][j] = row[j].GetInt();
+                }
+            }
+        }
+    } else {
+        std::cout << "Layout not found" << std::endl;
+    }
+
+}
