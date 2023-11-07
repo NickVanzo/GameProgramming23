@@ -3,7 +3,7 @@
 #include "Engine/MyEngine.h"
 #include "Engine/Components/ComponentRendererSprite.h"
 
-void ComponentBackground::Init(rapidjson::Value&) {
+void ComponentBackground::Init(rapidjson::Value& serializedData) {
 	auto gameObject = GetGameObject().lock();
 	if (!gameObject)
 		return;

@@ -15,14 +15,7 @@ void ComponentController::Init(rapidjson::Value& serializedData) {
 
     SetBirdValuesFromJSON(serializedData);
 
-//    rapidjson::StringBuffer buffer;
-//    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
-//
-//    // Serialize the `serializedData` to a JSON string
-//    serializedData.Accept(writer);
-//
-//    // Print the JSON string to the console
-//    std::cout << buffer.GetString() << std::endl;
+
 }
 
 void ComponentController::SetBirdValuesFromJSON(rapidjson::Value &serializedData) {
