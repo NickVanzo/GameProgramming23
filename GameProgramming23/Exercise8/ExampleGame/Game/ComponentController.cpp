@@ -55,8 +55,7 @@ void ComponentController::KeyEvent(SDL_Event& event)
 void ComponentController::ApplyImpulse() {
     auto physicsComponent = GetGameObject().lock()->FindComponent<ComponentPhysicsBody>();
     if(physicsComponent.lock()) {
-        auto* impulseVector = new bvec2(0, impulseForce);
-        physicsComponent.lock()->addImpulse(*impulseVector);
+        physicsComponent.lock()->addImpulse(*new bvec2(0, impulseForce));
     }
 }
 
