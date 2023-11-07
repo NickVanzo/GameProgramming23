@@ -26,12 +26,33 @@ void ComponentController::Init(rapidjson::Value& serializedData) {
 }
 
 void ComponentController::SetBirdValuesFromJSON(rapidjson::Value &serializedData) {
-    if(serializedData.HasMember("movSpeed") && serializedData.HasMember("rotSpeed")) {
-        mov_speed = serializedData["movSpeed"].GetFloat();
-        rot_speed = serializedData["rotSpeed"].GetFloat();
-        impulseForce = serializedData["impulseForce"].GetFloat();
-        cout << "Setting velocity at "<< mov_speed << " and rotation at "<< rot_speed <<" speed of bird" << endl;
+    if(JSONIsValid(serializedData)) {
+        SetValuesFromJSON(serializedData);
+    } else {
+        SetDefaultValues();
     }
+}
+
+bool ComponentController::JSONIsValid(rapidjson::Value &serializedData) {
+    return(
+            serializedData.HasMember("movSpeed")
+            && serializedData.HasMember("rotSpeed")
+            && serializedData.HasMember("impulseForce")
+            );
+}
+
+void ComponentController::SetValuesFromJSON(rapidjson::Value &serializedData) {
+    mov_speed = serializedData["movSpeed"].GetFloat();
+    rot_speed = serializedData["rotSpeed"].GetFloat();
+    impulseForce = serializedData["impulseForce"].GetFloat();
+    cout << "Setting velocity at "<< mov_speed << " and rotation at "<< rot_speed <<" speed of bird" << endl;
+}
+
+void ComponentController::SetDefaultValues() {
+    mov_speed = 100;
+    rot_speed = 1;
+    impulseForce = 40;
+    cout << "Something went wrong while reading from the json. Setting bird variables to default" << endl;
 }
 
 void ComponentController::Update(float deltaTime) {

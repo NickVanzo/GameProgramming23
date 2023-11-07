@@ -16,4 +16,7 @@ private:
     void ApplyImpulse();
     void Move(float deltaTime);
     void SetBirdValuesFromJSON(rapidjson::Value&);
+    void SetValuesFromJSON(rapidjson::Value&);
+    void SetDefaultValues();
+    bool JSONIsValid(rapidjson::Value&);
 };
