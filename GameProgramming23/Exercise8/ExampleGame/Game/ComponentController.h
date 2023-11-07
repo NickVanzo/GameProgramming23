@@ -9,6 +9,7 @@ class ComponentController : public MyEngine::Component {
 	void KeyEvent(SDL_Event&) override;
 	void OnCollisionStart(ComponentPhysicsBody* other) override;
 private:
+    bool linearVelocitySet = false;
 	glm::vec3 _mov;
 	float mov_speed;
 	float rot_speed;
@@ -19,4 +20,5 @@ private:
     void SetValuesFromJSON(rapidjson::Value&);
     void SetDefaultValues();
     bool JSONIsValid(rapidjson::Value&);
+    void SetLinearVelocity(float);
 };

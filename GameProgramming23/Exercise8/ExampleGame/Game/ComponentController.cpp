@@ -15,14 +15,14 @@ void ComponentController::Init(rapidjson::Value& serializedData) {
 
     SetBirdValuesFromJSON(serializedData);
 
-    rapidjson::StringBuffer buffer;
-    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
-
-    // Serialize the `serializedData` to a JSON string
-    serializedData.Accept(writer);
-
-    // Print the JSON string to the console
-    std::cout << buffer.GetString() << std::endl;
+//    rapidjson::StringBuffer buffer;
+//    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
+//
+//    // Serialize the `serializedData` to a JSON string
+//    serializedData.Accept(writer);
+//
+//    // Print the JSON string to the console
+//    std::cout << buffer.GetString() << std::endl;
 }
 
 void ComponentController::SetBirdValuesFromJSON(rapidjson::Value &serializedData) {
@@ -42,28 +42,37 @@ bool ComponentController::JSONIsValid(rapidjson::Value &serializedData) {
 }
 
 void ComponentController::SetValuesFromJSON(rapidjson::Value &serializedData) {
+    cout << "Setting velocity at "<< mov_speed << " and rotation at "<< rot_speed <<" speed of bird" << endl;
     mov_speed = serializedData["movSpeed"].GetFloat();
     rot_speed = serializedData["rotSpeed"].GetFloat();
     impulseForce = serializedData["impulseForce"].GetFloat();
-    cout << "Setting velocity at "<< mov_speed << " and rotation at "<< rot_speed <<" speed of bird" << endl;
 }
 
 void ComponentController::SetDefaultValues() {
-    mov_speed = 100;
-    rot_speed = 1;
-    impulseForce = 40;
     cout << "Something went wrong while reading from the json. Setting bird variables to default" << endl;
+    mov_speed = 1;
+    rot_speed = 1;
+    impulseForce = 400;
 }
+
 
 void ComponentController::Update(float deltaTime) {
-    Move(deltaTime);
+    SetLinearVelocity(mov_speed);
 }
 
-void ComponentController::Move(float deltaTime) {
-    vec3 v = glm::vec3(mov_speed, 0,  0);
-    mat4 translation = translate(mat4(1.0), v * deltaTime);
-    GetGameObject().lock()->transform = translation * GetGameObject().lock()->transform;
+void ComponentController::SetLinearVelocity(float velocityAlongTheX) {
+    if(!linearVelocitySet) {
+        linearVelocitySet = true;
+        cout << "Setting the linear velocity of the bird" << endl;
+        auto physicsComponent = GetGameObject().lock()->FindComponent<ComponentPhysicsBody>();
+        if(physicsComponent.lock()) {
+            physicsComponent.lock()->setLinearVelocity(*new vec2(velocityAlongTheX, 0));
+        } else {
+            cout << "Something went wrong while setting the linear velocity of the game object" << endl;
+        }
+    }
 }
+
 
 void ComponentController::KeyEvent(SDL_Event& event)
 {
