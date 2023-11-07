@@ -12,7 +12,8 @@ private:
 	glm::vec3 _mov;
 	float mov_speed;
 	float rot_speed;
+    float impulseForce;
     void ApplyImpulse();
     void Move(float deltaTime);
-    void ReadJSON(rapidjson::Value&);
+    void SetBirdValuesFromJSON(rapidjson::Value&);
 };
