@@ -29,7 +29,7 @@ namespace MyEngine {
 		const float PHYSICS_FIXED_FRAME_TIME = 1 / 60.0f;
 		const int   PHYSICS_ITERATION_POSITION = 2;
 		const int   PHYSICS_ITERATION_VELOCITY = 6;
-
+        void RemoveObject(std::shared_ptr<MyEngine::GameObject>);
 		Engine();
 
 		void Init(std::string sceneFile);
@@ -37,6 +37,8 @@ namespace MyEngine {
 		void Update(float);
 		void UpdatePhysics();
 		void Render();
+
+        void DestroyBody(b2Body* body);
 
 		float GetFPS() const { return 1.0 / time_elapsed.count(); }
 		float GetTimeElapsedMs() const { return 1000 * time_elapsed.count(); }
@@ -48,6 +50,7 @@ namespace MyEngine {
 		float GetTime() const { return time; }
 		sre::Camera* GetCamera() { return &_camera; };
 		b2World* GetB2World() { return _b2World; }
+        void DestroyGameObjectByName(std::string name);
 		float GetPhysicsScale() { return _physicsScale; }
 
 		void RegisterPhysicsComponent(ComponentPhysicsBody* body);

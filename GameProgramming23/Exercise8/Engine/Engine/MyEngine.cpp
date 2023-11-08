@@ -197,7 +197,7 @@ namespace MyEngine {
 		}
 	}
 
-	void Engine::BeginContact(b2Contact* contact) {
+    void Engine::BeginContact(b2Contact* contact) {
 		b2ContactListener::BeginContact(contact);
 		HandleContact(contact, true);
 	}
@@ -206,6 +206,10 @@ namespace MyEngine {
 		b2ContactListener::EndContact(contact);
 		HandleContact(contact, false);
 	}
+
+    void Engine::RemoveObject(std::shared_ptr<MyEngine::GameObject> p) {
+        std::cout << "Removing..." << p->_name << std::endl;
+    }
 
 	void Engine::HandleContact(b2Contact* contact, bool begin) {
 		auto fixA = contact->GetFixtureA();
@@ -225,4 +229,8 @@ namespace MyEngine {
 				gameObjB->OnCollisionEnd(physB->second);
 		}
 	}
+
+    void Engine::DestroyBody(b2Body* body) {
+        _b2World->DestroyBody(body);
+    }
 }

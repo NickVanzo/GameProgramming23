@@ -23,6 +23,8 @@ public:
 	void addImpulse(glm::vec2 impulse);
 	void setLinearVelocity(glm::vec2 velocity);
 	glm::vec2 getLinearVelocity();
+    void Destroy();
+    b2Body* GetBody() {return _body; };
 
 private:
 	b2World* _world;

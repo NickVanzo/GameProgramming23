@@ -31,14 +31,22 @@ void ComponentSpawner::Init(rapidjson::Value&) {
 			0
 		};
 
+
 		SpawnWall("WallBottom" + std::to_string(i), "column_bottom.png", posBot);
-        glm::vec3 coinPos = posBot + glm::vec3(0,380,0);
-        // Spawning coins
-        SpawnCoin("coin" + std::to_string(i), coinPos);
-		SpawnWall("WallTop" + std::to_string(i), "column_top.png", posTop);
+        SpawnWall("WallTop" + std::to_string(i), "column_top.png", posTop);
+        SpawnCoin("coin" + std::to_string(i), posBot + glm::vec3(0,380,0));
 	}
 
-	// TODO spawn floor
+	for(int i = 0; i < nWalls; ++i) {
+        float xOffset = xVariation * cos(i * curve * 0.2f) + xOffsetStart;
+        glm::vec3 posBot {
+                i * 300,
+                0,
+                0
+        };
+        SpawnFloor("floor" + std::to_string(i), posBot);
+
+    }
 
 }
 
@@ -74,4 +82,18 @@ void ComponentSpawner::SpawnCoin(std::string name, glm::vec3 pos) {
     auto body = coin->CreateComponent<ComponentPhysicsBody>().lock();
     glm::vec2 s {sprite->getSpriteSize().x * sprite->getScale().x / 2, sprite->getSpriteSize().y * sprite->getScale().y / 2};
     body->CreateBody(b2_staticBody, true, s);
+}
+void ComponentSpawner::SpawnFloor(std::string name, glm::vec3 pos) {
+    auto engine = MyEngine::Engine::GetInstance();
+    auto gameObject = GetGameObject();
+    auto coin = engine->CreateGameObject(name, gameObject).lock();
+    auto renderer = coin->CreateComponent<ComponentRendererSprite>().lock();
+    renderer->SetSprite("SINGLE", "background2");
+    float scale = MyEngine::Engine::GetInstance()->GetScreenSize().y / renderer->GetSprite()->getSpriteSize().y;
+    renderer->GetSprite()->setScale({scale, scale  });
+    coin->SetPosition(pos);
+    auto body = coin->CreateComponent<ComponentPhysicsBody>().lock();
+
+    glm::vec2 s {renderer->GetSprite()->getSpriteSize().x, renderer->GetSprite()->getSpriteSize().y /2};
+    body->CreateBody(b2_staticBody, false, s);
 }

@@ -9,6 +9,7 @@
 #include "rapidjson/document.h"
 #include "sre/SpriteBatch.hpp"
 #include "sre/RenderPass.hpp"
+#include "Box2D/Dynamics/b2World.h"
 
 class ComponentPhysicsBody;
 

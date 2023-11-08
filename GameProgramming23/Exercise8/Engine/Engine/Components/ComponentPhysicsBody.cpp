@@ -1,5 +1,4 @@
 #include "ComponentPhysicsBody.h"
-
 #include "Engine/MyEngine.h"
 
 ComponentPhysicsBody::~ComponentPhysicsBody() {
@@ -103,4 +102,10 @@ void ComponentPhysicsBody::setLinearVelocity(glm::vec2 velocity) {
 		_body->SetAwake(true);
 	}
 	_body->SetLinearVelocity(v);
+}
+
+void ComponentPhysicsBody::Destroy() {
+    auto engine = MyEngine::Engine::GetInstance();
+    _world = engine->GetB2World();
+    _world->DestroyBody(_body);
 }

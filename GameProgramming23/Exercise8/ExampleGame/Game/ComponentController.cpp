@@ -3,7 +3,7 @@
 #include "Engine/Components/ComponentPhysicsBody.h"
 #include "glm/gtx/matrix_decompose.hpp"
 #include "rapidjson/prettywriter.h"
-
+#include "Engine/MyEngine.h"
 using namespace std;
 using namespace glm;
 using namespace rapidjson;
@@ -88,6 +88,8 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other) {
 
         } else {
             ++coinsPickedUp;
+            auto engine = MyEngine::Engine::GetInstance();
+            engine->RemoveObject(other->GetGameObject().lock());
             cout << "Coin picked up! Total: " << coinsPickedUp << endl;
         }
     }
