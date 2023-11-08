@@ -83,8 +83,12 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other) {
     //  TODO gameOver on touching pipes, despawn coins
     if(other->GetGameObject().lock()) {
         auto name = other->GetGameObject().lock()->GetName();
+        cout << name << endl;
         if(IsWall(name)) {
-            
+
+        } else {
+            ++coinsPickedUp;
+            cout << "Coin picked up! Total: " << coinsPickedUp << endl;
         }
     }
 }

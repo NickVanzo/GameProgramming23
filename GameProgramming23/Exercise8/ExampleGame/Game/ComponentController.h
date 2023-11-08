@@ -14,6 +14,7 @@ private:
 	float mov_speed;
 	float rot_speed;
     float impulseForce;
+    int coinsPickedUp = 0;
     void ApplyImpulse();
     void Move(float deltaTime);
     bool IsWall(const std::string& name);

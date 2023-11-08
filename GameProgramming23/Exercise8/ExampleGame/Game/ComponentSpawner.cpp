@@ -33,13 +33,13 @@ void ComponentSpawner::Init(rapidjson::Value&) {
 
 		SpawnWall("WallBottom" + std::to_string(i), "column_bottom.png", posBot);
         glm::vec3 coinPos = posBot + glm::vec3(0,380,0);
+        // Spawning coins
         SpawnCoin("coin" + std::to_string(i), coinPos);
 		SpawnWall("WallTop" + std::to_string(i), "column_top.png", posTop);
 	}
 
 	// TODO spawn floor
 
-	// TODO spawn coins
 }
 
 void ComponentSpawner::SpawnWall(std::string name, std::string spriteId, glm::vec3 pos) {
@@ -62,7 +62,6 @@ void ComponentSpawner::SpawnWall(std::string name, std::string spriteId, glm::ve
 	body->CreateBody(b2_staticBody, false, s);
 }
 
-
 void ComponentSpawner::SpawnCoin(std::string name, glm::vec3 pos) {
     auto engine = MyEngine::Engine::GetInstance();
     auto gameObject = GetGameObject();
@@ -72,4 +71,7 @@ void ComponentSpawner::SpawnCoin(std::string name, glm::vec3 pos) {
     auto sprite = renderer->GetSprite();
     sprite->setScale({ 2, 2 });
     coin->SetPosition(pos);
+    auto body = coin->CreateComponent<ComponentPhysicsBody>().lock();
+    glm::vec2 s {sprite->getSpriteSize().x * sprite->getScale().x / 2, sprite->getSpriteSize().y * sprite->getScale().y / 2};
+    body->CreateBody(b2_staticBody, true, s);
 }
