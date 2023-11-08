@@ -15,6 +15,5 @@ int main() {
 	MyEngine::ComponentFactory::RegisterComponentOfType("FOLLOW_TARGET", []() { return std::make_shared<ComponentFollowTarget>(); });
 	MyEngine::ComponentFactory::RegisterComponentOfType("BACKGROUND", []() { return std::make_shared<ComponentBackground>(); });
 	MyEngine::ComponentFactory::RegisterComponentOfType("SPAWNER", []() { return std::make_shared<ComponentSpawner>(); });
-	
 	engine.Init("data/scene.json");
 }

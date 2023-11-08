@@ -170,6 +170,8 @@ namespace MyEngine {
 	}
 
 	std::weak_ptr<GameObject> Engine::CreateGameObject(std::string name, std::weak_ptr<GameObject> p_parent) {
+        std::cout << "Gameobject created" << name << std::endl;
+
 		assert(_gameObjects.find(name) == _gameObjects.end() && "Cannot create two objects with same name");
 
 		auto parent = p_parent.lock();

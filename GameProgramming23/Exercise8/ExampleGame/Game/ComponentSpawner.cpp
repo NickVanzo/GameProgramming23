@@ -30,8 +30,6 @@ void ComponentSpawner::Init(rapidjson::Value&) {
 			winHeight - sin(i* curve)* heighVariation,
 			0
 		};
-
-
 		SpawnWall("WallBottom" + std::to_string(i), "column_bottom.png", posBot);
         SpawnWall("WallTop" + std::to_string(i), "column_top.png", posTop);
         SpawnCoin("coin" + std::to_string(i), posBot + glm::vec3(0,380,0));
@@ -44,9 +42,7 @@ void ComponentSpawner::Init(rapidjson::Value&) {
                 0
         };
         SpawnFloor("floor" + std::to_string(i), posBot);
-
     }
-
 }
 
 void ComponentSpawner::SpawnWall(std::string name, std::string spriteId, glm::vec3 pos) {
