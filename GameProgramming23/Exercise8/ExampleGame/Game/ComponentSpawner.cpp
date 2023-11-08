@@ -38,7 +38,6 @@ void ComponentSpawner::Init(rapidjson::Value&) {
 	}
 
 	for(int i = 0; i < nWalls; ++i) {
-        float xOffset = xVariation * cos(i * curve * 0.2f) + xOffsetStart;
         glm::vec3 posBot {
                 i * 300,
                 0,

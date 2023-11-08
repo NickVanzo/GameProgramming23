@@ -84,12 +84,12 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other) {
     if(other->GetGameObject().lock()) {
         auto name = other->GetGameObject().lock()->GetName();
         cout << name << endl;
-        if(IsWall(name)) {
+        if(IsWall(name)) {  
 
         } else {
             ++coinsPickedUp;
             auto engine = MyEngine::Engine::GetInstance();
-            engine->RemoveObject(other->GetGameObject().lock());
+            engine->DestroyGameObject(other->GetGameObject().lock().get()       );
             cout << "Coin picked up! Total: " << coinsPickedUp << endl;
         }
     }
