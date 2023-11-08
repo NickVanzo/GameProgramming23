@@ -1,9 +1,7 @@
 #include "ComponentController.h"
-#include "glm/glm.hpp"
 #include "SDL.h"
 #include "Engine/Components/ComponentPhysicsBody.h"
 #include "glm/gtx/matrix_decompose.hpp"
-#include "rapidjson/stringbuffer.h"
 #include "rapidjson/prettywriter.h"
 
 using namespace std;
@@ -12,10 +10,7 @@ using namespace rapidjson;
 
 void ComponentController::Init(rapidjson::Value& serializedData) {
     // TODO load necessary data (linear velocity, inpulse strenght, etc) and add the to `scene.json`
-
     SetBirdValuesFromJSON(serializedData);
-
-
 }
 
 void ComponentController::SetBirdValuesFromJSON(rapidjson::Value &serializedData) {
@@ -45,7 +40,7 @@ void ComponentController::SetDefaultValues() {
     cout << "Something went wrong while reading from the json. Setting bird variables to default" << endl;
     mov_speed = 1;
     rot_speed = 1;
-    impulseForce = 400;
+    impulseForce = 10000000;
 }
 
 
@@ -78,11 +73,22 @@ void ComponentController::KeyEvent(SDL_Event& event)
 void ComponentController::ApplyImpulse() {
     auto physicsComponent = GetGameObject().lock()->FindComponent<ComponentPhysicsBody>();
     if(physicsComponent.lock()) {
+        physicsComponent.lock()->addImpulse(*new bvec2(0,0 ));
         auto* impulseVector = new bvec2(0, impulseForce);
         physicsComponent.lock()->addImpulse(*impulseVector);
     }
 }
 
 void ComponentController::OnCollisionStart(ComponentPhysicsBody* other) {
-    // TODO gameOver on touching pipes, despawn coins
+    //  TODO gameOver on touching pipes, despawn coins
+    if(other->GetGameObject().lock()) {
+        auto name = other->GetGameObject().lock()->GetName();
+        if(IsWall(name)) {
+            
+        }
+    }
+}
+
+bool ComponentController::IsWall(const std::string& name) {
+    return name == "WallBottom1" || name == "WallTop1";
 }

@@ -38,7 +38,6 @@ void ComponentSpawner::Init(rapidjson::Value&) {
 	}
 
 	// TODO spawn floor
-    SpawnFloor();
 
 	// TODO spawn coins
 }
@@ -57,14 +56,12 @@ void ComponentSpawner::SpawnWall(std::string name, std::string spriteId, glm::ve
 	pos.y += sprite->getSpriteSize().y / 2;
 	wall->SetPosition(pos);
 
-	// TODO add body
 	auto body = wall->CreateComponent<ComponentPhysicsBody>().lock();
 
 	glm::vec2 s { sprite->getSpriteSize().x * sprite->getScale().x / 2, sprite->getSpriteSize().y * sprite->getScale().y / 2};
 	body->CreateBody(b2_staticBody, false, s);
 }
 
-void ComponentSpawner::SpawnFloor() {}
 
 void ComponentSpawner::SpawnCoin(std::string name, glm::vec3 pos) {
     auto engine = MyEngine::Engine::GetInstance();

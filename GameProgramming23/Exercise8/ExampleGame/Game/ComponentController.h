@@ -16,6 +16,7 @@ private:
     float impulseForce;
     void ApplyImpulse();
     void Move(float deltaTime);
+    bool IsWall(const std::string& name);
     void SetBirdValuesFromJSON(rapidjson::Value&);
     void SetValuesFromJSON(rapidjson::Value&);
     void SetDefaultValues();

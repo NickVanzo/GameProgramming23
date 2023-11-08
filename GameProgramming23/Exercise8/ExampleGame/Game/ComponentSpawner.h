@@ -6,6 +6,5 @@ class ComponentSpawner : public MyEngine::Component {
 	void Init(rapidjson::Value&) override;
 
 	void SpawnWall(std::string name, std::string sprite, glm::vec3 pos);
-    void SpawnFloor();
     void SpawnCoin(std::string name, glm::vec3 pos);
 };
