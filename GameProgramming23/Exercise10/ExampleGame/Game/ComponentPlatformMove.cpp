@@ -2,6 +2,7 @@
 
 #include "Engine/MyEngine.h"
 #include "Engine/Components/ComponentPhysicsBody.h"
+#include <math.h>
 
 void ComponentPlatformMove::Init(rapidjson::Value& serializedData) {
 	auto gameObject = GetGameObject().lock();
@@ -27,6 +28,7 @@ void ComponentPlatformMove::Update(float delta) {
 	_t = std::fmod(_t + delta, _duration);
 
 	float t = _t / _duration;
+
 	if (_yoyo) {
 		t *= 2;
 		if (t > 1)
@@ -46,10 +48,12 @@ void ComponentPlatformMove::Update(float delta) {
 }
 
 float ComponentPlatformMove::Easing(float t) {
+    auto c4 = (2 * M_PI) / 3;
 	switch (_easing) {
 		case Constant: return 0;
 		case Linear: return t;
 		case Sin: return glm::sin(t);
-		// TODO add your easing functions here
+        case EaseInSine: return 1 - glm::cos((t * M_PI) / 2);
+        case EaseInElastic: t == 0 ? 0 : t == 1 ? 1 : -pow(2, 10 * t - 10) * glm::sin((t * 10 - 10.75) * c4);
 	}
 }

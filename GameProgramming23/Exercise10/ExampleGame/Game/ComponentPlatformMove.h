@@ -5,8 +5,9 @@
 enum EasingType {
 	Constant,
 	Linear,
-	Sin
-	// add your easings here
+	Sin,
+    EaseInSine,
+    EaseInElastic
 };
 
 class ComponentPlatformMove : public MyEngine::Component {
@@ -17,7 +18,7 @@ private:
 	glm::vec3 _end;
 	EasingType _easing;
 
-	// interpolation time, always betwee 0 and 1.
+	// interpolation time, always between 0 and 1.
 	// called `t` as a convention
 	float _t = 0;
 
