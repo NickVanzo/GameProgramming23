@@ -9,7 +9,8 @@ using namespace glm;
 using namespace rapidjson;
 
 void ComponentController::Init(rapidjson::Value& serializedData) {
-    // TODO load necessary data (linear velocity, inpulse strenght, etc) and add the to `scene.json`
+    // The impulse force has some problems with my machine, I have a mac M1. No matter the value of the impulseForce,
+    // the impulse that I see on the screen is always the same. While the same code in a windows machine works better
     SetBirdValuesFromJSON(serializedData);
 }
 
@@ -40,7 +41,7 @@ void ComponentController::SetDefaultValues() {
     cout << "Something went wrong while reading from the json. Setting bird variables to default" << endl;
     mov_speed = 1;
     rot_speed = 1;
-    impulseForce = 10000000;
+    impulseForce = 1;
 }
 
 
