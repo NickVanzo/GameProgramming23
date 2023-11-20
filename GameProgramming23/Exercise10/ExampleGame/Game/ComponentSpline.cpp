@@ -38,6 +38,12 @@ void ComponentSpline::Update(float delta) {
     } else {
         offset = vec3(20, 20, 0);
     }
+    if(segment == 2) {
+        offset = vec3(-10, -10, 0);
+    }
+    if(segment == 3) {
+        offset = vec3(10,-10,0);
+    }
     auto intermediatePoint = vec3((a.x + b.x) / 2, (a.y + b.y) / 2, -1) + offset;
 
     auto p0 = mix(a, intermediatePoint, t);
