@@ -55,10 +55,6 @@ void ComponentSpline::Update(float delta) {
 
 }
 
-void ComponentSpline::PrintPoint(glm::vec2 p) {
-    std::cout << p.x << " " << p.y << std::endl;
-}
-
 void ComponentSpline::Render(sre::RenderPass& renderPass) {
 	for (auto& pair : _pairs)
 		renderPass.drawLines(pair);

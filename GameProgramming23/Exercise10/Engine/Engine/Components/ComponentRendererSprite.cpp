@@ -40,3 +40,6 @@ void ComponentRendererSprite::Render(sre::RenderPass& renderPass) {
 void ComponentRendererSprite::SetSpritePosition(glm::vec2& pivot) {
 	_sprite.setPosition(pivot);
 }
+void ComponentRendererSprite::SetSpriteFlipping(glm::bvec2& flip) {
+    _sprite.setFlip(flip);
+}
